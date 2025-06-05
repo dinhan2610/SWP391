@@ -1,35 +1,15 @@
-import qoutes from '../../../assets/images/testimonials/quotes.png'
-import tem01 from '../../../assets/images/testimonials/01.png'
-import tem02 from '../../../assets/images/testimonials/02.png'
-import tem03 from '../../../assets/images/testimonials/03.png'
-import tem04 from '../../../assets/images/testimonials/04.png'
-// import { useState } from 'react'
+import qoutes from "../../../assets/images/testimonials/quotes.png";
+import tem01 from "../../../assets/images/testimonials/01.png";
+
+import tem03 from "../../../assets/images/testimonials/03.png";
+import tem04 from "../../../assets/images/testimonials/04.png";
+
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// import 'swiper/css/navigation';
 import "swiper/css/pagination";
-// import 'swiper/css/scrollbar';
-export default function Testimonials() {
-  // const [testimonials] = useState([
-  //     {
-  //       disc: "Dr. Robert Thompson is an exceptional cardiologist. His ability to explain complex medical issues in a way that's easy to understand is truly impressive.",
-  //       author: "David Patel",
-  //       image: tem01,
-  //     },
-  //     {
-  //       disc: "An exceptional cardiologist. His ability to explain complex medical issues in a way that's easy to understand is truly impressive.",
-  //       author: "Malan Patel",
-  //       image: tem03,
-  //     },
-  //     {
-  //       disc: "Dr. Robert Thompson provides outstanding care. His clear explanations of complex heart conditions are remarkable.",
-  //       author: "Joker Vandi",
-  //       image: tem04,
-  //     },
-  //     // ... thêm testimonials
-  //   ]);
 
+export default function Testimonials() {
   return (
     <div className="rts-testimonials-area rts-section-gap">
       <div className="container">
@@ -37,7 +17,7 @@ export default function Testimonials() {
           <div className="col-lg-12">
             <div className="title-area-center">
               <h2 className="title text-center">
-                Words from Our <br /> Patients
+                Reviews from Our Patients <br />
               </h2>
             </div>
           </div>
@@ -45,7 +25,6 @@ export default function Testimonials() {
         <div className="row mt--0 g-5">
           <div className="col-lg-12">
             <Swiper
-              // install Swiper modules
               modules={[Navigation, Pagination, Scrollbar, A11y]}
               spaceBetween={50}
               slidesPerView={3}
@@ -60,22 +39,16 @@ export default function Testimonials() {
               <SwiperSlide>
                 <div className="single-testimonials-style">
                   <div className="quots">
-                    <img
-                      src={qoutes}
-                      alt="testimonails"
-                    />
+                    <img src={qoutes} alt="testimonails" />
                   </div>
                   <p className="disc">
-                    Dr. Robert Thompson is an exceptional cardiologist. His
-                    ability to explain with complex medical issues in a way
-                    that&apos;s easy to understand is truly impressive.
+                    I am very satisfied with the healthcare services here. The
+                    doctors explain everything clearly, which makes me feel at
+                    ease.
                   </p>
                   <div className="author-area">
                     <a href="#" className="img">
-                      <img
-                        src={tem01}
-                        alt="testiminials"
-                      />
+                      <img src={tem01} alt="testiminials" />
                     </a>
                     <div className="info">
                       <h6 className="name">David Patel</h6>
@@ -87,37 +60,25 @@ export default function Testimonials() {
                         <i className="fa-sharp fa-solid fa-star" />
                       </div>
                     </div>
-                  </div>
-                  <div className="shape">
-                    <img
-                      src={tem02}
-                      alt="service"
-                    />
                   </div>
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="single-testimonials-style">
                   <div className="quots">
-                    <img
-                      src={qoutes}
-                      alt="testimonails"
-                    />
+                    <img src={qoutes} alt="testimonails" />
                   </div>
                   <p className="disc">
-                    Dr. Robert Thompson is an exceptional cardiologist. His
-                    ability to explain with complex medical issues in a way
-                    that&apos;s easy to understand is truly impressive.
+                    The medical team is professional and caring. Every time I
+                    visit, I feel welcomed and well taken care of. They always
+                    ensure my comfort.
                   </p>
                   <div className="author-area">
                     <a href="#" className="img">
-                      <img
-                        src={tem03}
-                        alt="testiminials"
-                      />
+                      <img src={tem03} alt="testiminials" />
                     </a>
                     <div className="info">
-                      <h6 className="name">David Patel</h6>
+                      <h6 className="name">John Doe</h6>
                       <div className="stars-area">
                         <i className="fa-sharp fa-solid fa-star" />
                         <i className="fa-sharp fa-solid fa-star" />
@@ -126,37 +87,24 @@ export default function Testimonials() {
                         <i className="fa-sharp fa-solid fa-star" />
                       </div>
                     </div>
-                  </div>
-                  <div className="shape">
-                    <img
-                      src={tem02}
-                      alt="service"
-                    />
                   </div>
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="single-testimonials-style">
                   <div className="quots">
-                    <img
-                      src={qoutes}
-                      alt="testimonails"
-                    />
+                    <img src={qoutes} alt="testimonails" />
                   </div>
                   <p className="disc">
-                    Dr. Robert Thompson is an exceptional cardiologist. His
-                    ability to explain with complex medical issues in a way
-                    that&apos;s easy to understand is truly impressive.
+                    I am impressed by the speed and efficiency of the services
+                    here. Everything is done quickly without long wait times.
                   </p>
                   <div className="author-area">
                     <a href="#" className="img">
-                      <img
-                        src={tem04}
-                        alt="testiminials"
-                      />
+                      <img src={tem04} alt="testiminials" />
                     </a>
                     <div className="info">
-                      <h6 className="name">David Patel</h6>
+                      <h6 className="name">Sarah Lee</h6>
                       <div className="stars-area">
                         <i className="fa-sharp fa-solid fa-star" />
                         <i className="fa-sharp fa-solid fa-star" />
@@ -165,37 +113,25 @@ export default function Testimonials() {
                         <i className="fa-sharp fa-solid fa-star" />
                       </div>
                     </div>
-                  </div>
-                  <div className="shape">
-                    <img
-                      src={tem02}
-                      alt="service"
-                    />
                   </div>
                 </div>
               </SwiperSlide>
               <SwiperSlide>
                 <div className="single-testimonials-style">
                   <div className="quots">
-                    <img
-                      src={qoutes}
-                      alt="testimonails"
-                    />
+                    <img src={qoutes} alt="testimonails" />
                   </div>
                   <p className="disc">
-                    Dr. Robert Thompson is an exceptional cardiologist. His
-                    ability to explain with complex medical issues in a way
-                    that&apos;s easy to understand is truly impressive.
+                    The healthcare services here are excellent. The doctors
+                    answer all of my questions thoroughly, and I feel well cared
+                    for.
                   </p>
                   <div className="author-area">
                     <a href="#" className="img">
-                      <img
-                        src={tem04}
-                        alt="testiminials"
-                      />
+                      <img src={tem01} alt="testiminials" />
                     </a>
                     <div className="info">
-                      <h6 className="name">David Patel</h6>
+                      <h6 className="name">Michael Brown</h6>
                       <div className="stars-area">
                         <i className="fa-sharp fa-solid fa-star" />
                         <i className="fa-sharp fa-solid fa-star" />
@@ -205,15 +141,8 @@ export default function Testimonials() {
                       </div>
                     </div>
                   </div>
-                  <div className="shape">
-                    <img
-                      src={tem02}
-                      alt="service"
-                    />
-                  </div>
                 </div>
               </SwiperSlide>
-             
               ...
             </Swiper>
           </div>

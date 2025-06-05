@@ -2,9 +2,8 @@ import choose01 from "../../../assets/images/service/icon/01.svg";
 import choose02 from "../../../assets/images/service/03.svg";
 import choose03 from "../../../assets/images/service/icon/03.svg";
 import choose04 from "../../../assets/images/service/icon/04.svg";
-import choose05 from "../../../assets/images/feature/02.webp";
-import choose06 from "../../../assets/images/feature/03.svg";
-import choose07 from "../../../assets/images/feature/01.webp";
+import choose07 from "../../../assets/images/feature/01a.png";
+
 export default function WhyChoose() {
   return (
     <div className="why-choose-us-area">
@@ -22,7 +21,7 @@ export default function WhyChoose() {
                           data-wow-delay=".4s"
                           data-wow-duration=".8s"
                         >
-                          Why Our Patients Recommend Us
+                          Reasons Our Patients Trust Us
                         </h2>
                       </div>
                       <div className="why-choose-us-main-wrapper">
@@ -35,9 +34,12 @@ export default function WhyChoose() {
                             <img src={choose01} alt="service" />
                           </div>
                           <div className="info">
-                            <h6 className="title">Patient-Centered Care</h6>
+                            <h6 className="title">
+                              Care That Puts Patients First
+                            </h6>
                             <p>
-                              Emphasize your commitment to patient well-being
+                              Showcase your unwavering focus on prioritizing
+                              patient needs.
                             </p>
                           </div>
                         </div>
@@ -50,9 +52,12 @@ export default function WhyChoose() {
                             <img src={choose02} alt="service" />
                           </div>
                           <div className="info">
-                            <h6 className="title">Emergency Support</h6>
+                            <h6 className="title">
+                              Rapid Response for Critical Situations
+                            </h6>
                             <p>
-                              Emphasize your commitment to patient well-being
+                              Show your commitment to responding swiftly to
+                              urgent medical needs.
                             </p>
                           </div>
                         </div>
@@ -65,9 +70,12 @@ export default function WhyChoose() {
                             <img src={choose03} alt="service" />
                           </div>
                           <div className="info">
-                            <h6 className="title">Expertise and Experience</h6>
+                            <h6 className="title">
+                              Professional Expertise Backed by Years of Practice
+                            </h6>
                             <p>
-                              Emphasize your commitment to patient well-being
+                              Underscore your team's qualifications and
+                              experience in providing compassionate care.{" "}
                             </p>
                           </div>
                         </div>
@@ -80,9 +88,12 @@ export default function WhyChoose() {
                             <img src={choose04} alt="service" />
                           </div>
                           <div className="info">
-                            <h6 className="title">24/7 hour Emergency Call</h6>
+                            <h6 className="title">
+                              24/7 Access to Emergency Assistance
+                            </h6>
                             <p>
-                              Emphasize your commitment to patient well-being
+                              Emphasize your dedication to ensuring that help is
+                              always available in critical situations.
                             </p>
                           </div>
                         </div>
@@ -91,20 +102,8 @@ export default function WhyChoose() {
                   </div>
                   <div className="col-xl-6 col-lg-6 offset-xl-1">
                     <div className="right-whychoose-us-style-one">
-                      <div className="feature-bg-primary">
-                        <img src={choose05} alt="medicle" />
-                      </div>
                       <div className="thumbnail-image">
                         <img src={choose07} alt="medicle" />
-                      </div>
-                      <div className="inner-content">
-                        <div className="top">
-                          <h3 className="title">Hello</h3>
-                          <div className="time-shedule">
-                            <img src={choose06} alt="medicle" />
-                            <span>24/7</span>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
