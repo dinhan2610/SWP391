@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 // import { useGetImageUrl } from "../../apis/CallAPIFirebase";
 import DrawerMenu from "../DrawerMenu";
 import { motion } from "framer-motion";
+
 const headerVariants = {
   hidden: { y: -100, opacity: 0 },
   visible: {
@@ -30,9 +31,9 @@ const Headers = () => {
   // Get image
   const handleGetImage = async () => {
     try {
-      //   const result = await useGetImageUrl("pregnancyCareImages/users", 1);
+      // const result = await useGetImageUrl("pregnancyCareImages/users", 1);
       setUrl("https://via.placeholder.com/150");
-      //   setUrl(result);
+      // setUrl(result);
     } catch (error) {
       console.error(error);
     }
@@ -98,46 +99,39 @@ const Headers = () => {
                       <a onClick={() => navigate("/")}>Home</a>
                     </motion.li>
                     <motion.li
-                      className="main-nav has-dropdown"
+                      className="main-nav"
                       whileHover={{ scale: 1.05 }}
                       style={{ display: "inline-block", marginRight: 20 }}
                     >
-                      <a onClick={() => navigate("/our-expert")}>Our Expert</a>
+                      <a onClick={() => navigate("/blog")}>Blog</a>
                     </motion.li>
                     <motion.li
-                      className="main-nav has-dropdown"
+                      className="main-nav"
                       whileHover={{ scale: 1.05 }}
                       style={{ display: "inline-block", marginRight: 20 }}
                     >
-                      <a onClick={() => navigate("/community")}>Community</a>
+                      <a onClick={() => navigate("/stis-testing-services")}>
+                        STIs & Testing Services
+                      </a>
                     </motion.li>
                     <motion.li
-                      className="main-nav has-dropdown"
+                      className="main-nav"
                       whileHover={{ scale: 1.05 }}
                       style={{ display: "inline-block", marginRight: 20 }}
                     >
-                      <a>Appointment</a>
-                      <ul className="submenu parent-nav">
-                        <li>
-                          <a onClick={() => navigate("/appointment/calendar")}>
-                            Calendar
-                          </a>
-                        </li>
-                        <li>
-                          <a onClick={() => navigate("/appointment/schedule")}>
-                            Schedule
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            onClick={() =>
-                              navigate("/appointment/fetus-growth-chart")
-                            }
-                          >
-                            Growth Chart
-                          </a>
-                        </li>
-                      </ul>
+                      <a onClick={() => navigate("/appointment/calendar")}>
+                        Consultation Booking
+                      </a>
+                    </motion.li>
+                    {/* Đã xóa mục Contact */}
+                    <motion.li
+                      className="main-nav"
+                      whileHover={{ scale: 1.05 }}
+                      style={{ display: "inline-block", marginRight: 20 }}
+                    >
+                      <a onClick={() => navigate("/cycle-tracking")}>
+                        Cycle Tracking
+                      </a>
                     </motion.li>
                   </ul>
                 </div>
