@@ -1,4 +1,4 @@
-import logo2 from "../../assets/images/logo/logo-2.svg";
+import logo2 from "../../assets/images/logo/logo-2.png";
 import BacktoTop from "../Backtotop";
 export default function Footer() {
   return (

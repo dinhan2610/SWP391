@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Typography, message as Message } from "antd";
-import SigninBackground from "../../../assets/Signin.jpg";
+import SigninBackground from "../../../assets/Signin.png";
 // import { useRegister } from "../../../apis/CallAPIUser";
 import BackdropLoader from "../../../components/BackdropLoader";
 
@@ -57,7 +57,7 @@ export default function Signin({ setActiveTab }) {
           </div>
         </div>
         <Text style={{ display: "block", marginBottom: "20px" }}>
-          Enter your email to become a new PregnancyCare member
+          Enter your email to become a new HealthWise member
         </Text>
         <Form layout="vertical" onFinish={handleSubmit}>
           <Form.Item
@@ -114,7 +114,7 @@ export default function Signin({ setActiveTab }) {
         <img
           src={SigninBackground}
           alt="Signin background"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          style={{ width: "100%", height: "95%", objectFit: "cover" }}
         />
       </div>
     </div>

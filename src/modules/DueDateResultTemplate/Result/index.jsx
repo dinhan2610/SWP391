@@ -1,5 +1,5 @@
 import React from "react";
-import avatarImage from "../../../assets/avatar.jpg";
+import avatarImage from "../../../assets/images/avatar.png";
 import DueDateCalculatorImage from "../../../assets/DueDateCalculator.jpg";
 import LightImage from "../../../assets/light.jpg";
 import { Link } from "react-router-dom";

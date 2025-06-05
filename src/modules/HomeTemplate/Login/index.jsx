@@ -15,7 +15,7 @@ export default function LoginUI() {
             alt="Login background"
             style={{
               width: "100%",
-              height: "100%",
+              height: "80%",
               objectFit: "cover",
             }}
           />
@@ -30,7 +30,7 @@ export default function LoginUI() {
           </div>
 
           <Text style={{ display: "block", marginBottom: "20px" }}>
-            Enter your email to log in to your PregnancyCare account
+            Enter your email to log in to your HealthWise account
           </Text>
 
           <Form layout="vertical" onFinish={() => {}}>
@@ -68,7 +68,7 @@ export default function LoginUI() {
           </Form>
 
           <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <Text>New to Pregnancy Care?</Text>
+            <Text>New to HealthWise ?</Text>
           </div>
         </div>
       </div>
