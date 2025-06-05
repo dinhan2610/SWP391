@@ -9062,7 +9062,7 @@ img {
   -ms-interpolation-mode: bicubic;
   border: 0;
   vertical-align: middle;
-  max-width: 100%;
+  width: 130px;
   height: auto;
 }
 
@@ -15508,7 +15508,7 @@ header.header-three .sub-dropdown .submenu.third-lvl.base {
 }
 
 .banner-area-one {
-  background-image: url(../src/assets/images/banner/01.webp);
+  background-image: url(../src/assets/images/banner/01a.png);
   position: relative;
   height: 798px;
   display: flex;

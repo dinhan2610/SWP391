@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import logo from "../../assets/images/logo/logo.svg";
+import logo from "../../assets/images/logo/logo.png";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -123,7 +123,7 @@ const Headers = () => {
                         Consultation Booking
                       </a>
                     </motion.li>
-                    {/* Đã xóa mục Contact */}
+
                     <motion.li
                       className="main-nav"
                       whileHover={{ scale: 1.05 }}

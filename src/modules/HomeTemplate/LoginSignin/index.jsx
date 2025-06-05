@@ -9,7 +9,7 @@ import Signin from "../Signin";
 // Danh sách các tab trong phần Account Settings
 const tabLabels = ["Log in", "Sign in"];
 
-// eslint-disable-next-line react/prop-types
+
 
 export default function LoginSignin({ open, onClose }) {
   // Quản lý state cho tab đang được chọn
