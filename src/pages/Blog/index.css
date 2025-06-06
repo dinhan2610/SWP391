@@ -9,6 +9,7 @@ body {
   font-family: 'Arial', sans-serif;
   background-color: #f8f8f8;
   color: #333;
+  line-height: 1.6;
 }
 
 h1, h3 {
@@ -17,25 +18,41 @@ h1, h3 {
 
 /* Blog Page */
 .blog-page {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 50px auto;
   padding: 0 20px;
 }
 
 .blog-header {
-  text-align: center;
-  margin-bottom: 40px;
+  background-image: url('/public/blog/bg01.png');  /* Đặt ảnh nền */
+  background-size: cover;  /* Làm cho ảnh bao phủ toàn bộ khu vực */
+  background-position: center;  /* Căn giữa ảnh nền */
+  background-repeat: no-repeat; /* Đảm bảo ảnh không lặp lại */
+
+  display: flex;  /* Sử dụng Flexbox để căn chỉnh nội dung */
+  flex-direction: column;  /* Căn chỉnh theo chiều dọc */
+  justify-content: center;  /* Căn giữa nội dung theo chiều dọc */
+  text-align: center;  /* Căn giữa nội dung trong header */
+  color: #000000;  /* Đảm bảo chữ có màu sáng để dễ đọc trên nền tối */
+  border-radius: 10px;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3); /* Thêm bóng tối nhẹ vào bên trong */
 }
 
 .blog-header h1 {
-  font-size: 36px;
-  color: #2c3e50;
+  font-size: 63px;
+  color: #000000; /* Màu chữ sáng hơn để dễ nhìn */
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 40px;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Thêm bóng chữ để nổi bật */
 }
 
+
 .blog-header p {
-  font-size: 18px;
+  font-size: 20px;
   color: #777;
-  margin-top: 10px;
+  margin-top: -10px;
 }
 
 .blog-posts {
@@ -43,6 +60,7 @@ h1, h3 {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
   justify-items: center;
+  margin-top: 30px;
 }
 
 .blog-card {
@@ -50,19 +68,26 @@ h1, h3 {
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
   width: 100%;
   max-width: 350px;
+  cursor: pointer;
 }
 
 .blog-card:hover {
   transform: translateY(-10px);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
 }
 
 .blog-image img {
   width: 100%;
   height: 250px;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.blog-card:hover .blog-image img {
+  transform: scale(1.05);
 }
 
 .blog-content {
@@ -75,11 +100,13 @@ h1, h3 {
   font-size: 22px;
   color: #333;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .blog-content p {
   font-size: 16px;
   color: #555;
+  margin-bottom: 15px;
 }
 
 .blog-date {
@@ -88,30 +115,97 @@ h1, h3 {
   margin-top: 10px;
 }
 
-.read-more {
+/* Full-text style - Updated */
+
+
+/* View Full Button Style */
+.view-full {
   text-decoration: none;
-  color: #007bff;
+  color: #fff;
+  background-color: #615efc;
   font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 20px;  /* Viền bo tròn hơn */
   margin-top: 10px;
   display: inline-block;
-  background-color: #f0f0f0;
-  padding: 8px 15px;
-  border-radius: 5px;
   cursor: pointer;
-  border: none;
+  transition: background-color 0.3s ease;
 }
 
-.read-more:hover {
-  background-color: #007bff;
-  color: white;
+.view-full:hover {
+  background-color: #000000;
 }
 
-.full-text {
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+/* Modal Title */
+.modal-content h2 {
+  font-size: 28px;      /* Đặt cỡ chữ cho tiêu đề */
+  font-weight: bold;    /* Làm đậm tiêu đề */
+  color: #2c3e50;       /* Đặt màu sắc cho tiêu đề */
+  margin-bottom: 20px;  /* Khoảng cách dưới tiêu đề */
+  text-align: center;   /* Căn giữa tiêu đề */
+}
+
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 70%;
+  max-width: 900px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  text-align: left;
+  word-wrap: break-word;
+   white-space: normal;
+   margin: 0;
+}
+
+.modal-content img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.modal-content h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.modal-content p {
   font-size: 16px;
   color: #333;
-  margin-top: 10px;
-  display: none;
   line-height: 1.8;
+}
+
+.close-modal {
+  background-color: #615efc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.close-modal:hover {
+  background-color: #000000;
 }
 
 /* Responsive Design */
@@ -126,5 +220,17 @@ h1, h3 {
 
   .blog-posts {
     grid-template-columns: 1fr;
+  }
+
+  .modal-content {
+    width: 90%;
+  }
+
+  .blog-date {
+    font-size: 12px;
+  }
+
+  .read-more, .view-full {
+    font-size: 14px;
   }
 }
