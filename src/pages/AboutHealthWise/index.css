@@ -1,0 +1,282 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7f6;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* About Section */
+.about-us-page {
+  padding: 80px 0;
+}
+
+/* About Section Style */
+.about-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 40px 0;
+  margin-bottom: 40px;
+}
+
+.image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.image-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  max-width: 90%;
+}
+
+.about-image {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.about-image:hover {
+  transform: scale(1.05);
+}
+
+.content-section {
+  flex: 1;
+  padding: 30px;
+  text-align: left;
+}
+
+.about-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+
+.about-description {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.about-link {
+  font-size: 18px;
+  font-weight: bold;
+  color: #615efc;
+  text-decoration: none;
+  padding: 10px 25px;
+  border: 2px solid #615efc;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.about-link:hover {
+  background-color: #615efc;
+  color: #fff;
+}
+
+/* Mission Section */
+.mission-section {
+  background-color: #f9f9f9;
+  padding: 50px 0;
+}
+
+.mission-section .section-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.mission-section .section-description {
+  font-size: 18px;
+  color: #555;
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* Vision Section */
+.vision-section {
+  padding: 50px 0;
+}
+
+.vision-section .section-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.vision-section .section-description {
+  font-size: 18px;
+  color: #555;
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* Values Section */
+.values-section {
+  padding: 50px 0;
+  background-color: #fff;
+}
+
+.values-section .section-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.values-list {
+  list-style-type: none;
+  padding-left: 0;
+  font-size: 18px;
+  color: #555;
+}
+
+.values-list li {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.values-list li strong {
+  color: #2c3e50;
+}
+
+/* Team Section */
+.team-section {
+  background-color: #f9f9f9;
+  padding: 50px 0;
+}
+
+.team-section .section-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.team-member {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.team-member-photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.team-member-name {
+  font-size: 22px;
+  color: #333;
+  margin-top: 10px;
+}
+
+.team-member-position {
+  font-size: 16px;
+  color: #777;
+}
+
+/* Contact Section */
+.contact-section {
+  background-color: #f9f9f9;
+  padding: 50px 0;
+}
+
+.contact-section .section-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.contact-section .section-description {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.8;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.contact-button {
+  background-color: #615efc;
+  color: white;
+  font-weight: bold;
+  padding: 12px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-button:hover {
+  background-color: #5058c2;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .about-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-title {
+    font-size: 30px;
+  }
+
+  .about-description {
+    font-size: 16px;
+  }
+
+  .about-image {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .about-link {
+    font-size: 16px;
+  }
+
+  .team-member-photo {
+    margin-bottom: 20px;
+  }
+
+  .team-member-name {
+    font-size: 18px;
+  }
+
+  .team-member-position {
+    font-size: 14px;
+  }
+}

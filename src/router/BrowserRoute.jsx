@@ -4,7 +4,9 @@ import HomeTemplate from "../modules/HomeTemplate";
 import Ovulation from "../pages/Ovulation";
 import DueDateCalculatorTemplate from "../modules/DueDateTemplate";
 import DueDateCalculatorResultTemplate from "../modules/DueDateResultTemplate";
-import BlogPage from "../pages/Blog"; // Import BlogPage
+import BlogPage from "../pages/Blog";
+
+import AboutHealthWise from "../pages/AboutHealthWise";
 
 const routes = [
   {
@@ -17,7 +19,8 @@ const routes = [
         path: "/due-date/result",
         element: <DueDateCalculatorResultTemplate />,
       },
-      { path: "/blog", element: <BlogPage /> }, // Thêm route cho trang blog
+      { path: "/blog", element: <BlogPage /> },
+      { path: "/about", element: <AboutHealthWise /> },
     ],
   },
 ];
