@@ -35,6 +35,11 @@ body {
   border-radius: 15px;
   padding: 40px 0;
   margin-bottom: 40px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.about-section:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
 .image-section {
@@ -55,6 +60,7 @@ body {
   height: auto;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  object-fit: cover; /* Đảm bảo ảnh không bị bóp méo */
   transition: transform 0.3s ease-in-out;
 }
 
@@ -66,6 +72,9 @@ body {
   flex: 1;
   padding: 30px;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .about-title {
@@ -92,18 +101,21 @@ body {
   padding: 10px 25px;
   border: 2px solid #615efc;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .about-link:hover {
   background-color: #615efc;
   color: #fff;
+  transform: translateY(-3px);
 }
 
 /* Mission Section */
 .mission-section {
   background-color: #f9f9f9;
   padding: 50px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .mission-section .section-title {
@@ -119,11 +131,13 @@ body {
   color: #555;
   text-align: center;
   line-height: 1.8;
+  margin-top: 20px;
 }
 
 /* Vision Section */
 .vision-section {
   padding: 50px 0;
+  background-color: #fff;
 }
 
 .vision-section .section-title {
@@ -139,12 +153,15 @@ body {
   color: #555;
   text-align: center;
   line-height: 1.8;
+  margin-top: 20px;
 }
 
 /* Values Section */
 .values-section {
   padding: 50px 0;
-  background-color: #fff;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .values-section .section-title {
@@ -160,6 +177,7 @@ body {
   padding-left: 0;
   font-size: 18px;
   color: #555;
+  margin-bottom: 30px;
 }
 
 .values-list li {
@@ -175,6 +193,8 @@ body {
 .team-section {
   background-color: #f9f9f9;
   padding: 50px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .team-section .section-title {
@@ -188,13 +208,24 @@ body {
 .team-member {
   text-align: center;
   margin-bottom: 30px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.team-member:hover {
+  transform: translateY(-10px);
 }
 
 .team-member-photo img {
-  width: 100%;
-  height: auto;
+  width: 230px;
+  height: 300px;
   border-radius: 50%;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.team-member-photo img:hover {
+  transform: scale(1.1);
 }
 
 .team-member-name {
@@ -208,26 +239,300 @@ body {
   color: #777;
 }
 
-/* Contact Section */
-.contact-section {
-  background-color: #f9f9f9;
-  padding: 50px 0;
+
+
+/* Modal Background */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ khi mở modal */
+  transition: background-color 0.3s ease-in-out;
 }
 
+/* Modal Container */
+.modal-dialog {
+  display: flex;
+  justify-content: center; /* Căn giữa modal theo chiều ngang */
+  align-items: center;     /* Căn giữa modal theo chiều dọc */
+  height: 100vh;           /* Chiều cao modal chiếm toàn bộ màn hình */
+}
+
+.modal-content {
+  border-radius: 15px;
+  max-width: 1000px;  /* Tăng chiều rộng của modal */
+  width: 1000px;    /* Đặt chiều rộng mặc định của modal */
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Căn giữa nội dung modal */
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal-content:hover {
+  transform: translateY(-5px); /* Thêm hiệu ứng chuyển động nhẹ khi hover */
+}
+
+/* Modal Header */
+.modal-header {
+  border-bottom: 2px solid #615efc;
+  padding: 15px 20px;
+}
+
+.modal-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* Modal Body */
+.modal-body {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.modal-body h4 {
+  color: #615efc;
+  margin-top: 10px;
+  font-size: 22px;
+}
+
+.modal-body p {
+  margin-bottom: 10px;
+}
+
+/* Modal Footer */
+.modal-footer {
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.modal-footer .btn {
+  background-color: #615efc;
+  color: white;
+  font-weight: bold;
+  padding: 10px 25px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer .btn:hover {
+  background-color: #5058c2;
+}
+
+/* Modal Close Button */
+.modal-header .close {
+  color: #2c3e50;
+  font-size: 30px;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.modal-header .close:hover {
+  color: #615efc;
+}
+/* Contact Section */
+.contact-section {
+  background-color: #f4f7f6;
+  padding: 80px 20px;
+  border-radius: 15px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  flex-direction: column;
+  text-align: center; /* Ensure text is centered */
+  height: 100vh; /* Full screen height */
+}
+
+/* Section Title */
 .contact-section .section-title {
-  font-size: 32px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase; /* All caps for emphasis */
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Section Description */
+.contact-section .section-description {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 30px;
+  text-align: center;
+  line-height: 1.8;
+  max-width: 700px; /* Limit width for better readability */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px; /* Adding some padding to the sides */
+}
+
+/* Contact Button Styles */
+.contact-button {
+  background-color: #615efc;
+  color: white;
+  font-weight: bold;
+  padding: 15px 40px;
+  border-radius: 30px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.contact-button:hover {
+  background-color: #5058c2;
+  transform: translateY(-5px); /* Hover effect */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.contact-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px #615efc, 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Focus effect for accessibility */
+.contact-button-link {
+  text-decoration: none; /* Remove underline from link */
+  display: inline-block;
+}
+
+/* Animation for Button */
+@keyframes button-animation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Button hover animation */
+.contact-button:hover {
+  animation: button-animation 0.5s ease-in-out;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .contact-section {
+    height: auto; /* Remove 100vh on smaller screens */
+    padding: 50px 20px;
+  }
+
+  .contact-button {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+
+  .section-description {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .contact-button {
+    padding: 12px 25px;
+    font-size: 14px;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
+
+  .section-description {
+    font-size: 14px;
+  }
+}
+/* Contact Form */
+/* Compact Contact Form */
+.contact-form {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+  text-align: left;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-form h3 {
+  font-size: 22px;
   font-weight: bold;
   color: #2c3e50;
   margin-bottom: 20px;
   text-align: center;
 }
 
-.contact-section .section-description {
-  font-size: 18px;
-  color: #555;
-  line-height: 1.8;
+.contact-form .form-group {
+  margin-bottom: 15px;
+}
+
+.contact-form .form-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 5px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+.contact-form input[type="tel"] {
+  -moz-appearance: textfield; /* Remove number field spinner */
+  -webkit-appearance: none;
+}
+
+.contact-form textarea {
+  resize: none;
+}
+
+.contact-form button {
+  background-color: #615efc;
+  color: white;
+  font-weight: bold;
+  padding: 10px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-size: 16px;
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form button:hover {
+  background-color: #5058c2;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Button linking to the contact page */
+.contact-button-link {
+  display: block;
+  margin-top: 20px;
   text-align: center;
-  margin-bottom: 30px;
 }
 
 .contact-button {
@@ -235,48 +540,75 @@ body {
   color: white;
   font-weight: bold;
   padding: 12px 30px;
-  border-radius: 5px;
+  border-radius: 30px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-size: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
 }
 
 .contact-button:hover {
   background-color: #5058c2;
+  transform: translateY(-3px);
+}
+
+.social-media {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.social-media h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+}
+
+.social-icons a {
+  margin: 0 10px;
+}
+
+.social-icons img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.social-icons img:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .contact-form {
+    padding: 20px;
+  }
+
+  .contact-form h3 {
+    font-size: 20px;
+  }
+
+  .contact-form button {
+    font-size: 14px;
+    padding: 8px 25px;
+  }
 }
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
-  .about-section {
-    flex-direction: column;
-    text-align: center;
+  .modal-content {
+    width: 90%;  /* Chiều rộng modal giảm xuống còn 90% trên màn hình nhỏ */
   }
+}
 
-  .about-title {
-    font-size: 30px;
-  }
-
-  .about-description {
-    font-size: 16px;
-  }
-
-  .about-image {
-    max-width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .about-link {
-    font-size: 16px;
-  }
-
-  .team-member-photo {
-    margin-bottom: 20px;
-  }
-
-  .team-member-name {
-    font-size: 18px;
-  }
-
-  .team-member-position {
-    font-size: 14px;
+@media screen and (max-width: 480px) {
+  .modal-content {
+    width: 95%;  /* Đặt chiều rộng lớn hơn trên các màn hình nhỏ */
   }
 }

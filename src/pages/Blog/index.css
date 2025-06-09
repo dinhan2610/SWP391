@@ -12,6 +12,7 @@ body {
   line-height: 1.6;
 }
 
+/* Heading Styles */
 h1, h3 {
   color: #333;
 }
@@ -23,38 +24,40 @@ h1, h3 {
   padding: 0 20px;
 }
 
+/* Blog Header */
 .blog-header {
-  background-image: url('/public/blog/bg01.png');  /* Đặt ảnh nền */
-  background-size: cover;  /* Làm cho ảnh bao phủ toàn bộ khu vực */
-  background-position: center;  /* Căn giữa ảnh nền */
+  background-image: url('/public/blog/bg01.png'); /* Đặt ảnh nền */
+  background-size: cover; /* Làm cho ảnh bao phủ toàn bộ khu vực */
+  background-position: center; /* Căn giữa ảnh nền */
   background-repeat: no-repeat; /* Đảm bảo ảnh không lặp lại */
-
-  display: flex;  /* Sử dụng Flexbox để căn chỉnh nội dung */
-  flex-direction: column;  /* Căn chỉnh theo chiều dọc */
-  justify-content: center;  /* Căn giữa nội dung theo chiều dọc */
-  text-align: center;  /* Căn giữa nội dung trong header */
-  color: #000000;  /* Đảm bảo chữ có màu sáng để dễ đọc trên nền tối */
+  display: flex; /* Sử dụng Flexbox để căn chỉnh nội dung */
+  flex-direction: column; /* Căn chỉnh theo chiều dọc */
+  justify-content: center; /* Căn giữa nội dung theo chiều dọc */
+  text-align: center; /* Căn giữa nội dung trong header */
+  color: #ffffff; /* Màu chữ sáng để dễ đọc trên nền tối */
   border-radius: 10px;
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3); /* Thêm bóng tối nhẹ vào bên trong */
+  padding: 80px 20px;
+  margin-bottom: 50px;
 }
 
 .blog-header h1 {
   font-size: 63px;
-  color: #000000; /* Màu chữ sáng hơn để dễ nhìn */
+  color: #fff; /* Màu chữ sáng hơn để dễ nhìn */
   font-weight: bold;
   text-transform: uppercase;
-  margin-top: 40px;
   letter-spacing: 3px;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Thêm bóng chữ để nổi bật */
 }
 
-
 .blog-header p {
   font-size: 20px;
-  color: #777;
+  color: #ddd;
   margin-top: -10px;
+  line-height: 1.8;
 }
 
+/* Blog Posts Grid */
 .blog-posts {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -63,9 +66,10 @@ h1, h3 {
   margin-top: 30px;
 }
 
+/* Blog Card */
 .blog-card {
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
@@ -90,6 +94,7 @@ h1, h3 {
   transform: scale(1.05);
 }
 
+/* Blog Content */
 .blog-content {
   padding: 20px;
   display: flex;
@@ -115,9 +120,6 @@ h1, h3 {
   margin-top: 10px;
 }
 
-/* Full-text style - Updated */
-
-
 /* View Full Button Style */
 .view-full {
   text-decoration: none;
@@ -125,7 +127,7 @@ h1, h3 {
   background-color: #615efc;
   font-weight: bold;
   padding: 10px 20px;
-  border-radius: 20px;  /* Viền bo tròn hơn */
+  border-radius: 20px;
   margin-top: 10px;
   display: inline-block;
   cursor: pointer;
@@ -150,16 +152,8 @@ h1, h3 {
   z-index: 1000;
   transition: opacity 0.3s ease;
 }
-/* Modal Title */
-.modal-content h2 {
-  font-size: 28px;      /* Đặt cỡ chữ cho tiêu đề */
-  font-weight: bold;    /* Làm đậm tiêu đề */
-  color: #2c3e50;       /* Đặt màu sắc cho tiêu đề */
-  margin-bottom: 20px;  /* Khoảng cách dưới tiêu đề */
-  text-align: center;   /* Căn giữa tiêu đề */
-}
 
-
+/* Modal Content */
 .modal-content {
   background-color: #fff;
   padding: 30px;
@@ -172,28 +166,25 @@ h1, h3 {
   transition: transform 0.3s ease;
   text-align: left;
   word-wrap: break-word;
-   white-space: normal;
-   margin: 0;
+  white-space: normal;
+  margin: 0;
 }
 
-.modal-content img {
-  width: 100%;
-  height: auto;
-  margin-bottom: 15px;
-}
-
+/* Modal Title */
 .modal-content h2 {
   font-size: 24px;
   color: #333;
   margin-bottom: 20px;
 }
 
+/* Modal Body */
 .modal-content p {
   font-size: 16px;
   color: #333;
   line-height: 1.8;
 }
 
+/* Close Button */
 .close-modal {
   background-color: #615efc;
   color: white;
