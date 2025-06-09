@@ -1,9 +1,15 @@
+import React, { useState } from "react";
+import { Modal, Button } from "react-bootstrap";
 import "./index.css";
+
 export default function AboutHealthWise() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
   return (
     <div className="about-us-page">
-      {" "}
-      {/* Thêm lớp này */}
       {/* About Section */}
       <div className="about-section">
         <div className="container">
@@ -11,13 +17,11 @@ export default function AboutHealthWise() {
             {/* Image Section */}
             <div className="col-lg-6 image-section">
               <div className="image-wrapper">
-                {
-                  <img
-                    src="/abouthealthwise/01.png"
-                    alt="About Us"
-                    className="about-image"
-                  />
-                }
+                <img
+                  src="/abouthealthwise/01.png"
+                  alt="About Us"
+                  className="about-image"
+                />
               </div>
             </div>
 
@@ -33,7 +37,7 @@ export default function AboutHealthWise() {
                   Our goal is to enhance the health and quality of life for our
                   community.
                 </p>
-                <a href="/about" className="about-link">
+                <a href="#!" onClick={handleShowModal} className="about-link">
                   Learn More
                 </a>
               </div>
@@ -41,53 +45,119 @@ export default function AboutHealthWise() {
           </div>
         </div>
       </div>
+
+      {/* Modal for Full Content */}
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>About HealthWish</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Our Commitment</h4>
+          <p>
+            At HealthWish, we are committed to delivering outstanding healthcare
+            services, prioritizing the needs of our patients. Our services are
+            designed to provide the best possible care, combining medical
+            expertise with compassion. We strive to improve the health and
+            well-being of every individual, enhancing the quality of life for
+            the community.
+          </p>
+          <h4>Patient-Centered Focus</h4>
+          <p>
+            We believe that patient care should always be centered around the
+            needs, preferences, and values of the individual. Every decision we
+            make is in pursuit of creating a healthier future for all.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       {/* Mission Section */}
       <div className="mission-section">
         <div className="container">
-          <h2 className="section-title">Our Mission</h2>
-          <p className="section-description">
-            Our mission is to provide accessible, compassionate, and top-quality
-            healthcare services to individuals and families, ensuring better
-            health outcomes for everyone.
-          </p>
+          <div className="row">
+            <div className="col-lg-6 image-section">
+              <img
+                src="/abouthealthwise/05.png"
+                alt="Mission"
+                className="about-image"
+              />
+            </div>
+            <div className="col-lg-6 content-section">
+              <h2 className="section-title">Our Mission</h2>
+              <p className="section-description">
+                Our mission is to provide accessible, compassionate, and
+                top-quality healthcare services to individuals and families,
+                ensuring better health outcomes for everyone.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
+
       {/* Vision Section */}
       <div className="vision-section">
         <div className="container">
-          <h2 className="section-title">Our Vision</h2>
-          <p className="section-description">
-            Our vision is to be the leading healthcare provider in our region,
-            promoting wellness through patient-centered care, cutting-edge
-            technology, and a focus on preventive medicine.
-          </p>
+          <div className="row">
+            <div className="col-lg-6 image-section">
+              <img
+                src="/abouthealthwise/06.png"
+                alt="Vision"
+                className="about-image"
+              />
+            </div>
+            <div className="col-lg-6 content-section">
+              <h2 className="section-title">Our Vision</h2>
+              <p className="section-description">
+                Our vision is to be the leading healthcare provider in our
+                region, promoting wellness through patient-centered care,
+                cutting-edge technology, and a focus on preventive medicine.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
+
       {/* Values Section */}
       <div className="values-section">
         <div className="container">
-          <h2 className="section-title">Our Values</h2>
-          <ul className="values-list">
-            <li>
-              <strong>Compassion:</strong> We believe in treating every patient
-              with kindness, dignity, and respect.
-            </li>
-            <li>
-              <strong>Integrity:</strong> We act with honesty and transparency
-              in all our interactions.
-            </li>
-            <li>
-              <strong>Innovation:</strong> We embrace the latest advancements in
-              healthcare to provide the best care possible.
-            </li>
-            <li>
-              <strong>Collaboration:</strong> We work together as a team, both
-              within our organization and with our patients, to achieve optimal
-              health outcomes.
-            </li>
-          </ul>
+          <div className="row">
+            <div className="col-lg-6 image-section">
+              <img
+                src="/abouthealthwise/07.png"
+                alt="Values"
+                className="about-image"
+              />
+            </div>
+            <div className="col-lg-6 content-section">
+              <h2 className="section-title">Our Values</h2>
+              <ul className="values-list">
+                <li>
+                  <strong>Compassion:</strong> We believe in treating every
+                  patient with kindness, dignity, and respect.
+                </li>
+                <li>
+                  <strong>Integrity:</strong> We act with honesty and
+                  transparency in all our interactions.
+                </li>
+                <li>
+                  <strong>Innovation:</strong> We embrace the latest
+                  advancements in healthcare to provide the best care possible.
+                </li>
+                <li>
+                  <strong>Collaboration:</strong> We work together as a team,
+                  both within our organization and with our patients, to achieve
+                  optimal health outcomes.
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
+
       {/* Team Section */}
       <div className="team-section">
         <div className="container">
@@ -98,10 +168,10 @@ export default function AboutHealthWise() {
                 <img
                   src="/abouthealthwise/02.png"
                   className="about-image-doctor"
-                  alt="Dr. John Dion"
+                  alt="Dr. Sarah Lee"
                 />
               </div>
-              <h3 className="team-member-name">Dr. John Dion</h3>
+              <h3 className="team-member-name">Dr. Sarah Lee</h3>
               <p className="team-member-position">Chief Medical Officer</p>
             </div>
             <div className="col-md-4 team-member">
@@ -129,6 +199,7 @@ export default function AboutHealthWise() {
           </div>
         </div>
       </div>
+
       {/* Contact Section */}
       <div className="contact-section">
         <div className="container">
@@ -137,7 +208,58 @@ export default function AboutHealthWise() {
             Have any questions? Feel free to reach out to us, and our team will
             be happy to assist you.
           </p>
-          <button className="contact-button">Contact Us</button>
+
+          {/* Compact Contact Form */}
+          <div className="contact-form">
+            <h3>Get in Touch</h3>
+            <form>
+              <div className="form-group">
+                <input
+                  type="text"
+                  id="name"
+                  className="form-input"
+                  placeholder="Your Name"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="email"
+                  id="email"
+                  className="form-input"
+                  placeholder="Your Email"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="tel"
+                  id="phone"
+                  className="form-input"
+                  placeholder="Your Phone"
+                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <textarea
+                  id="message"
+                  className="form-input"
+                  rows="4"
+                  placeholder="Your Message"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" className="contact-button">
+                Send Message
+              </button>
+            </form>
+          </div>
+
+          {/* Button linking to the contact page */}
+          <a href="/contact" className="contact-button-link">
+            <button className="contact-button">Our Contact</button>
+          </a>
         </div>
       </div>
     </div>

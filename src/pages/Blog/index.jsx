@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./index.css"; // Import CSS từ file index.css
+import { Modal, Button } from "react-bootstrap";
 
 export default function BlogPages() {
   // eslint-disable-next-line no-unused-vars
@@ -169,17 +170,24 @@ export default function BlogPages() {
       </div>
 
       {/* Modal */}
+      {/* Modal */}
       {isModalOpen && modalPost && (
-        <div className="modal-overlay" onClick={handleCloseModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2>{modalPost.title}</h2>
-
+        <Modal show={isModalOpen} onHide={handleCloseModal} size="lg">
+          <Modal.Header closeButton>
+            {" "}
+            {/* Sử dụng closeButton từ React-Bootstrap */}
+            <Modal.Title>{modalPost.title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h4>Our Commitment</h4>
             <p>{modalPost.fullText}</p>
-            <button className="close-modal" onClick={handleCloseModal}>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
               Close
-            </button>
-          </div>
-        </div>
+            </Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </div>
   );
