@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Input, Typography } from "antd";
 import LoginBackground from "../../../assets/Login.png";
+import "./index.css";
 
 const { Title, Text } = Typography;
 
@@ -17,6 +18,7 @@ export default function LoginUI() {
               width: "100%",
               height: "80%",
               objectFit: "cover",
+              borderRadius: "12px",
             }}
           />
         </div>
@@ -29,8 +31,14 @@ export default function LoginUI() {
             </div>
           </div>
 
-          <Text style={{ display: "block", marginBottom: "20px" }}>
-            Enter your email to log in to your HealthWise account
+          <Text
+            style={{
+              display: "block",
+              marginBottom: "20px",
+              marginLeft: "24px",
+            }}
+          >
+            Enter your email to log in to your HealthWise account!
           </Text>
 
           <Form layout="vertical" onFinish={() => {}}>
