@@ -38,7 +38,7 @@ export default function LoginUI() {
               name="email"
               rules={[
                 { type: "email", message: "Email is incorrect!" },
-                { required: true, message: "Please enter email!" },
+                { required: true, message: "Please enter your email!" },
               ]}
               style={{ marginBottom: 35 }}
             >

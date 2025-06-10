@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { Form, Input, Typography } from "antd";
 import "./index.css";
 
 export default function AboutHealthWise() {
@@ -7,6 +8,10 @@ export default function AboutHealthWise() {
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
+
+  const onFinish = (values) => {
+    console.log("Form values:", values);
+  };
 
   return (
     <div className="about-us-page">
@@ -202,64 +207,101 @@ export default function AboutHealthWise() {
 
       {/* Contact Section */}
       <div className="contact-section">
-        <div className="container">
-          <h2 className="section-title">Contact Us</h2>
+        <div className="container-contact">
+          <h2 className="section-title">
+            <a href="/contact" className="contact-button-link">
+              Contact Us
+              <i className="fas fa-arrow-right"></i>
+            </a>
+          </h2>
+
           <p className="section-description">
             Have any questions? Feel free to reach out to us, and our team will
             be happy to assist you.
           </p>
-
-          {/* Compact Contact Form */}
-          <div className="contact-form">
+          {/* Contact Form */}
+          <div className="contact">
             <h3>Get in Touch</h3>
-            <form>
-              <div className="form-group">
-                <input
-                  type="text"
-                  id="name"
-                  className="form-input"
-                  placeholder="Your Name"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="email"
-                  id="email"
-                  className="form-input"
-                  placeholder="Your Email"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="tel"
-                  id="phone"
-                  className="form-input"
-                  placeholder="Your Phone"
-                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <textarea
-                  id="message"
-                  className="form-input"
-                  rows="4"
-                  placeholder="Your Message"
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" className="contact-button">
-                Send Message
-              </button>
-            </form>
-          </div>
+            <Form onFinish={onFinish}>
+              {[
+                {
+                  name: "name",
+                  placeholder: "Your Name",
+                  rules: [
+                    { required: true, message: "Please enter your name!" },
+                    {
+                      pattern: /^[^\d]*$/,
+                      message: "Name cannot contain numbers!",
+                    },
+                  ],
+                  type: "text",
+                },
+                {
+                  name: "email",
+                  placeholder: "Email",
+                  rules: [
+                    { type: "email", message: "Email is incorrect!" },
+                    { required: true, message: "Please enter your email!" },
+                  ],
+                  type: "text",
+                },
+                {
+                  name: "phone",
+                  placeholder: "Your Phone",
+                  rules: [
+                    {
+                      pattern: /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/,
+                      message: "Please enter numbers only!",
+                    },
+                    {
+                      required: true,
+                      message: "Please enter your phone number!",
+                    },
+                  ],
+                  type: "text",
+                },
+                {
+                  name: "message",
+                  placeholder: "Your Message",
+                  rules: [
+                    { required: true, message: "Please enter your message!" },
+                  ],
+                  type: "textarea",
+                },
+              ].map((field) => (
+                <div className="form-group" key={field.name}>
+                  <Form.Item
+                    name={field.name}
+                    rules={field.rules}
+                    style={{ marginBottom: 35 }}
+                  >
+                    {field.type === "textarea" ? (
+                      <textarea
+                        placeholder={field.placeholder}
+                        className="form-input"
+                        rows="4"
+                        style={{ height: 150, fontSize: 16 }}
+                      />
+                    ) : (
+                      <Input
+                        placeholder={field.placeholder}
+                        className="form-input"
+                        style={{ height: 50, fontSize: 16 }}
+                      />
+                    )}
+                  </Form.Item>
+                </div>
+              ))}
 
-          {/* Button linking to the contact page */}
-          <a href="/contact" className="contact-button-link">
-            <button className="contact-button">Our Contact</button>
-          </a>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="contact-button"
+              >
+                Send Message
+              </Button>
+            </Form>
+          </div>
         </div>
       </div>
     </div>
