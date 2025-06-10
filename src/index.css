@@ -18019,6 +18019,12 @@ header .rts-btn {
   max-width: max-content;
   border: 1px solid rgba(97, 94, 252, 0.2);
 }
+.title-wrapper-left .pre:hover  {
+  background-color: #615efc !important;
+  color: #fff !important;
+  transform: translateY(-3px) !important;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s !important;
+}
 
 .title-wrapper-left .title {
   text-align: left;
@@ -18423,6 +18429,7 @@ header .rts-btn {
 
 .rts-about-area .move-right img {
   width: 100%;
+  border-radius: 15px;
 }
 
 .about-five-right-area .pre-title {
