@@ -1,5 +1,5 @@
 import Aboutus from "./About";
-import Appointment from "./Appoinment";
+import Booking from "./Booking";
 import Carousel from "./Carousel";
 
 import ShortServices from "./ShortServices";
@@ -15,7 +15,7 @@ export default function HomeTemplate() {
         <Aboutus />
         <WhyChoose />
         <Testimonials />
-        <Appointment />
+        <Booking />
       </WowProvider>
     </>
   );

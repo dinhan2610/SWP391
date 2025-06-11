@@ -475,7 +475,7 @@ body {
   border: none;
   transition: background-color 0.3s ease, transform 0.3s ease;
   font-size: 16px;
-  margin-top: 20px;
+  margin-top: 40px;
   display: block;
   width: 100%;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -607,57 +607,53 @@ body {
   
 }
 
-.contact {
-  max-width: 1000px;
-  margin: 05px auto;
-  background: #fff;
+.contact-form-wrapper {
+  background-color: #ffffff;
+  padding: 40px;
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(60, 72, 88, 0.13);
-  padding: 40px 32px 32px 32px;
-  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  max-width: 700px;
+  margin: 40px auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
-.contact h3 {
+.contact-form-wrapper h3 {
+  font-size: 24px;
+  color: #0f172a;
+  margin-bottom: 24px;
   text-align: center;
-  font-size: 3.5rem;
-  color: #22223b;
-  margin-bottom: 32px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.form-group {
-  margin-bottom: 35px;
-  
-  
 }
 
 .form-input {
+  font-size: 16px !important;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
   width: 100%;
-  border: 0.5px solid #8a8a8a !important;
-  border-radius: 18px !important;
-  padding: 10px 22px !important;      /* padding trên/dưới = 16px, trái/phải = 22px */
-  font-size: 2rem;
-  background: #fffcfc;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  outline: none;
-  box-sizing: border-box;
-  color: #22223b;
-  height: 56px;            /* Nếu muốn chiều cao cố định */
-  line-height: normal;     /* Để mặc định hoặc = height nếu cần */
 }
 
+.submit-button {
+  background-color: #615efc;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 20px;
+  width: 40%;
+  margin-top: 20px;
+  transition: background 0.3s ease, transform 0.2s ease;
+  
+}
 
-.form-input:focus {
-  border-color: #615efc;
-  box-shadow: 0 0 0 2px #e3eaff;
-  background: #fff;
+.submit-button:hover {
+  background-color: #000000;
+  transform: scale(1.03);
 }
 
 textarea.form-input {
   min-height: 120px;
   font-size: 2rem;                /* To lên cho đồng bộ input */
-  border: 2px solid #000;         /* Viền đen rõ ràng */
+  
   resize: vertical;
 }
 
@@ -667,28 +663,7 @@ textarea.form-input {
   font-size: 1.5rem;
 }
 
-.contact-button {
-  width: 30%;
-  padding: 14px 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-  border-radius: 20px;
-  background: linear-gradient(90deg, #615efc );
-  color: #fff;
-  
-  box-shadow: 0 2px 8px rgba(79, 140, 255, 0.13);
-  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
-  cursor: pointer;
-  margin-top: 10px;
-}
 
-.contact-button:hover,
-.contact-button:focus {
-  background: #222;
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(79, 140, 255, 0.18);
-  border: 2px solid #000;
-}
 
 .ant-form-item-explain,
 .ant-form-item-explain-error {
