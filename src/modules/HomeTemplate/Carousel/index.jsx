@@ -10,41 +10,39 @@ export default function Carousel() {
                   className="title wow fadeInUp"
                   data-wow-delay=".2s"
                   data-wow-duration=".8s"
+                  style={{ marginTop: "-100px" }}
                 >
-                  Book now <br />
-                  with our experts
+                  Check Your <br />
+                  Sexual Health
                 </h1>
-                <div
-                  className="select-area-down wow fadeInUp"
-                  data-wow-delay=".6s"
+                <p
+                  className="description wow fadeInUp"
+                  data-wow-delay=".4s"
                   data-wow-duration=".8s"
+                  style={{
+                    maxWidth: "550px",
+                    marginBottom: "20px",
+                    marginTop: "50px",
+                  }}
                 >
+                  It takes just 60 seconds to find out which tests you may need.
+                  No sign-up, 100% confidential.
+                </p>
+
+                <div>
                   <form
                     className="select-2"
-                    action="#"
+                    action="/quiz"
                     method="get"
                     acceptCharset="utf-8"
+                    style={{
+                      marginTop: "50px",
+                    }}
                   >
-                    <select name="my_select2" className="my_select2">
-                      <option value={2} selected>
-                        Select Doctor
-                      </option>
-                      <option value={10}>Mr. Mark</option>
-                      <option value={1}>Mrs. Sajjat</option>
-                      <option value={13}>John Dion</option>
-                      <option value={2}>Dr. Emily Smith</option>
-                      <option value={3}>Dr. Michael Johnson</option>
-                      <option value={4}>Dr. Sarah Brown</option>
-                      <option value={5}>Dr. David Lee</option>
-                      <option value={6}>Dr. Linda Williams</option>
-                      <option value={7}>Dr. James Taylor</option>
-                      <option value={8}>Dr. Rachel Clark</option>
-                      <option value={9}>Dr. Robert Garcia</option>
-                    </select>
+                    <a href="/quiz" className="rts-btn btn-primary">
+                      Start the Check
+                    </a>
                   </form>
-                  <a href="#" className="rts-btn btn-primary">
-                    Find Doctors
-                  </a>
                 </div>
               </div>
             </div>

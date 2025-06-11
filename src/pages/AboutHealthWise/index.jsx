@@ -220,83 +220,66 @@ export default function AboutHealthWise() {
             be happy to assist you.
           </p>
           {/* Contact Form */}
-          <div className="contact">
-            <h3>Get in Touch</h3>
-            <Form onFinish={onFinish}>
-              {[
-                {
-                  name: "name",
-                  placeholder: "Your Name",
-                  rules: [
-                    { required: true, message: "Please enter your name!" },
-                    {
-                      pattern: /^[^\d]*$/,
-                      message: "Name cannot contain numbers!",
-                    },
-                  ],
-                  type: "text",
-                },
-                {
-                  name: "email",
-                  placeholder: "Email",
-                  rules: [
-                    { type: "email", message: "Email is incorrect!" },
-                    { required: true, message: "Please enter your email!" },
-                  ],
-                  type: "text",
-                },
-                {
-                  name: "phone",
-                  placeholder: "Your Phone",
-                  rules: [
-                    {
-                      pattern: /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/,
-                      message: "Please enter numbers only!",
-                    },
-                    {
-                      required: true,
-                      message: "Please enter your phone number!",
-                    },
-                  ],
-                  type: "text",
-                },
-                {
-                  name: "message",
-                  placeholder: "Your Message",
-                  rules: [
-                    { required: true, message: "Please enter your message!" },
-                  ],
-                  type: "textarea",
-                },
-              ].map((field) => (
-                <div className="form-group" key={field.name}>
-                  <Form.Item
-                    name={field.name}
-                    rules={field.rules}
-                    style={{ marginBottom: 35 }}
-                  >
-                    {field.type === "textarea" ? (
-                      <textarea
-                        placeholder={field.placeholder}
-                        className="form-input"
-                        rows="4"
-                        style={{ height: 150, fontSize: 16 }}
-                      />
-                    ) : (
-                      <Input
-                        placeholder={field.placeholder}
-                        className="form-input"
-                        style={{ height: 50, fontSize: 16 }}
-                      />
-                    )}
-                  </Form.Item>
-                </div>
-              ))}
+          <div className="contact-form-wrapper">
+            <h3>Send us a message</h3>
+            <Form onFinish={onFinish} layout="vertical">
+              <Form.Item
+                label="Full Name"
+                name="name"
+                rules={[
+                  { required: true, message: "Please enter your name" },
+                  {
+                    pattern: /^[^\d]*$/,
+                    message: "Name cannot contain numbers",
+                  },
+                ]}
+              >
+                <Input className="form-input" placeholder="Your Name" />
+              </Form.Item>
+
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  { required: true, message: "Please enter your email" },
+                  { type: "email", message: "Invalid email format" },
+                ]}
+              >
+                <Input className="form-input" placeholder="Your Email" />
+              </Form.Item>
+
+              <Form.Item
+                label="Phone"
+                name="phone"
+                rules={[
+                  { required: true, message: "Please enter your phone number" },
+                  {
+                    pattern: /^[0-9]{10,11}$/,
+                    message: "Please enter a valid phone number",
+                  },
+                ]}
+              >
+                <Input className="form-input" placeholder="Your Phone" />
+              </Form.Item>
+
+              <Form.Item
+                label="Message"
+                name="message"
+                rules={[
+                  { required: true, message: "Please enter your message" },
+                ]}
+              >
+                <Input.TextArea
+                  rows={4}
+                  className="form-input"
+                  placeholder="Type your message here"
+                />
+              </Form.Item>
 
               <Button
                 type="primary"
                 htmlType="submit"
-                className="contact-button"
+                className="submit-button"
               >
                 Send Message
               </Button>

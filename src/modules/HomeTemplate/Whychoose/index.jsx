@@ -103,7 +103,16 @@ export default function WhyChoose() {
                   <div className="col-xl-6 col-lg-6 offset-xl-1">
                     <div className="right-whychoose-us-style-one">
                       <div className="thumbnail-image">
-                        <img src={choose07} alt="medicle" />
+                        <img
+                          src={choose07}
+                          alt="medicle"
+                          style={{
+                            width: "580px",
+                            height: "880px",
+                            marginLeft: "-300px",
+                            borderRadius: "20px",
+                          }}
+                        />
                       </div>
                     </div>
                   </div>

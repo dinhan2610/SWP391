@@ -5,8 +5,9 @@ import Ovulation from "../pages/Ovulation";
 import DueDateCalculatorTemplate from "../modules/DueDateTemplate";
 import DueDateCalculatorResultTemplate from "../modules/DueDateResultTemplate";
 import BlogPage from "../pages/Blog";
-
+import QuizPage from "../modules/HomeTemplate/quiz";
 import AboutHealthWise from "../pages/AboutHealthWise";
+import ContactPage from "../pages/Contact";
 
 const routes = [
   {
@@ -21,6 +22,8 @@ const routes = [
       },
       { path: "/blog", element: <BlogPage /> },
       { path: "/about", element: <AboutHealthWise /> },
+      { path: "/quiz", element: <QuizPage /> },
+      { path: "/contact", element: <ContactPage /> },
     ],
   },
 ];
