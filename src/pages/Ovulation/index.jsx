@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { Select, Button, Form, Card, Typography, Breadcrumb } from "antd";
 import {
   format,
   addDays,
@@ -16,19 +17,8 @@ import {
   LeftOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import {
-  Button,
-  DatePicker,
-  Select,
-  Form,
-  Row,
-  Col,
-  Collapse,
-  Card,
-  Typography,
-  Breadcrumb,
-  Popover,
-} from "antd";
+import { DatePicker, Row, Col, Collapse, Popover } from "antd";
+import "./index.css";
 
 const { Title, Paragraph, Text } = Typography;
 const { Option } = Select;
@@ -183,7 +173,7 @@ export default function Ovulation() {
       <Breadcrumb className="mb-3">
         <Breadcrumb.Item>
           <a href="#" className="text-success">
-            Getting Pregnant
+            Track Your Fertility
           </a>
         </Breadcrumb.Item>
         <Breadcrumb.Item>
@@ -193,33 +183,69 @@ export default function Ovulation() {
         </Breadcrumb.Item>
       </Breadcrumb>
 
-      <Title level={1}>Ovulation Calculator</Title>
+      <Title level={1}>Cycle & Ovulation Guide</Title>
 
       <Paragraph className="mb-4">
-        Use our ovulation calculator to predict when you might ovulate and boost
-        your chances of getting pregnant. This tool helps you pinpoint your
-        likely ovulation date and your most fertile window to set you up for
-        baby-making success!
+        Track your fertility cycle with our tool to determine your ovulation
+        days and maximize your chances of conception. By predicting your most
+        fertile window and ovulation date, this tool supports your journey to
+        starting a family!
       </Paragraph>
 
       {!showResults ? (
-        <Card className="bg-light bg-opacity-25" style={{ maxWidth: "800px" }}>
-          <Form layout="vertical">
-            <Form.Item label="First day of your last period" className="mb-4">
+        <Card
+          className="bg-light bg-opacity-25 shadow-lg"
+          style={{ maxWidth: "800px", margin: "auto" }}
+        >
+          <Form layout="vertical" onFinish={handleCalculate}>
+            {/* First day of your last period */}
+            <Form.Item
+              label="First day of your last period"
+              className="mb-4"
+              name="lastPeriodDate"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select the first day of your last period!",
+                },
+              ]}
+            >
               <DatePicker
-                style={{ width: "100%", height: "40px" }}
+                style={{ width: "100%", minHeight: "40px" }}
                 onChange={(date) => setLastPeriodDate(date?.toDate())}
                 format="MM-DD-YYYY"
                 placeholder="Select a date"
+                dropdownAlign={{ offset: [0, 4] }}
               />
             </Form.Item>
 
-            <Form.Item label="How long was your last cycle" className="mb-4">
+            {/* How long was your last cycle */}
+            <Form.Item
+              label="How long was your last cycle"
+              className="mb-4"
+              name="cycleLength"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select your cycle length!",
+                },
+                {
+                  validator: (_, value) =>
+                    value !== "none"
+                      ? Promise.resolve()
+                      : Promise.reject("Please select your cycle length!"),
+                },
+              ]}
+            >
               <Select
                 value={cycleLength}
                 onChange={setCycleLength}
-                style={{ width: "100%", height: "40px" }}
+                style={{ width: "100%", minHeight: "40px" }}
+                placeholder="Select cycle length"
               >
+                <Option value="none" disabled>
+                  None
+                </Option>
                 {Array.from({ length: 15 }, (_, i) => i + 21).map((days) => (
                   <Option key={days} value={days.toString()}>
                     {days} days
@@ -228,13 +254,20 @@ export default function Ovulation() {
               </Select>
             </Form.Item>
 
+            {/* Button to calculate */}
             <Button
               type="primary"
-              style={{ backgroundColor: "#20B2AA" }}
-              onClick={handleCalculate}
+              style={{
+                backgroundColor: "#615efc",
+                width: "30%",
+                padding: "10px 0",
+                transition: "all 0.3s ease",
+              }}
+              htmlType="submit"
               size="large"
+              className="focus-button"
             >
-              See my fertile days
+              Submit
             </Button>
           </Form>
         </Card>
@@ -349,7 +382,7 @@ export default function Ovulation() {
           <div className="col-12 my-5">
             <section>
               <Title level={2} className="mb-4">
-                Tips for getting pregnant
+                How to Increase Your Chances of Pregnancy
               </Title>
               <ul className="list-unstyled">
                 <li className="d-flex gap-2 mb-3">
@@ -362,8 +395,8 @@ export default function Ovulation() {
                     }}
                   />
                   <Paragraph className="m-0">
-                    Find out when you'll ovulate using our calculator or an
-                    ovulation predictor kit, or by tracking your symptoms.
+                    Use an ovulation tracker or test kit, or monitor your body’s
+                    signals to determine your most fertile days.
                   </Paragraph>
                 </li>
                 <li className="d-flex gap-2 mb-3">
@@ -376,7 +409,8 @@ export default function Ovulation() {
                     }}
                   />
                   <Paragraph className="m-0">
-                    Have sex every other day around the time of ovulation.
+                    Engage in intercourse every other day during your fertile
+                    window for the best chances of conception.
                   </Paragraph>
                 </li>
                 <li className="d-flex gap-2 mb-3">
@@ -389,8 +423,8 @@ export default function Ovulation() {
                     }}
                   />
                   <Paragraph className="m-0">
-                    Start taking a prenatal vitamin with folic acid at least one
-                    month before you start trying (6 months is ideal).
+                    Begin taking a prenatal vitamin with folic acid at least a
+                    month before trying to conceive (preferably 6 months ahead).
                   </Paragraph>
                 </li>
                 <li className="d-flex gap-2 mb-3">
@@ -403,10 +437,10 @@ export default function Ovulation() {
                     }}
                   />
                   <Paragraph className="m-0">
-                    See your healthcare provider and make sure they're managing
-                    any pre-existing health conditions you may have. Staying
-                    up-to-date with vaccinations and regular check-ups can lower
-                    the risk of complications during pregnancy.
+                    Consult with your healthcare provider to ensure pre-existing
+                    medical conditions are under control. Regular check-ups and
+                    vaccinations can significantly reduce pregnancy
+                    complications.
                   </Paragraph>
                 </li>
                 <li className="d-flex gap-2 mb-3">
@@ -419,10 +453,10 @@ export default function Ovulation() {
                     }}
                   />
                   <Paragraph className="m-0">
-                    Take good care of yourself. You'll want to kick unhealthy
-                    habits like smoking and start incorporating regular exercise
-                    into your routine if you aren't exercising already. Eating a
-                    healthy, nutrient-dense diet can help, too.
+                    Focus on maintaining a healthy lifestyle. Eliminate harmful
+                    habits such as smoking, start a fitness routine if you don’t
+                    already have one, and nourish your body with a balanced,
+                    nutritious diet.
                   </Paragraph>
                 </li>
               </ul>
