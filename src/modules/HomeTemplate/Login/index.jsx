@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Input, Typography } from "antd";
 import LoginBackground from "../../../assets/Login.png";
-import "./index.css";
 
 const { Title, Text } = Typography;
 

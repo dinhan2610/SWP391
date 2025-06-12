@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "./index.css";
 
 export default function BackToTop() {
   const [showButton, setShowButton] = useState(false);

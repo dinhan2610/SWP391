@@ -129,7 +129,7 @@ const Headers = () => {
                       whileHover={{ scale: 1.05 }}
                       style={{ display: "inline-block", marginRight: 20 }}
                     >
-                      <a onClick={() => navigate("/cycle-tracking")}>
+                      <a onClick={() => navigate("/ovulation")}>
                         Cycle Tracking
                       </a>
                     </motion.li>
