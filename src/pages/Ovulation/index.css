@@ -20,3 +20,10 @@
   background-color: #000000 !important; 
   transform: scale(1.05) !important;
 }
+.table-striped-light {
+  background-color: #bcbbfc;
+  }
+
+.table-striped-dark {
+  background-color: #f4f6f8;
+}
