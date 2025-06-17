@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { Select, Button, Form, Card, Typography, Breadcrumb } from "antd";
+import {
+  Select,
+  Button,
+  Form,
+  Card,
+  Typography,
+  Breadcrumb,
+  Table,
+} from "antd";
 import {
   format,
   addDays,
@@ -16,6 +24,8 @@ import {
   CalendarOutlined,
   LeftOutlined,
   RightOutlined,
+  HeartOutlined,
+  WarningOutlined,
 } from "@ant-design/icons";
 import { DatePicker, Row, Col, Collapse, Popover } from "antd";
 import "./index.css";
@@ -30,26 +40,37 @@ export default function Ovulation() {
   const [showResults, setShowResults] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(undefined);
   const [results, setResults] = useState(null);
+  const [multiCycleResults, setMultiCycleResults] = useState([]);
+  const [currentCycleIndex, setCurrentCycleIndex] = useState(0);
   const [activeKey, setActiveKey] = useState([]);
 
   const handleCalculate = () => {
     if (lastPeriodDate) {
       const cycleLengthNum = Number.parseInt(cycleLength);
-      const ovulationDate = addDays(lastPeriodDate, cycleLengthNum - 14);
-      const fertileStart = subDays(ovulationDate, 5);
-      const fertileEnd = addDays(ovulationDate, 1);
-      const nextPeriod = addDays(lastPeriodDate, cycleLengthNum);
-      const dueDate = addDays(lastPeriodDate, 280);
+      const cycles = [];
 
-      setResults({
-        ovulationDate,
-        fertileStart,
-        fertileEnd,
-        nextPeriod,
-        dueDate,
-      });
+      for (let i = 0; i < 6; i++) {
+        const menstruationDate = addDays(lastPeriodDate, i * cycleLengthNum);
+        const ovulationDate = addDays(menstruationDate, cycleLengthNum - 14);
+        const fertileStart = subDays(ovulationDate, 5);
+        const fertileEnd = addDays(ovulationDate, 1);
+        const dueDate = addDays(menstruationDate, 280);
 
-      setCurrentMonth(fertileStart);
+        cycles.push({
+          key: i + 1,
+          cycle: `Cycle ${i + 1}`,
+          menstruationDate,
+          ovulationDate,
+          fertileStart,
+          fertileEnd,
+          dueDate,
+        });
+      }
+
+      setMultiCycleResults(cycles);
+      setResults(cycles[0]);
+      setCurrentCycleIndex(0);
+      setCurrentMonth(cycles[0].fertileStart);
       setShowResults(true);
     }
   };
@@ -69,6 +90,8 @@ export default function Ovulation() {
   const resetCalculator = () => {
     setShowResults(false);
     setResults(null);
+    setMultiCycleResults([]);
+    setCurrentCycleIndex(0);
   };
 
   const togglePanel = (key) => {
@@ -79,6 +102,24 @@ export default function Ovulation() {
     }
   };
 
+  const goToNextCycle = () => {
+    if (currentCycleIndex + 1 < multiCycleResults.length) {
+      const nextIndex = currentCycleIndex + 1;
+      setCurrentCycleIndex(nextIndex);
+      setResults(multiCycleResults[nextIndex]);
+      setCurrentMonth(multiCycleResults[nextIndex].fertileStart);
+    }
+  };
+
+  const goToPreviousCycle = () => {
+    if (currentCycleIndex > 0) {
+      const prevIndex = currentCycleIndex - 1;
+      setCurrentCycleIndex(prevIndex);
+      setResults(multiCycleResults[prevIndex]);
+      setCurrentMonth(multiCycleResults[prevIndex].fertileStart);
+    }
+  };
+
   const renderCalendar = () => {
     if (!results || !currentMonth) return null;
 
@@ -86,80 +127,193 @@ export default function Ovulation() {
     const monthEnd = endOfMonth(currentMonth);
     const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
 
-    const isFertileDay = (date) => {
-      return date >= results.fertileStart && date <= results.fertileEnd;
-    };
-
-    const isNextPeriod = (date) => {
-      return isSameDay(date, results.nextPeriod);
-    };
-
-    const isOvulationDay = (date) => {
-      return isSameDay(date, results.ovulationDate);
-    };
+    const isFertileDay = (date) =>
+      date >= results.fertileStart && date <= results.fertileEnd;
+    const isOvulationDay = (date) => isSameDay(date, results.ovulationDate);
+    const isMenstruationDay = (date) =>
+      isSameDay(date, results.menstruationDate);
+    const isDueDate = (date) => isSameDay(date, results.dueDate);
 
     return (
-      <Card className="mt-4">
-        <div className="d-flex align-items-center justify-content-between p-2 bg-light">
-          <Button icon={<LeftOutlined />} onClick={prevMonth} size="small" />
-          <Title level={5} className="m-0">
-            {format(currentMonth, "MMMM yyyy")}
-          </Title>
-          <Button icon={<RightOutlined />} onClick={nextMonth} size="small" />
-        </div>
+      <>
+        <Card className="mt-4">
+          <div className="d-flex align-items-center justify-content-between p-2 bg-light">
+            <Button icon={<LeftOutlined />} onClick={prevMonth} size="small" />
+            <Title level={5} className="m-0">
+              {format(currentMonth, "MMMM yyyy")}
+            </Title>
+            <Button icon={<RightOutlined />} onClick={nextMonth} size="small" />
+          </div>
 
-        <div className="container-fluid p-0">
-          <Row className="text-center">
-            {["S", "M", "T", "W", "T", "F", "S"].map((day, i) => (
-              <Col span={3} key={i} className="py-2">
-                <Text type="secondary" strong>
-                  {day}
-                </Text>
-              </Col>
-            ))}
-          </Row>
-
-          <Row className="text-center">
-            {Array.from({
-              length: new Date(monthStart).getDay(),
-            }).map((_, i) => (
-              <Col span={3} key={`empty-${i}`} className="p-2" />
-            ))}
-
-            {days.map((day, i) => {
-              let bgClass = "";
-              if (isOvulationDay(day)) bgClass = "bg-info";
-              else if (isFertileDay(day)) bgClass = "bg-info bg-opacity-25";
-              else if (isNextPeriod(day)) bgClass = "bg-warning bg-opacity-50";
-
-              return (
-                <Col
-                  span={3}
-                  key={i}
-                  className="p-2 text-center position-relative"
-                >
-                  <div
-                    className={`d-flex h-8 w-8  rounded-circle ${bgClass} mx-auto align-items-center justify-content-center`}
-                    style={{
-                      width: "30px",
-                      height: "30px",
-                      borderRadius: "50%",
-                    }}
-                  >
-                    {format(day, "d")}
-                  </div>
+          <div className="container-fluid p-0">
+            <Row className="text-center">
+              {["S", "M", "T", "W", "T", "F", "S"].map((day, i) => (
+                <Col span={3} key={i} className="py-2">
+                  <Text type="secondary" strong>
+                    {day}
+                  </Text>
                 </Col>
-              );
-            })}
-          </Row>
-        </div>
+              ))}
+            </Row>
 
-        <div className="text-center p-3">
-          <Button type="default" onClick={resetCalculator}>
-            Start over
-          </Button>
-        </div>
-      </Card>
+            <Row className="text-center">
+              {Array.from({ length: new Date(monthStart).getDay() }).map(
+                (_, i) => (
+                  <Col span={3} key={`empty-${i}`} className="p-2" />
+                )
+              )}
+
+              {days.map((day, i) => {
+                let icon = null;
+                let title = null;
+
+                if (isMenstruationDay(day)) {
+                  icon = <HeartOutlined style={{ color: "#e74c3c" }} />;
+                  title = "Menstruation Day";
+                } else if (isDueDate(day)) {
+                  icon = <WarningOutlined style={{ color: "#f39c12" }} />;
+                  title = "Expected Due Date";
+                } else if (isOvulationDay(day)) {
+                  icon = <CalendarOutlined style={{ color: "#17a2b8" }} />;
+                  title = "Ovulation Day";
+                }
+
+                const bgClass = isFertileDay(day)
+                  ? "bg-info bg-opacity-25"
+                  : "";
+
+                return (
+                  <Col
+                    span={3}
+                    key={i}
+                    className="p-2 text-center position-relative"
+                  >
+                    <div
+                      className={`d-flex h-8 w-8 rounded-circle ${bgClass} mx-auto align-items-center justify-content-center`}
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        borderRadius: "50%",
+                      }}
+                    >
+                      {title ? (
+                        <Popover content={title}>{icon}</Popover>
+                      ) : (
+                        format(day, "d")
+                      )}
+                    </div>
+                  </Col>
+                );
+              })}
+            </Row>
+          </div>
+
+          <div className="text-start p-3">
+            <Title level={5}>Legend</Title>
+            <div className="d-flex flex-wrap gap-3">
+              <div className="d-flex align-items-center gap-2">
+                <HeartOutlined style={{ color: "#e74c3c" }} />
+                <Text>Menstruation Day</Text>
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <WarningOutlined style={{ color: "#f39c12" }} />
+                <Text>Expected Due Date</Text>
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <CalendarOutlined style={{ color: "#17a2b8" }} />
+                <Text>Ovulation Day</Text>
+              </div>
+              <div className="d-flex align-items-center gap-2">
+                <div
+                  style={{
+                    width: 16,
+                    height: 16,
+                    backgroundColor: "#b8e1f5",
+                    borderRadius: 4,
+                  }}
+                ></div>
+                <Text>Fertile Window</Text>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center p-3">
+            <Button type="default" onClick={resetCalculator} className="me-2">
+              Start over
+            </Button>
+            <Button
+              onClick={goToPreviousCycle}
+              disabled={currentCycleIndex === 0}
+              className="me-2"
+            >
+              Previous Cycle
+            </Button>
+            <Button
+              type="primary"
+              onClick={goToNextCycle}
+              disabled={currentCycleIndex + 1 >= multiCycleResults.length}
+            >
+              Next Cycle <RightOutlined />
+            </Button>
+          </div>
+        </Card>
+
+        <Card className="mt-4">
+          <Title level={4}>Cycle Summary</Title>
+          <Table
+            bordered
+            size="middle"
+            pagination={false}
+            dataSource={multiCycleResults.map((item, index) => ({
+              ...item,
+              index: index + 1, // số thứ tự đơn giản
+              key: index,
+            }))}
+            columns={[
+              {
+                title: "No.",
+                dataIndex: "index",
+                key: "index",
+                align: "center",
+              },
+              {
+                title: "Menstruation",
+                dataIndex: "menstruationDate",
+                key: "menstruationDate",
+                align: "center",
+                render: (date) => format(date, "MMM d, yyyy"),
+              },
+              {
+                title: "Ovulation",
+                dataIndex: "ovulationDate",
+                key: "ovulationDate",
+                align: "center",
+                render: (date) => format(date, "MMM d, yyyy"),
+              },
+              {
+                title: "Fertile Window",
+                key: "fertileWindow",
+                align: "center",
+                render: (_, record) =>
+                  `${format(record.fertileStart, "MMM d")} - ${format(
+                    record.fertileEnd,
+                    "MMM d, yyyy"
+                  )}`,
+              },
+              {
+                title: "Due Date",
+                dataIndex: "dueDate",
+                key: "dueDate",
+                align: "center",
+                render: (date) => format(date, "MMM d, yyyy"),
+              },
+            ]}
+            rowClassName={(_, index) =>
+              index % 2 === 0 ? "table-striped-light" : "table-striped-dark"
+            }
+          />
+        </Card>
+      </>
     );
   };
 
@@ -273,95 +427,6 @@ export default function Ovulation() {
         </Card>
       ) : (
         <div>
-          {results && (
-            <Card
-              style={{ maxWidth: "800px" }}
-              className="bg-light bg-opacity-25"
-            >
-              <div
-                className="p-2 mb-4 text-center text-white rounded"
-                style={{ backgroundColor: "#20B2AA" }}
-              >
-                Cycle 1/6
-              </div>
-
-              <div className="d-flex flex-column gap-4">
-                <div className="d-flex align-items-center gap-3">
-                  <div className="p-2 rounded-circle bg-warning bg-opacity-25">
-                    <div
-                      className="rounded-circle bg-warning"
-                      style={{
-                        width: "32px",
-                        height: "32px",
-                      }}
-                    ></div>
-                  </div>
-                  <div>
-                    <Text type="secondary" strong>
-                      Menstruation date
-                    </Text>
-                    <div className="fs-5">
-                      {lastPeriodDate
-                        ? format(lastPeriodDate, "MMM d, yyyy")
-                        : "N/A"}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="d-flex align-items-center gap-3">
-                  <div className="p-2 rounded-circle bg-info bg-opacity-25">
-                    <div
-                      className="rounded-circle bg-info d-flex align-items-center justify-content-center"
-                      style={{
-                        width: "32px",
-                        height: "32px",
-                      }}
-                    >
-                      <CalendarOutlined style={{ color: "white" }} />
-                    </div>
-                  </div>
-                  <div>
-                    <Text type="secondary" strong>
-                      Fertile days
-                    </Text>
-                    <div className="fs-5">
-                      {format(results.fertileStart, "MMM d, yyyy")} -{" "}
-                      {format(results.fertileEnd, "MMM d, yyyy")}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="d-flex align-items-center gap-3">
-                  <div className="p-2 rounded-circle bg-warning bg-opacity-25">
-                    <div
-                      className="rounded-circle bg-warning d-flex align-items-center justify-content-center"
-                      style={{
-                        width: "32px",
-                        height: "32px",
-                      }}
-                    >
-                      <CalendarOutlined style={{ color: "white" }} />
-                    </div>
-                  </div>
-                  <div>
-                    <Text type="secondary" strong>
-                      Expected due date
-                    </Text>
-                    <div className="fs-5">
-                      {format(results.dueDate, "MMM d, yyyy")}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="d-flex justify-content-center mt-4">
-                <Button type="primary" style={{ backgroundColor: "#20B2AA" }}>
-                  Next Cycle <RightOutlined />
-                </Button>
-              </div>
-            </Card>
-          )}
-
           {renderCalendar()}
 
           <div className="mt-4 pt-4 border-top">
