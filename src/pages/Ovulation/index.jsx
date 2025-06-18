@@ -26,6 +26,7 @@ import {
   RightOutlined,
   HeartOutlined,
   WarningOutlined,
+  MedicineBoxOutlined,
 } from "@ant-design/icons";
 import { DatePicker, Row, Col, Collapse, Popover } from "antd";
 import "./index.css";
@@ -35,6 +36,7 @@ const { Option } = Select;
 const { Panel } = Collapse;
 
 export default function Ovulation() {
+  const [pillType, setPillType] = useState(null);
   const [lastPeriodDate, setLastPeriodDate] = useState(undefined);
   const [cycleLength, setCycleLength] = useState("28");
   const [showResults, setShowResults] = useState(false);
@@ -120,6 +122,25 @@ export default function Ovulation() {
     }
   };
 
+  const generatePillReminderTable = () => {
+    if (!pillType || !results) return [];
+    const start = results.menstruationDate;
+    let totalDays = 0;
+    if (pillType === "21") totalDays = 21;
+    else if (pillType === "28") totalDays = 28;
+    else if (pillType === "continuous") totalDays = 30;
+
+    return Array.from({ length: totalDays }, (_, i) => {
+      const date = addDays(start, i);
+      return {
+        key: i,
+        day: i + 1,
+        date: format(date, "MMM d, yyyy"),
+        note: "Take Pill",
+      };
+    });
+  };
+
   const renderCalendar = () => {
     if (!results || !currentMonth) return null;
 
@@ -131,7 +152,9 @@ export default function Ovulation() {
       date >= results.fertileStart && date <= results.fertileEnd;
     const isOvulationDay = (date) => isSameDay(date, results.ovulationDate);
     const isMenstruationDay = (date) =>
-      isSameDay(date, results.menstruationDate);
+      multiCycleResults.some((cycle) =>
+        isSameDay(date, cycle.menstruationDate)
+      );
     const isDueDate = (date) => isSameDay(date, results.dueDate);
 
     return (
@@ -259,58 +282,32 @@ export default function Ovulation() {
         </Card>
 
         <Card className="mt-4">
-          <Title level={4}>Cycle Summary</Title>
+          <Title level={4}>Pill Reminder Schedule</Title>
           <Table
             bordered
-            size="middle"
+            size="small"
             pagination={false}
-            dataSource={multiCycleResults.map((item, index) => ({
-              ...item,
-              index: index + 1, // số thứ tự đơn giản
-              key: index,
-            }))}
+            dataSource={generatePillReminderTable()}
             columns={[
               {
-                title: "No.",
-                dataIndex: "index",
-                key: "index",
+                title: "Day",
+                dataIndex: "day",
+                key: "day",
                 align: "center",
               },
               {
-                title: "Menstruation",
-                dataIndex: "menstruationDate",
-                key: "menstruationDate",
+                title: "Date",
+                dataIndex: "date",
+                key: "date",
                 align: "center",
-                render: (date) => format(date, "MMM d, yyyy"),
               },
               {
-                title: "Ovulation",
-                dataIndex: "ovulationDate",
-                key: "ovulationDate",
+                title: "Note",
+                dataIndex: "note",
+                key: "note",
                 align: "center",
-                render: (date) => format(date, "MMM d, yyyy"),
-              },
-              {
-                title: "Fertile Window",
-                key: "fertileWindow",
-                align: "center",
-                render: (_, record) =>
-                  `${format(record.fertileStart, "MMM d")} - ${format(
-                    record.fertileEnd,
-                    "MMM d, yyyy"
-                  )}`,
-              },
-              {
-                title: "Due Date",
-                dataIndex: "dueDate",
-                key: "dueDate",
-                align: "center",
-                render: (date) => format(date, "MMM d, yyyy"),
               },
             ]}
-            rowClassName={(_, index) =>
-              index % 2 === 0 ? "table-striped-light" : "table-striped-dark"
-            }
           />
         </Card>
       </>
@@ -352,7 +349,6 @@ export default function Ovulation() {
           style={{ maxWidth: "800px", margin: "auto" }}
         >
           <Form layout="vertical" onFinish={handleCalculate}>
-            {/* First day of your last period */}
             <Form.Item
               label="First day of your last period"
               className="mb-4"
@@ -367,13 +363,12 @@ export default function Ovulation() {
               <DatePicker
                 style={{ width: "100%", minHeight: "40px" }}
                 onChange={(date) => setLastPeriodDate(date?.toDate())}
-                format="MM-DD-YYYY"
+                format="DD-MM-YYYY"
                 placeholder="Select a date"
                 dropdownAlign={{ offset: [0, 4] }}
               />
             </Form.Item>
 
-            {/* How long was your last cycle */}
             <Form.Item
               label="How long was your last cycle"
               className="mb-4"
@@ -408,7 +403,24 @@ export default function Ovulation() {
               </Select>
             </Form.Item>
 
-            {/* Button to calculate */}
+            <Form.Item
+              label="Type of birth control pill (optional)"
+              className="mb-4"
+              name="pillType"
+            >
+              <Select
+                allowClear
+                value={pillType}
+                onChange={(val) => setPillType(val)}
+                placeholder="Select pill type (optional)"
+                style={{ width: "100%", minHeight: "40px" }}
+              >
+                <Option value="21">21-day pill (7-day break)</Option>
+                <Option value="28">28-day pill (7 placebo)</Option>
+                <Option value="continuous">Continuous use (no break)</Option>
+              </Select>
+            </Form.Item>
+
             <Button
               type="primary"
               style={{
