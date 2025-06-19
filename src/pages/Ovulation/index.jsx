@@ -1,6 +1,6 @@
 "use client";
-
-import React, { useState } from "react";
+import { Tooltip } from "antd";
+import React, { useState, useEffect } from "react";
 import {
   Select,
   Button,
@@ -9,6 +9,7 @@ import {
   Typography,
   Breadcrumb,
   Table,
+  Popconfirm,
 } from "antd";
 import {
   format,
@@ -45,7 +46,16 @@ export default function Ovulation() {
   const [multiCycleResults, setMultiCycleResults] = useState([]);
   const [currentCycleIndex, setCurrentCycleIndex] = useState(0);
   const [activeKey, setActiveKey] = useState([]);
-
+  useEffect(() => {
+    const storedPillTaken = localStorage.getItem("pillTaken");
+    if (storedPillTaken) {
+      try {
+        setPillTaken(JSON.parse(storedPillTaken));
+      } catch (e) {
+        console.error("Error parsing pillTaken from localStorage", e);
+      }
+    }
+  }, []);
   const handleCalculate = () => {
     if (lastPeriodDate) {
       const cycleLengthNum = Number.parseInt(cycleLength);
@@ -94,8 +104,13 @@ export default function Ovulation() {
     setResults(null);
     setMultiCycleResults([]);
     setCurrentCycleIndex(0);
+    setPillTaken({});
+    localStorage.removeItem("pillTaken");
   };
-
+  const clearPillTaken = () => {
+    setPillTaken({});
+    localStorage.removeItem("pillTaken");
+  };
   const togglePanel = (key) => {
     if (Array.isArray(activeKey) && activeKey.includes(key)) {
       setActiveKey(activeKey.filter((k) => k !== key));
@@ -124,23 +139,33 @@ export default function Ovulation() {
 
   const generatePillReminderTable = () => {
     if (!pillType || !results) return [];
+
     const start = results.menstruationDate;
-    let totalDays = 0;
-    if (pillType === "21") totalDays = 21;
-    else if (pillType === "28") totalDays = 28;
-    else if (pillType === "continuous") totalDays = 30;
+    let totalDays = pillType === "21" ? 21 : pillType === "28" ? 28 : 30;
 
     return Array.from({ length: totalDays }, (_, i) => {
       const date = addDays(start, i);
+      const key = format(date, "yyyy-MM-dd");
       return {
-        key: i,
+        key,
         day: i + 1,
         date: format(date, "MMM d, yyyy"),
-        note: "Take Pill",
+        note: (
+          <input
+            type="checkbox"
+            checked={pillTaken[key] || false}
+            onChange={() =>
+              setPillTaken((prev) => ({
+                ...prev,
+                [key]: !prev[key],
+              }))
+            }
+          />
+        ),
       };
     });
   };
-
+  const [pillTaken, setPillTaken] = useState({});
   const renderCalendar = () => {
     if (!results || !currentMonth) return null;
 
@@ -261,9 +286,16 @@ export default function Ovulation() {
           </div>
 
           <div className="text-center p-3">
-            <Button type="default" onClick={resetCalculator} className="me-2">
-              Start over
-            </Button>
+            <Popconfirm
+              title="Are you sure you want to reset?"
+              onConfirm={resetCalculator}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="default" className="me-2">
+                Start over
+              </Button>
+            </Popconfirm>
             <Button
               onClick={goToPreviousCycle}
               disabled={currentCycleIndex === 0}
@@ -282,6 +314,14 @@ export default function Ovulation() {
         </Card>
 
         <Card className="mt-4">
+          <Button
+            type="dashed"
+            onClick={clearPillTaken}
+            danger
+            style={{ marginBottom: 12 }}
+          >
+            Clear all pills
+          </Button>
           <Title level={4}>Pill Reminder Schedule</Title>
           <Table
             bordered
@@ -333,16 +373,13 @@ export default function Ovulation() {
           </a>
         </Breadcrumb.Item>
       </Breadcrumb>
-
       <Title level={1}>Cycle & Ovulation Guide</Title>
-
       <Paragraph className="mb-4">
         Track your fertility cycle with our tool to determine your ovulation
         days and maximize your chances of conception. By predicting your most
         fertile window and ovulation date, this tool supports your journey to
         starting a family!
       </Paragraph>
-
       {!showResults ? (
         <Card
           className="bg-light bg-opacity-25 shadow-lg"
@@ -454,6 +491,62 @@ export default function Ovulation() {
           </div>
         </div>
       )}
+
+      <div className="mt-5 container">
+        <div className="row">
+          <div className="col-12 my-5">
+            <section>
+              <Title level={2} className="mb-4">
+                How to Take Birth Control Pills Correctly
+              </Title>
+              <ul className="list-unstyled">
+                <li className="d-flex gap-2 mb-3">
+                  <div
+                    className="rounded-circle bg-info"
+                    style={{ width: "8px", height: "8px", marginTop: "10px" }}
+                  />
+                  <Paragraph className="m-0">
+                    <Tooltip title="Take 1 pill daily for 21 days, then stop for 7 days before starting a new pack.">
+                      <strong>21-day pack:</strong>
+                    </Tooltip>{" "}
+                    Take 1 pill every day at the same time for 21 days. Then
+                    stop for 7 days (no pills), and start a new pack after the
+                    break.
+                  </Paragraph>
+                </li>
+                <li className="d-flex gap-2 mb-3">
+                  <div
+                    className="rounded-circle bg-info"
+                    style={{ width: "8px", height: "8px", marginTop: "10px" }}
+                  />
+                  <Paragraph className="m-0">
+                    <Tooltip title="Includes 21 hormone pills and 7 reminder pills with no hormones. Keep taking one pill each day.">
+                      <strong>28-day pack:</strong>
+                    </Tooltip>{" "}
+                    Take 1 pill every day without a break. The first 21 pills
+                    contain hormones, the last 7 are inactive (placebo) to keep
+                    your routine.
+                  </Paragraph>
+                </li>
+                <li className="d-flex gap-2 mb-3">
+                  <div
+                    className="rounded-circle bg-info"
+                    style={{ width: "8px", height: "8px", marginTop: "10px" }}
+                  />
+                  <Paragraph className="m-0">
+                    <Tooltip title="You take active hormone pills every day with no break. This can help avoid monthly periods. Always consult your doctor.">
+                      <strong>Continuous use:</strong>
+                    </Tooltip>{" "}
+                    Take 1 hormone pill every day with no breaks or placebo
+                    pills. This can help you skip your period. Ask your doctor
+                    before using this method.
+                  </Paragraph>
+                </li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </div>
       <div className="mt-5 container">
         <div className="row">
           <div className="col-12 my-5">
