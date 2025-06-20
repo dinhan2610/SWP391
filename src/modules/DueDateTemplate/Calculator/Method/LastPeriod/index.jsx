@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   MenuItem,
@@ -7,12 +7,32 @@ import {
   Select,
 } from "@mui/material";
 
-export default function LastPeriod() {
+export default function LastPeriod({
+  lastPeriodDate: propLastPeriodDate,
+  setLastPeriodDate: setPropLastPeriodDate,
+  cycleLength: propCycleLength,
+  setCycleLength: setPropCycleLength,
+}) {
+  // Nếu có prop thì dùng prop, không thì dùng state cục bộ
   const [lastPeriodDate, setLastPeriodDate] = useState(
-    new Date().toISOString().split("T")[0]
+    propLastPeriodDate ||
+      localStorage.getItem("shared_lastPeriodDate") ||
+      new Date().toISOString().split("T")[0]
   );
-  const [cycleLength, setCycleLength] = useState("28");
+  const [cycleLength, setCycleLength] = useState(
+    propCycleLength || localStorage.getItem("shared_cycleLength") || "28"
+  );
   const cycleOptions = Array.from({ length: 26 }, (_, i) => i + 20);
+
+  // Khi thay đổi, cập nhật prop nếu có
+  useEffect(() => {
+    if (setPropLastPeriodDate) setPropLastPeriodDate(lastPeriodDate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastPeriodDate]);
+  useEffect(() => {
+    if (setPropCycleLength) setPropCycleLength(cycleLength);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cycleLength]);
 
   return (
     <>

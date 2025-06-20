@@ -1,0 +1,31 @@
+.booking-submit-btn {
+  background-color: #615efc !important;
+  border-color: #615efc !important;
+  color: #fff !important;
+  transition: all 0.2s cubic-bezier(.4,2,.6,1.2);
+}
+.booking-submit-btn:focus, .booking-submit-btn:active, .booking-submit-btn:focus-visible, .booking-submit-btn:hover {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+  color: #fff !important;
+  transform: scale(1.12);
+
+  outline: none;
+}
+.booking-cancel-btn {
+  background-color: #fff !important;
+  border-color: #ff4d4f !important; /* Viền đỏ */
+  color: #ff4d4f !important;
+  transition: all 0.2s cubic-bezier(.4,2,.6,1.2);
+}
+.booking-cancel-btn:focus,
+.booking-cancel-btn:active,
+.booking-cancel-btn:focus-visible,
+.booking-cancel-btn:hover {
+  background-color: #000 !important; /* Nền đen khi focus/hover */
+  border-color: #000 !important;     /* Viền đen khi focus/hover */
+  color: #fff !important;            /* Chữ trắng khi focus/hover */
+  transform: scale(1.12);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.12);
+  outline: none;
+}

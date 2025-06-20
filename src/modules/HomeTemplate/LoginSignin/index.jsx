@@ -9,8 +9,6 @@ import Signin from "../Signin";
 // Danh sách các tab trong phần Account Settings
 const tabLabels = ["Log in", "Sign in"];
 
-
-
 export default function LoginSignin({ open, onClose }) {
   // Quản lý state cho tab đang được chọn
   const [activeTab, setActiveTab] = useState(0);
@@ -41,8 +39,15 @@ export default function LoginSignin({ open, onClose }) {
         </AppBar>
 
         {/* Nội dung cho từng tab*/}
-        {activeTab === 0 && <Login onClose={onClose} />}
-        {activeTab === 1 && <Signin setActiveTab={setActiveTab} />}
+        {activeTab === 0 && (
+          <Login onClose={onClose} onSwitchTab={() => setActiveTab(1)} />
+        )}
+        {activeTab === 1 && (
+          <Signin
+            setActiveTab={setActiveTab}
+            onSwitchTab={() => setActiveTab(0)}
+          />
+        )}
       </Box>
     </Modal>
   );

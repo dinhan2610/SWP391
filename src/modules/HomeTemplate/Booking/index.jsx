@@ -26,8 +26,8 @@ export default function Booking() {
                 <span>Booking Made Easy</span>
               </h2>
 
-              <a href="/Booking" className="rts-btn btn-primary">
-                Arrange Consultation
+              <a href="/booking-consultation" className="rts-btn btn-primary">
+                Booking Consultation
               </a>
             </div>
           </div>

@@ -13,13 +13,11 @@ export default function ShortServices() {
             data-wow-delay=".2s"
             data-wow-duration=".8s"
           >
-            <a href="appoinment.html" className="single-short-service">
+            <a href="/booking-consultation" className="single-short-service">
               <div className="icon">
                 <img src={serviceImg01} alt="service" />
               </div>
-              <h5 className="title">
-                Estimated due date
-              </h5>
+              <h5 className="title">Booking Consulation</h5>
             </a>
           </div>
           <div
@@ -27,13 +25,11 @@ export default function ShortServices() {
             data-wow-delay=".4s"
             data-wow-duration=".8s"
           >
-            <a href="doctors-one.html" className="single-short-service">
+            <a href="/testing-services" className="single-short-service">
               <div className="icon">
                 <img src={serviceImg02} alt="service" />
               </div>
-              <h5 className="title">
-              Create an appointment
-              </h5>
+              <h5 className="title">STIs Testing Service</h5>
             </a>
           </div>
           <div
@@ -45,9 +41,7 @@ export default function ShortServices() {
               <div className="icon">
                 <img src={serviceImg03} alt="service" />
               </div>
-              <h5 className="title">
-                Fetus Growth Tracker
-              </h5>
+              <h5 className="title">Fetus Growth Tracker</h5>
             </a>
           </div>
           <div
@@ -55,12 +49,12 @@ export default function ShortServices() {
             data-wow-delay=".8s"
             data-wow-duration=".8s"
           >
-            <a href="contactus.html" className="single-short-service">
+            <a href="/contact" className="single-short-service">
               <div className="icon">
                 <img src={serviceImg04} alt="service" />
               </div>
               <h5 className="title">
-                24/7  <br />
+                24/7 <br />
                 Support
               </h5>
             </a>

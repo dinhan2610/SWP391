@@ -11,7 +11,7 @@ import {
   Box,
   Avatar,
 } from "@mui/material";
-import PregnancyTimeline from "../PregnancyTimeline";
+import HealthWiseTimeline from "../HealthWise";
 
 export default function Result() {
   return (

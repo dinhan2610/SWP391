@@ -26,4 +26,8 @@
 
 .table-striped-dark {
   background-color: #f4f6f8;
+  }
+.fertile-window-bg {
+  background-color: #b8e1f5 !important;
+  opacity: 0.7;
 }
