@@ -1,10 +1,28 @@
-import React from "react";
-import { Form, Input, Typography } from "antd";
+import React, { useState } from "react";
+import { Form, Input, Typography, message as Message } from "antd";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import LoginBackground from "../../../assets/Login.png";
 
 const { Title, Text } = Typography;
 
-export default function LoginUI() {
+export default function LoginUI({ onSwitchTab }) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleLogin = (values) => {
+    setLoading(true);
+    setError("");
+    // TODO: Thay thế bằng API thật
+    setTimeout(() => {
+      if (values.email === "test@email.com" && values.password === "123456") {
+        Message.success("Đăng nhập thành công!");
+      } else {
+        setError("Email hoặc mật khẩu không đúng!");
+      }
+      setLoading(false);
+    }, 1200);
+  };
+
   return (
     <div>
       <div style={{ display: "flex", height: "100vh" }}>
@@ -15,9 +33,16 @@ export default function LoginUI() {
             alt="Login background"
             style={{
               width: "100%",
-              height: "80%",
-              objectFit: "cover",
+              height: 380,
+              objectFit: "contain",
+              display: "block",
               borderRadius: "12px",
+              minHeight: 320,
+              minWidth: 200,
+              maxHeight: 420,
+              maxWidth: 420,
+              margin: "32px auto 0 auto",
+              background: "#f8fafc",
             }}
           />
         </div>
@@ -40,7 +65,7 @@ export default function LoginUI() {
             Enter your email to log in to your HealthWise account!
           </Text>
 
-          <Form layout="vertical" onFinish={() => {}}>
+          <Form layout="vertical" onFinish={handleLogin}>
             <Form.Item
               name="email"
               rules={[
@@ -49,25 +74,48 @@ export default function LoginUI() {
               ]}
               style={{ marginBottom: 35 }}
             >
-              <Input placeholder="Email" style={{ height: 50, fontSize: 16 }} />
+              <Input
+                prefix={<MailOutlined style={{ color: "#2563eb" }} />}
+                placeholder="Email"
+                style={{ height: 50, fontSize: 16 }}
+                autoComplete="email"
+              />
             </Form.Item>
 
             <Form.Item
               name="password"
               rules={[{ required: true, message: "Please enter password!" }]}
-              style={{ marginBottom: 50 }}
+              style={{ marginBottom: 20 }}
             >
               <Input.Password
+                prefix={<LockOutlined style={{ color: "#2563eb" }} />}
                 placeholder="Password"
                 style={{ height: 50, fontSize: 16 }}
+                autoComplete="current-password"
               />
             </Form.Item>
+
+            {error && (
+              <div
+                style={{
+                  color: "#e74c3c",
+                  marginBottom: 16,
+                  textAlign: "center",
+                }}
+              >
+                {error}
+              </div>
+            )}
 
             <Form.Item>
               <div className="row justify-content-md-center">
                 <div className="col-md-auto">
-                  <button className="rts-btn btn-primary" type="submit">
-                    Log in
+                  <button
+                    className="rts-btn btn-primary"
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading ? "Đang đăng nhập..." : "Log in"}
                   </button>
                 </div>
               </div>
@@ -75,7 +123,17 @@ export default function LoginUI() {
           </Form>
 
           <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <Text>New to HealthWise ?</Text>
+            <Text>New to HealthWise? </Text>
+            <a
+              href="#"
+              onClick={onSwitchTab}
+              style={{
+                color: "#2563eb",
+                fontWeight: 500,
+              }}
+            >
+              Sign in now!
+            </a>
           </div>
         </div>
       </div>

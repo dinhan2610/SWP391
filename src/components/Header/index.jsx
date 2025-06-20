@@ -119,7 +119,7 @@ const Headers = () => {
                       whileHover={{ scale: 1.05 }}
                       style={{ display: "inline-block", marginRight: 20 }}
                     >
-                      <a onClick={() => navigate("/Booking")}>
+                      <a onClick={() => navigate("/booking-consultation")}>
                         Consultation & Booking
                       </a>
                     </motion.li>

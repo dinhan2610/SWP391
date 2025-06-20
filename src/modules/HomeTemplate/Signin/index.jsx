@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Form, Input, Typography, message as Message } from "antd";
+import { MailOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import SigninBackground from "../../../assets/Signin.png";
 // import { useRegister } from "../../../apis/CallAPIUser";
 import BackdropLoader from "../../../components/BackdropLoader";
 
 const { Title, Text } = Typography;
 
-export default function Signin({ setActiveTab }) {
+export default function Signin({ setActiveTab, onSwitchTab }) {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     email: "",
@@ -17,22 +18,14 @@ export default function Signin({ setActiveTab }) {
   // Xử lý đăng ký
   const handleSubmit = () => {
     setLoading(true);
-
     // TODO: Thay thế bằng API thật khi có
-    console.log("Register data:", {
-      email: user.email,
-      password: user.password,
-      fullname: user.fullname,
-    });
-
-    // Giả lập success
     setTimeout(() => {
       Message.success("Sign in successfully (Mock)");
-      setActiveTab(0);
+      if (setActiveTab) setActiveTab(0);
       setLoading(false);
     }, 1500);
 
-    // 🔥 KHI CÓ API THẬT, UNCOMMENT ĐOẠN NÀY VÀ XÓA PHẦN TRÊN
+    // Giả lập success
     /*
     useRegister(user.email, user.password, user.fullname)
       .then((res) => {
@@ -56,10 +49,16 @@ export default function Signin({ setActiveTab }) {
           alt="Signin background"
           style={{
             width: "100%",
-            height: "80%",
-            objectFit: "cover",
+            height: 380,
+            objectFit: "contain",
             display: "block",
             borderRadius: "12px",
+            minHeight: 320,
+            minWidth: 200,
+            maxHeight: 420,
+            maxWidth: 420,
+            margin: "32px auto 0 auto",
+            background: "#f8fafc",
           }}
         />
       </div>
@@ -92,10 +91,17 @@ export default function Signin({ setActiveTab }) {
           <Form layout="vertical" onFinish={handleSubmit}>
             <Form.Item
               name="fullname"
-              rules={[{ required: true, message: "Please enter full name!" }]}
+              rules={[
+                { required: true, message: "Please enter full name!" },
+                {
+                  pattern: /^[^\d]+$/,
+                  message: "Full name must not contain numbers!",
+                },
+              ]}
               style={{ marginBottom: 35 }}
             >
               <Input
+                prefix={<UserOutlined style={{ color: "#2563eb" }} />}
                 placeholder="Full name"
                 value={user.fullname}
                 onChange={(e) => setUser({ ...user, fullname: e.target.value })}
@@ -111,6 +117,7 @@ export default function Signin({ setActiveTab }) {
               style={{ marginBottom: 35 }}
             >
               <Input
+                prefix={<MailOutlined style={{ color: "#2563eb" }} />}
                 placeholder="Email"
                 value={user.email}
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
@@ -119,10 +126,20 @@ export default function Signin({ setActiveTab }) {
             </Form.Item>
             <Form.Item
               name="password"
-              rules={[{ required: true, message: "Please enter password!" }]}
+              rules={[
+                { required: true, message: "Please enter password!" },
+                { min: 8, message: "Password must be at least 8 characters!" },
+                {
+                  pattern:
+                    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
+                  message:
+                    "Password must include uppercase, lowercase, number, and special character!",
+                },
+              ]}
               style={{ marginBottom: 50 }}
             >
               <Input.Password
+                prefix={<LockOutlined style={{ color: "#2563eb" }} />}
                 placeholder="Password"
                 value={user.password}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
@@ -140,7 +157,14 @@ export default function Signin({ setActiveTab }) {
             </Form.Item>
           </Form>
           <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <Text>Already have an account? Log in now!</Text>
+            <Text>Already have an account? </Text>
+            <a
+              href="#"
+              onClick={onSwitchTab}
+              style={{ color: "#2563eb", fontWeight: 500 }}
+            >
+              Log in now!
+            </a>
           </div>
         </div>
       </div>

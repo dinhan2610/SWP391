@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import "./index.css";
 
 const quizData = [
   {
@@ -62,15 +63,31 @@ export default function QuizPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h2>Preliminary Assessment Result</h2>
-        <p>
-          {risky
-            ? "⚠️ Your responses suggest a potential risk of sexually transmitted infections. We recommend scheduling a test as soon as possible."
-            : "✅ Your current risk appears to be low. However, regular STI testing is still important to maintain your sexual health."}
+        <h2 className="quiz-title">Preliminary Assessment Result</h2>
+        <p className="quiz-result-text">
+          {risky ? (
+            <>
+              <span style={{ color: "#ff4d4f", fontWeight: 600 }}>
+                ⚠️ Your responses suggest a potential risk of sexually
+                transmitted infections.
+              </span>{" "}
+              We recommend scheduling a test as soon as possible.
+            </>
+          ) : (
+            <>
+              <span style={{ color: "#52c41a", fontWeight: 600 }}>
+                ✅ Your current risk appears to be low.
+              </span>{" "}
+              However, regular STI testing is still important to maintain your
+              sexual health.
+            </>
+          )}
         </p>
         <div className="quiz-buttons">
-          <button onClick={() => alert("Redirecting to booking page...")}>
-            Book a Test
+          <button
+            onClick={() => (window.location.href = "/booking-consultation")}
+          >
+            Booking Consulation
           </button>
           <button onClick={() => (window.location.href = "/")}>
             Return to Homepage
@@ -88,7 +105,7 @@ export default function QuizPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1>Quick Quiz: Check Your Sexual Health</h1>
+          <h1 className="quiz-title">Quick Quiz: Check Your Sexual Health</h1>
           <p className="quiz-intro">
             It takes just 1 minute to find out if you should consider an STI
             test. 100% anonymous and private.
@@ -103,11 +120,13 @@ export default function QuizPage() {
                 alt="illustration"
                 className="quiz-image"
               />
-              <h2>
+              <h2 className="quiz-question-title">
                 Question {currentQuestion + 1}/{quizData.length}
               </h2>
 
-              <p>{quizData[currentQuestion]?.question}</p>
+              <p className="quiz-question-text">
+                {quizData[currentQuestion]?.question}
+              </p>
               <div className="quiz-options">
                 {quizData[currentQuestion]?.options?.map((option, idx) => (
                   <button key={idx} onClick={() => handleAnswer(option)}>
