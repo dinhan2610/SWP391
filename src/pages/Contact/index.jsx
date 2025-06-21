@@ -9,110 +9,102 @@ import {
 import "./index.css";
 
 export default function ContactPage() {
-  const onFinish = (values) => {
-    console.log("Form data:", values);
-  };
-
   return (
     <div className="contact-page">
-      {/* Lời chào */}
+      {/* Greeting */}
       <div className="contact-header">
-        <h2>Contact HealthWise Clinic</h2>
-        <p>
+        <h2
+          style={{
+            fontSize: 40,
+            fontWeight: 800,
+            color: "#615efc",
+            marginBottom: 10,
+            lineHeight: 1.15,
+            letterSpacing: 0.5,
+            minHeight: 56,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          Contact HealthWise Clinic
+        </h2>
+        <p style={{ fontSize: 20, color: "#333", fontWeight: 500 }}>
           Have questions or need support? Our team is ready to help you book
           consultations, understand your options, and more.
         </p>
       </div>
 
-      {/* Thông tin liên hệ */}
+      {/* Contact Info */}
       <div className="contact-info">
-        <div className="info-item">
-          <EnvironmentOutlined />
+        <div
+          className="info-item"
+          style={{
+            fontSize: 24,
+            fontWeight: 700,
+            color: "#222",
+            letterSpacing: 0.5,
+          }}
+        >
+          <PhoneOutlined
+            style={{ color: "#ff4d4f", fontSize: 30, marginRight: 12 }}
+          />
+          <span>
+            Hotline:{" "}
+            <a
+              href="tel:+84123456789"
+              style={{
+                color: "#ff4d4f",
+                textDecoration: "underline",
+                fontWeight: 800,
+                fontSize: 24,
+                letterSpacing: 1,
+              }}
+            >
+              (+84) 123 456 789
+            </a>
+          </span>
+        </div>
+        <div
+          className="info-item"
+          style={{ fontSize: 20, fontWeight: 600, color: "#444" }}
+        >
+          <EnvironmentOutlined
+            style={{ color: "#615efc", fontSize: 24, marginRight: 10 }}
+          />
           <span>123 Main Street, District 1, Ho Chi Minh City</span>
         </div>
-        <div className="info-item">
-          <PhoneOutlined />
-          <span>(+84) 123 456 789</span>
-        </div>
-        <div className="info-item">
-          <MailOutlined />
+        <div
+          className="info-item"
+          style={{ fontSize: 20, fontWeight: 600, color: "#444" }}
+        >
+          <MailOutlined
+            style={{ color: "#2563eb", fontSize: 24, marginRight: 10 }}
+          />
           <span>contact@healthwise.vn</span>
         </div>
-        <div className="info-item">
-          <ClockCircleOutlined />
+        <div
+          className="info-item"
+          style={{ fontSize: 20, fontWeight: 600, color: "#444" }}
+        >
+          <ClockCircleOutlined
+            style={{ color: "#52c41a", fontSize: 24, marginRight: 10 }}
+          />
           <span>Mon - Sat: 08:00 - 17:30</span>
         </div>
       </div>
 
-      {/* Bản đồ */}
-      <div className="map-embed">
+      {/* Map */}
+      <div className="map-embed" style={{ marginBottom: 36 }}>
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!..."
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.133011003837!2d106.7004233153347!3d10.800995692304073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528d2d1b1b1b1%3A0x123456789abcdef!2zMTIzIE1haW4gU3QsIFRow6BuaCBwaOG7kSDEkOG7kWkgMSwgUXXhuq1uIDEsIEjDoCBO4buZaSBDaMOtbmgsIFZpZXRuYW0!5e0!3m2!1sen!2s!4v1680000000000!5m2!1sen!2s"
           width="100%"
-          height="300"
+          height="340"
           loading="lazy"
           style={{ border: 0 }}
           allowFullScreen
           title="Clinic Location"
         ></iframe>
-      </div>
-
-      {/* Biểu mẫu */}
-      <div className="contact-form-wrapper">
-        <h3>Send us a message</h3>
-        <Form onFinish={onFinish} layout="vertical">
-          <Form.Item
-            label="Full Name"
-            name="name"
-            rules={[
-              { required: true, message: "Please enter your name" },
-              { pattern: /^[^\d]*$/, message: "Name cannot contain numbers" },
-            ]}
-          >
-            <Input className="form-input" placeholder="Your Name" />
-          </Form.Item>
-
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[
-              { required: true, message: "Please enter your email" },
-              { type: "email", message: "Invalid email format" },
-            ]}
-          >
-            <Input className="form-input" placeholder="Your Email" />
-          </Form.Item>
-
-          <Form.Item
-            label="Phone"
-            name="phone"
-            rules={[
-              { required: true, message: "Please enter your phone number" },
-              {
-                pattern: /^[0-9]{10,11}$/,
-                message: "Please enter a valid phone number",
-              },
-            ]}
-          >
-            <Input className="form-input" placeholder="Your Phone" />
-          </Form.Item>
-
-          <Form.Item
-            label="Message"
-            name="message"
-            rules={[{ required: true, message: "Please enter your message" }]}
-          >
-            <Input.TextArea
-              rows={4}
-              className="form-input"
-              placeholder="Type your message here"
-            />
-          </Form.Item>
-
-          <Button type="primary" htmlType="submit" className="submit-button">
-            Send Message
-          </Button>
-        </Form>
       </div>
     </div>
   );

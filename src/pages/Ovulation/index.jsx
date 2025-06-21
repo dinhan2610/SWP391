@@ -261,7 +261,7 @@ export default function Ovulation() {
 
     return (
       <>
-        <Card className="mt-4">
+        <Card className="mt-4" style={{ marginTop: 32 }}>
           <div className="d-flex align-items-center justify-content-between p-2 bg-light">
             <Button icon={<LeftOutlined />} onClick={prevMonth} size="small" />
             <Title level={5} className="m-0">
@@ -392,32 +392,38 @@ export default function Ovulation() {
 
         <Card className="mt-4">
           <Title level={4}>Pill Reminder Schedule</Title>
-          <Table
-            bordered
-            size="small"
-            pagination={false}
-            dataSource={generatePillReminderTable()}
-            columns={[
-              {
-                title: "Day",
-                dataIndex: "day",
-                key: "day",
-                align: "center",
-              },
-              {
-                title: "Date",
-                dataIndex: "date",
-                key: "date",
-                align: "center",
-              },
-              {
-                title: "Note",
-                dataIndex: "note",
-                key: "note",
-                align: "center",
-              },
-            ]}
-          />
+          {pillType && pillType !== "none" ? (
+            <Table
+              bordered
+              size="small"
+              pagination={false}
+              dataSource={generatePillReminderTable()}
+              columns={[
+                {
+                  title: "Day",
+                  dataIndex: "day",
+                  key: "day",
+                  align: "center",
+                },
+                {
+                  title: "Date",
+                  dataIndex: "date",
+                  key: "date",
+                  align: "center",
+                },
+                {
+                  title: "Note",
+                  dataIndex: "note",
+                  key: "note",
+                  align: "center",
+                },
+              ]}
+            />
+          ) : (
+            <Paragraph type="secondary" className="text-center my-3">
+              No pill schedule to display.
+            </Paragraph>
+          )}
         </Card>
       </>
     );
@@ -427,7 +433,7 @@ export default function Ovulation() {
     <>
       <div>
         <div className="ovulation-bg">
-          <div className="ovulation-container">
+          <div className="ovulation-container" style={{ paddingTop: 64 }}>
             <div
               className="container py-4"
               style={{
@@ -522,12 +528,18 @@ export default function Ovulation() {
                       label="Type of birth control pill (optional)"
                       className="mb-4"
                       name="pillType"
+                      rules={[
+                        {
+                          required: true,
+                          message:
+                            "Please select your birth control pill type!",
+                        },
+                      ]}
                     >
                       <Select
-                        allowClear
                         value={pillType}
                         onChange={(val) => setPillType(val)}
-                        placeholder="Select pill type (optional)"
+                        placeholder="Select pill type"
                         style={{ width: "100%", minHeight: "40px" }}
                       >
                         <Option value="none">None</Option>
