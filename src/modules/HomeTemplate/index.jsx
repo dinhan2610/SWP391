@@ -3,7 +3,7 @@ import Booking from "./Booking";
 import Carousel from "./Carousel";
 
 import ShortServices from "./ShortServices";
-import Testimonials from "./Testimonials";
+import Feedback from "./Feedback";
 import WhyChoose from "./Whychoose";
 import WowProvider from "../../components/Wow";
 export default function HomeTemplate() {
@@ -14,8 +14,8 @@ export default function HomeTemplate() {
         <ShortServices />
         <Aboutus />
         <WhyChoose />
-        <Testimonials />
         <Booking />
+        <Feedback />
       </WowProvider>
     </>
   );

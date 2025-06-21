@@ -26,6 +26,6 @@
   border-color: #000 !important;     /* Viền đen khi focus/hover */
   color: #fff !important;            /* Chữ trắng khi focus/hover */
   transform: scale(1.12);
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.12);
+  
   outline: none;
 }
