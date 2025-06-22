@@ -20,59 +20,63 @@ export default function Footer() {
             <div className="col-lg-12">
               <div className="footer-wrapper-style-between">
                 <div className="single-wized">
-                  <h6 className="title">Contact</h6>
+                  <h6 className="title">Liên hệ</h6>
                   <div className="body">
                     <p className="location">
-                      Canada, 245 14h Street Office 42 Calgary, de 52473
+                      Địa chỉ: 123 Đường Sức Khỏe, Quận 1, TP. Hồ Chí Minh
                     </p>
-                    <a href="#">info@email.com</a>
-                    <a href="#">+1 554 558 748</a>
+                    <a href="mailto:info@healthwish.vn">info@healthwish.vn</a>
+                    <a href="tel:0123456789">0123 456 789</a>
                   </div>
                 </div>
                 <div className="single-wized">
-                  <h6 className="title">Company </h6>
+                  <h6 className="title">Công ty</h6>
                   <div className="body">
                     <ul className="nav-bottom">
                       <li>
-                        <a href="about.html">Company</a>
+                        <a href="/about">Giới thiệu</a>
                       </li>
                       <li>
-                        <a href="about.html">About</a>
+                        <a href="/booking-consultation">Đặt lịch hẹn</a>
                       </li>
                       <li>
-                        <a href="appoinment.html">Appointment </a>
-                      </li>
-                      <li>
-                        <a href="contact.html">Contact</a>
+                        <a href="/contact">Liên hệ</a>
                       </li>
                     </ul>
                   </div>
                 </div>
                 <div className="single-wized">
-                  <h6 className="title">Our Services</h6>
+                  <h6 className="title">Dịch vụ</h6>
                   <div className="body">
                     <ul className="nav-bottom">
                       <li>
-                        <a href="service-details.html">Orthopaedic</a>
+                        <a href="/service-details">
+                          Dịch vụ xét nghiệm &amp; STIs
+                        </a>
                       </li>
                       <li>
-                        <a href="service-details.html">Neurology</a>
+                        <a href="/ovulation">Theo dõi chu kì</a>
                       </li>
                       <li>
-                        <a href="service-details.html">Psychiatry </a>
-                      </li>
-                      <li>
-                        <a href="service-details.html">Cardiology</a>
+                        <a href="/booking-consultation">
+                          Hỗ trợ tư vấn sức khỏe
+                        </a>
                       </li>
                     </ul>
                   </div>
                 </div>
                 <div className="single-wized">
-                  <h6 className="title">Working Time</h6>
+                  <h6 className="title">Giờ làm việc</h6>
                   <div className="body">
-                    <p className="location">Mon - Fri: 9.00am - 5.00pm</p>
-                    <p className="location">Saturday: 10.00am - 6.00pm</p>
-                    <p className="location">Sunday Closed</p>
+                    <p className="location">
+                      Thời gian làm việc: 8:00 - 20:00 (Thứ 2 - Chủ nhật)
+                    </p>
+                    <p
+                      className="location"
+                      style={{ color: "#fff", fontWeight: 600 }}
+                    >
+                      Hỗ trợ trực tuyến 24/7
+                    </p>
                   </div>
                 </div>
               </div>
@@ -86,7 +90,7 @@ export default function Footer() {
             <div className="col-lg-12">
               <div className="copyright-area-inner">
                 <p>
-                  © 2025 Mediweb. All Rights Reserved by&nbsp;
+                  © 2025 Mediweb. Đã đăng ký bản quyền bởi&nbsp;
                   <a
                     target="_blank"
                     href="https://themeforest.net/user/themewant"

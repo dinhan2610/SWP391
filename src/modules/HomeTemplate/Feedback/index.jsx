@@ -15,11 +15,11 @@ export default function Feedback() {
 
   const handleSubmit = () => {
     if (!rating) {
-      message.error("Please select a rating!");
+      message.error("Vui lòng chọn số sao để đánh giá!");
       return;
     }
     setSubmitted(true);
-    message.success("Thank you for your feedback!");
+    message.success("Cảm ơn bạn đã gửi phản hồi!");
     // TODO: Gửi feedback lên server tại đây
   };
 
@@ -37,19 +37,21 @@ export default function Feedback() {
       >
         <div className="text-center mb-4">
           <Title level={2} style={{ marginBottom: 8, color: "#615efc" }}>
-            We Value Your Feedback
+            Chúng tôi trân trọng ý kiến của bạn
           </Title>
           <Paragraph type="secondary">
-            How was your experience with us?
+            Trải nghiệm của bạn với chúng tôi như thế nào?
           </Paragraph>
         </div>
         {submitted ? (
           <div className="text-center">
             <StarFilled style={{ fontSize: 48, color: "#faad14" }} />
             <Title level={4} className="mt-3">
-              Thank you!
+              Cảm ơn bạn!
             </Title>
-            <Paragraph>Your feedback helps us improve our service.</Paragraph>
+            <Paragraph>
+              Phản hồi của bạn giúp chúng tôi cải thiện dịch vụ.
+            </Paragraph>
           </div>
         ) : (
           <>
@@ -116,15 +118,15 @@ export default function Feedback() {
               }}
             >
               {rating
-                ? `You rated us ${rating} star${rating > 1 ? "s" : ""}`
-                : "Please select a rating"}
+                ? `Bạn đã đánh giá ${rating} sao`
+                : "Vui lòng chọn số sao để đánh giá"}
             </div>
             <Input.TextArea
               rows={4}
               maxLength={300}
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              placeholder="Your feedback"
+              placeholder="Nhập ý kiến của bạn"
               style={{ borderRadius: 8, marginBottom: 16 }}
             />
             <Button
@@ -138,7 +140,7 @@ export default function Feedback() {
               }}
               onClick={handleSubmit}
             >
-              Submit Feedback
+              Gửi phản hồi
             </Button>
           </>
         )}

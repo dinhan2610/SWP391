@@ -11,118 +11,120 @@ export default function BlogPages() {
   const posts = [
     {
       id: 1,
-      title: "Sex Education for Teenagers",
+      title: "Giáo Dục Giới Tính Cho Thanh Thiếu Niên",
       excerpt:
-        "Sex education helps teenagers understand bodies and health better.",
+        "Giáo dục giới tính giúp thanh thiếu niên hiểu biết về cơ thể và sức khỏe của mình.",
       fullText:
-        "Sex education plays a vital role in helping teenagers understand their bodies and health. It provides essential knowledge about puberty, consent in relationships, and sexual health, empowering teens to make informed decisions. Understanding body changes, like sexual organ development, emotional shifts, and menstruation, helps teens embrace these changes naturally.\n\n" +
-        "Sex education also teaches the importance of consent in building healthy relationships. It helps teens recognize their rights and responsibilities, fostering mutual respect and preventing abuse. Additionally, it provides knowledge about sexual health, including how to protect against STIs and unwanted pregnancies, and how to reduce risks through safe practices.\n\n" +
-        "By learning about sexual health, teens also develop a better understanding of personal boundaries, which is crucial for maintaining healthy relationships. Sex education encourages open conversations about relationships, helping break down stigmas and fostering more positive attitudes toward sexuality. In an increasingly complex world, equipping teenagers with the knowledge they need empowers them to make thoughtful, responsible choices in their lives.\n\n" +
-        "Ultimately, sex education empowers teens to make responsible choices, forming healthy habits and relationships that promote their well-being. It's essential for their physical, mental, and social development, leading to a healthier, more responsible life.",
+        "Giáo dục giới tính đóng vai trò quan trọng trong việc giúp thanh thiếu niên hiểu biết về cơ thể và sức khỏe của mình. Nó cung cấp những kiến thức cần thiết về sự phát triển của cơ thể, sự đồng ý trong quan hệ tình dục, và sức khỏe sinh sản, từ đó giúp các em đưa ra những quyết định đúng đắn. Việc hiểu biết về sự thay đổi của cơ thể, như sự phát triển của cơ quan sinh dục, sự thay đổi về cảm xúc, và chu kỳ kinh nguyệt, sẽ giúp các em chấp nhận những thay đổi này một cách tự nhiên hơn.\n\n" +
+        "Giáo dục giới tính cũng dạy về tầm quan trọng của sự đồng ý trong việc xây dựng các mối quan hệ lành mạnh. Nó giúp thanh thiếu niên nhận thức được quyền lợi và trách nhiệm của mình, từ đó thúc đẩy sự tôn trọng lẫn nhau và ngăn ngừa bạo lực tình dục. Bên cạnh đó, nó còn cung cấp kiến thức về sức khỏe sinh sản, bao gồm cách bảo vệ bản thân khỏi các bệnh lây truyền qua đường tình dục (STIs) và mang thai ngoài ý muốn, cũng như cách giảm thiểu rủi ro thông qua các biện pháp an toàn.\n\n" +
+        "Bằng cách tìm hiểu về sức khỏe sinh sản, thanh thiếu niên cũng phát triển được khả năng nhận thức về ranh giới cá nhân, điều này rất quan trọng để duy trì các mối quan hệ lành mạnh. Giáo dục giới tính khuyến khích việc trò chuyện cởi mở về các mối quan hệ, giúp xóa bỏ các định kiến và thúc đẩy những thái độ tích cực hơn về tình dục. Trong một thế giới ngày càng phức tạp, việc trang bị cho thanh thiếu niên những kiến thức cần thiết sẽ giúp các em có thể đưa ra những lựa chọn sáng suốt và có trách nhiệm trong cuộc sống của mình.\n\n" +
+        "Cuối cùng, giáo dục giới tính giúp thanh thiếu niên có thể đưa ra những lựa chọn có trách nhiệm, hình thành những thói quen và mối quan hệ lành mạnh, từ đó nâng cao sức khỏe và hạnh phúc của bản thân. Nó rất cần thiết cho sự phát triển về thể chất, tinh thần và xã hội của các em, dẫn đến một cuộc sống khỏe mạnh và có trách nhiệm hơn.",
       date: "12/06/2025",
       image: "/blog/01.png", // Hình ảnh chỉ xuất hiện trong phần này
     },
     {
       id: 2,
-      title: "Reproductive Health Care for Women",
+      title: "Chăm Sóc Sức Khỏe Sinh Sản Cho Phụ Nữ",
       excerpt:
-        "Explore methods for reproductive health care women at different ages.",
+        "Khám phá các phương pháp chăm sóc sức khỏe sinh sản cho phụ nữ ở các độ tuổi khác nhau.",
       fullText:
-        "Reproductive health care is essential for women at all stages of life. It encompasses a variety of methods and practices to ensure the health and well-being of women’s reproductive systems. From adolescence to menopause, women need to understand their fertility, birth control options, and the importance of regular gynecological exams. As women age, their reproductive needs change, and staying informed about these changes is key to maintaining good health.\n\n" +
-        "Throughout the reproductive years, it’s vital to monitor menstrual health and seek professional advice if any irregularities occur. Birth control options, such as the pill, IUDs, implants, and condoms, provide women with the ability to control their reproductive health. Regular check-ups and screenings, including Pap smears and mammograms, are essential for detecting potential health issues early on. As women approach menopause, they should be aware of the changes that affect their body and seek advice on managing symptoms and preventing potential health risks.\n\n" +
-        "By maintaining a healthy lifestyle, such as proper nutrition, regular exercise, and stress management, women can improve their reproductive health and overall well-being. Regular visits to healthcare providers ensure that women have access to necessary resources and support, leading to better health outcomes throughout their lives.",
+        "Chăm sóc sức khỏe sinh sản là điều cần thiết cho phụ nữ ở mọi lứa tuổi. Nó bao gồm nhiều phương pháp và thực hành khác nhau để đảm bảo sức khỏe và sự phát triển của hệ thống sinh sản nữ. Từ tuổi dậy thì đến thời kỳ mãn kinh, phụ nữ cần hiểu biết về khả năng sinh sản, các biện pháp tránh thai, và tầm quan trọng của việc khám phụ khoa định kỳ. Khi phụ nữ lớn tuổi, nhu cầu về sức khỏe sinh sản của họ cũng thay đổi, và việc cập nhật thông tin về những thay đổi này là chìa khóa để duy trì sức khỏe tốt.\n\n" +
+        "Trong những năm sinh sản, việc theo dõi sức khỏe kinh nguyệt và tìm kiếm sự tư vấn chuyên môn nếu có bất kỳ bất thường nào xảy ra là rất quan trọng. Các biện pháp tránh thai như thuốc tránh thai, vòng tránh thai (IUD), que cấy, và bao cao su, giúp phụ nữ có khả năng kiểm soát sức khỏe sinh sản của mình. Việc khám sức khỏe định kỳ và sàng lọc, bao gồm xét nghiệm Pap và chụp X-quang vú, rất cần thiết để phát hiện sớm các vấn đề sức khỏe tiềm ẩn. Khi phụ nữ tiến gần đến thời kỳ mãn kinh, họ nên nhận thức được những thay đổi ảnh hưởng đến cơ thể và tìm kiếm lời khuyên về cách quản lý các triệu chứng và ngăn ngừa các rủi ro sức khỏe tiềm ẩn.\n\n" +
+        "Bằng cách duy trì một lối sống lành mạnh, như dinh dưỡng hợp lý, tập thể dục thường xuyên, và quản lý căng thẳng, phụ nữ có thể cải thiện sức khỏe sinh sản và tổng thể của mình. Việc thăm khám định kỳ với các nhà cung cấp dịch vụ y tế đảm bảo rằng phụ nữ có quyền truy cập vào các nguồn lực và hỗ trợ cần thiết, dẫn đến kết quả sức khỏe tốt hơn trong suốt cuộc đời.",
       date: "05/06/2025",
       image: "/blog/02.png",
     },
     {
       id: 3,
-      title: "STI Testing and Prevention",
+      title: "Xét Nghiệm Và Phòng Ngừa Bệnh Lây Qua Đường Tình Dục",
       excerpt:
-        "Learn about STI testing methods and how to prevent them effectively.",
+        "Tìm hiểu về các phương pháp xét nghiệm STI và cách phòng ngừa chúng hiệu quả.",
       fullText:
-        "Sexually transmitted infections (STIs) are a serious health concern worldwide, but many of them are preventable and treatable with early detection. STI testing is vital for maintaining sexual health and preventing the spread of infections. This post covers various testing methods available, including blood tests, urine tests, and swabs, and explains how these tests can detect infections even in their early stages.\n\n" +
-        "Early detection of STIs helps prevent complications such as infertility, organ damage, and the transmission of infections to partners. It is crucial for sexually active individuals to get tested regularly, especially those who have multiple partners or engage in unprotected sex. By discussing the importance of safe sex practices, such as the use of condoms and dental dams, this post emphasizes how protection can significantly reduce the risk of transmission.\n\n" +
-        "Awareness and education are essential in preventing the spread of STIs. Public health initiatives play a major role in promoting safe sexual practices and encouraging regular screenings. It’s also important to break the stigma surrounding STIs, creating an environment where individuals feel comfortable discussing their sexual health and seeking help when needed.",
+        "Các bệnh lây truyền qua đường tình dục (STIs) là một mối quan tâm sức khỏe nghiêm trọng trên toàn thế giới, nhưng nhiều bệnh trong số đó có thể phòng ngừa và điều trị được nếu phát hiện sớm. Xét nghiệm STI là rất quan trọng để duy trì sức khỏe tình dục và ngăn ngừa sự lây lan của nhiễm trùng. Bài viết này đề cập đến các phương pháp xét nghiệm khác nhau, bao gồm xét nghiệm máu, xét nghiệm nước tiểu, và lấy mẫu dịch, và giải thích cách mà những xét nghiệm này có thể phát hiện nhiễm trùng ngay cả trong giai đoạn đầu.",
       date: "01/06/2025",
       image: "/blog/03.png",
     },
     {
       id: 4,
-      title: "Understanding Ovulation and Fertility",
+      title: "Hiểu Về Rụng Trứng Và Khả Năng Sinh Sản",
       excerpt:
-        "An introduction to ovulation and how it relates to fertility and conception.",
+        "Giới thiệu về quá trình rụng trứng và mối quan hệ của nó với khả năng sinh sản và thụ thai.",
       fullText:
-        "Understanding ovulation and fertility is crucial for anyone trying to conceive or avoid pregnancy. Ovulation is the process where an egg is released from the ovaries, and knowing when this occurs can help individuals plan for conception or use fertility awareness methods for contraception. This post explains the science behind ovulation and its connection to fertility.\n\n" +
-        "Tracking ovulation is an effective way to predict fertile windows. By understanding changes in cervical mucus, basal body temperature, and using ovulation predictor kits, individuals can better understand their cycle and improve their chances of conception. For those trying to prevent pregnancy, this knowledge also provides a natural family planning method. However, it is important to recognize that ovulation is not always predictable, and factors such as stress, illness, and hormonal imbalances can affect the cycle.\n\n" +
-        "In addition, there are lifestyle factors that can influence fertility, such as maintaining a healthy weight, eating a balanced diet, reducing stress, and avoiding smoking or excessive alcohol use. Couples who are struggling with infertility should consult a healthcare professional for advice and explore options such as fertility treatments or assisted reproductive technologies.",
+        "Hiểu về rụng trứng và khả năng sinh sản là điều cần thiết cho bất kỳ ai đang cố gắng thụ thai hoặc tránh thai. Rụng trứng là quá trình mà trứng được giải phóng từ buồng trứng, và biết được thời điểm này xảy ra có thể giúp các cặp đôi lên kế hoạch cho việc thụ thai hoặc sử dụng các phương pháp nhận thức về khả năng sinh sản để tránh thai. Bài viết này giải thích về khoa học của quá trình rụng trứng và mối liên hệ của nó với khả năng sinh sản.\n\n" +
+        "Theo dõi quá trình rụng trứng là một cách hiệu quả để dự đoán thời điểm dễ thụ thai. Bằng cách hiểu các thay đổi trong dịch âm đạo, nhiệt độ cơ thể cơ bản, và sử dụng các bộ dụng cụ dự đoán rụng trứng, các cặp đôi có thể hiểu rõ hơn về chu kỳ của mình và tăng cường khả năng thụ thai. Đối với những người đang cố gắng tránh thai, kiến thức này cũng cung cấp một phương pháp lập kế hoạch gia đình tự nhiên. Tuy nhiên, cần nhận thức rằng quá trình rụng trứng không phải lúc nào cũng có thể dự đoán được, và các yếu tố như căng thẳng, bệnh tật, và mất cân bằng hormone có thể ảnh hưởng đến chu kỳ.\n\n" +
+        "Ngoài ra, còn có những yếu tố về lối sống có thể ảnh hưởng đến khả năng sinh sản, chẳng hạn như duy trì cân nặng hợp lý, ăn uống cân bằng, giảm căng thẳng, và tránh xa thuốc lá hoặc rượu bia. Các cặp đôi gặp khó khăn trong việc sinh sản nên tham khảo ý kiến của các chuyên gia y tế để được tư vấn và khám phá các lựa chọn như điều trị vô sinh hoặc công nghệ hỗ trợ sinh sản.",
       date: "20/05/2025",
       image: "/blog/04.png",
     },
     {
       id: 5,
-      title: "Birth Control Methods Explained",
-      excerpt: "A guide to different birth control methods available to women.",
+      title: "Giải Thích Về Các Phương Pháp Tránh Thai",
+      excerpt:
+        "Hướng dẫn về các phương pháp tránh thai khác nhau dành cho phụ nữ.",
       fullText:
-        "Choosing the right birth control method is a personal decision that depends on individual health, lifestyle, and reproductive goals. This article explains the most common birth control methods available to women, both hormonal and non-hormonal, and helps women understand their options.\n\n" +
-        "Hormonal methods, such as birth control pills, patches, injections, and IUDs, work by regulating hormones to prevent ovulation, thicken cervical mucus, and thin the uterine lining. While highly effective, these methods may have side effects such as weight gain, mood changes, or changes in menstrual cycles. Non-hormonal options, including condoms, diaphragms, and copper IUDs, provide barrier protection and are ideal for those who prefer a hormone-free option.\n\n" +
-        "This article also discusses permanent methods of contraception, such as sterilization, which is a safe and effective choice for individuals who do not wish to have children in the future. It’s important for women to have open discussions with their healthcare providers to determine the best option based on their medical history, lifestyle, and preferences. Birth control is a vital tool for women’s health and empowerment, giving them the ability to plan their reproductive futures.",
+        "Lựa chọn phương pháp tránh thai phù hợp là một quyết định cá nhân phụ thuộc vào sức khỏe, lối sống, và mục tiêu sinh sản của từng người. Bài viết này giải thích về các phương pháp tránh thai phổ biến nhất hiện nay dành cho phụ nữ, bao gồm cả phương pháp hormone và không hormone, và giúp phụ nữ hiểu rõ hơn về các lựa chọn của mình.\n\n" +
+        "Các phương pháp hormone, chẳng hạn như thuốc tránh thai, miếng dán, tiêm, và vòng tránh thai (IUD), hoạt động bằng cách điều chỉnh hormone để ngăn ngừa rụng trứng, làm dày dịch cổ tử cung, và làm mỏng niêm mạc tử cung. Mặc dù rất hiệu quả, nhưng những phương pháp này có thể gây ra tác dụng phụ như tăng cân, thay đổi tâm trạng, hoặc thay đổi chu kỳ kinh nguyệt. Các lựa chọn không hormone, bao gồm bao cao su, màng ngăn, và vòng tránh thai bằng đồng, cung cấp sự bảo vệ bằng rào cản và là lựa chọn lý tưởng cho những ai muốn tránh xa hormone.\n\n" +
+        "Bài viết này cũng đề cập đến các phương pháp triệt sản vĩnh viễn, là một lựa chọn an toàn và hiệu quả cho những ai không muốn có con trong tương lai. Phụ nữ nên có những cuộc thảo luận cởi mở với các nhà cung cấp dịch vụ y tế của mình để xác định phương pháp tốt nhất dựa trên tiền sử bệnh lý, lối sống, và sở thích của họ. Tránh thai là một công cụ quan trọng cho sức khỏe và sự tự chủ của phụ nữ, giúp họ có khả năng lập kế hoạch cho tương lai sinh sản của mình.",
       date: "15/05/2025",
       image: "/blog/05.png",
     },
     {
       id: 6,
-      title: "Menstrual Health Awareness",
+      title: "Nhận Thức Về Sức Khỏe Kinh Nguyệt",
       excerpt:
-        "Learn about menstrual health and the importance of regular check-ups.",
+        "Tìm hiểu về sức khỏe kinh nguyệt và tầm quan trọng của việc kiểm tra sức khỏe định kỳ.",
       fullText:
-        "Menstrual health is an important aspect of women’s overall well-being. Understanding menstrual cycles, recognizing signs of irregularities, and knowing when to seek medical help are all key factors in maintaining good health. This post discusses how menstrual cycles work and the typical symptoms women experience during menstruation.\n\n" +
-        "Irregular periods can be a sign of an underlying health issue, such as polycystic ovary syndrome (PCOS), thyroid disorders, or stress. Regular check-ups with a gynecologist can help detect any potential issues early and ensure that women receive the proper care and treatment. It’s also essential for women to manage menstrual symptoms, such as cramps, bloating, and fatigue, by using pain relief methods, exercising, and maintaining a healthy diet.\n\n" +
-        "Menstrual health awareness also involves understanding the different types of menstrual products available, such as pads, tampons, menstrual cups, and period underwear. These products allow women to manage their menstruation in a way that suits their lifestyle, ensuring comfort and convenience during their period.",
+        "Sức khỏe kinh nguyệt là một khía cạnh quan trọng của sức khỏe tổng thể ở phụ nữ. Hiểu về chu kỳ kinh nguyệt, nhận biết các dấu hiệu bất thường, và biết khi nào cần tìm kiếm sự trợ giúp y tế là những yếu tố then chốt để duy trì sức khỏe tốt. Bài viết này giải thích về cách thức hoạt động của chu kỳ kinh nguyệt và các triệu chứng điển hình mà phụ nữ thường gặp phải trong thời kỳ này.\n\n" +
+        "Kinh nguyệt không đều có thể là dấu hiệu của các vấn đề sức khỏe tiềm ẩn, chẳng hạn như hội chứng buồng trứng đa nang (PCOS), rối loạn tuyến giáp, hoặc căng thẳng. Việc kiểm tra sức khỏe định kỳ với bác sĩ phụ khoa có thể giúp phát hiện sớm bất kỳ vấn đề tiềm ẩn nào và đảm bảo rằng phụ nữ nhận được sự chăm sóc và điều trị thích hợp. Ngoài ra, phụ nữ cũng cần quản lý các triệu chứng kinh nguyệt như đau bụng, đầy hơi, và mệt mỏi bằng cách sử dụng các phương pháp giảm đau, tập thể dục, và duy trì chế độ ăn uống lành mạnh.\n\n" +
+        "Nhận thức về sức khỏe kinh nguyệt cũng bao gồm việc hiểu về các loại sản phẩm vệ sinh kinh nguyệt khác nhau, chẳng hạn như băng vệ sinh, tampon, cốc nguyệt san, và đồ lót kỳ. Những sản phẩm này cho phép phụ nữ quản lý kỳ kinh nguyệt của mình theo cách phù hợp với lối sống, đảm bảo sự thoải mái và tiện lợi trong suốt thời gian hành kinh.",
       date: "10/05/2025",
       image: "/blog/06.png",
     },
     {
       id: 7,
-      title: "The Importance of Sexual Consent",
-      excerpt: "Why understanding and practicing sexual consent is essential.",
+      title: "Tầm Quan Trọng Của Sự Đồng Ý Trong Tình Dục",
+      excerpt:
+        "Tại sao việc hiểu và thực hành sự đồng ý trong tình dục là rất quan trọng.",
       fullText:
-        "Sexual consent is a fundamental component of any healthy sexual relationship. It ensures that both partners are willing and enthusiastic participants in sexual activity. This article explains what consent means, why it’s necessary, and how to ensure that both parties are comfortable and respect each other’s boundaries.\n\n" +
-        "Consent is not only about saying ‘yes’ or ‘no,’ but also about ongoing communication throughout the sexual encounter. It’s important to understand that consent can be revoked at any time, and both parties should always feel free to express their feelings and desires openly. This concept is crucial in fostering respect, trust, and mutual satisfaction in relationships.\n\n" +
-        "Sexual consent also plays a significant role in preventing sexual violence and abuse. By educating individuals about the importance of consent, society can reduce the prevalence of sexual assault and create a safer environment for everyone. Understanding and practicing consent is essential for building healthy relationships based on respect and equality.",
+        "Sự đồng ý trong tình dục là một thành component cơ bản của bất kỳ mối quan hệ tình dục lành mạnh nào. Nó đảm bảo rằng cả hai đối tác đều là những người tham gia tình nguyện và nhiệt tình trong hoạt động tình dục. Bài viết này giải thích sự đồng ý là gì, tại sao nó cần thiết, và làm thế nào để đảm bảo rằng cả hai bên đều cảm thấy thoải mái và tôn trọng ranh giới của nhau.\n\n" +
+        "Sự đồng ý không chỉ đơn giản là nói 'có' hoặc 'không', mà còn là việc giao tiếp liên tục trong suốt quá trình quan hệ tình dục. Cần phải hiểu rằng sự đồng ý có thể bị rút lại bất cứ lúc nào, và cả hai bên luôn cảm thấy tự do để bày tỏ cảm xúc và mong muốn của mình một cách cởi mở. Khái niệm này rất quan trọng trong việc thúc đẩy sự tôn trọng, tin tưởng, và sự thỏa mãn lẫn nhau trong các mối quan hệ.\n\n" +
+        "Sự đồng ý trong tình dục cũng đóng vai trò quan trọng trong việc ngăn ngừa bạo lực và lạm dụng tình dục. Bằng cách giáo dục mọi người về tầm quan trọng của sự đồng ý, xã hội có thể giảm thiểu tỷ lệ tội phạm tình dục và tạo ra một môi trường an toàn hơn cho mọi người. Hiểu và thực hành sự đồng ý là điều cần thiết để xây dựng những mối quan hệ lành mạnh dựa trên sự tôn trọng và bình đẳng.",
       date: "02/05/2025",
       image: "/blog/07.png",
     },
     {
       id: 8,
-      title: "Mental Health and Sexual Wellness",
-      excerpt: "How mental health affects sexual wellness and vice versa.",
+      title: "Sức Khỏe Tâm Thần Và Sự Lành Mạnh Tình Dục",
+      excerpt: "Tâm lý ảnh hưởng đến sức khỏe tình dục và ngược lại.",
       fullText:
-        "Mental health and sexual wellness are closely linked, and one can significantly affect the other. Anxiety, depression, and stress can impact a person’s desire and ability to engage in sexual activity, while poor sexual health can also contribute to mental health issues. This post explores the relationship between mental health and sexual wellness, highlighting the importance of a holistic approach to well-being.\n\n" +
-        "Mental health conditions, such as anxiety and depression, can lead to a decreased libido, sexual dysfunction, and challenges in maintaining healthy relationships. On the other hand, sexual issues, such as pain during intercourse or low sexual desire, can lead to feelings of frustration, isolation, or depression. It’s essential to address both mental and sexual health to achieve overall well-being.\n\n" +
-        "Seeking professional help when necessary, practicing open communication in relationships, and adopting healthy lifestyle habits such as regular exercise and stress management techniques are important steps toward improving both mental health and sexual wellness. By understanding this connection, individuals can lead healthier, more fulfilling lives.",
+        "Sức khỏe tâm thần và sự lành mạnh tình dục có mối liên hệ chặt chẽ với nhau, và một trong hai yếu tố này có thể ảnh hưởng đáng kể đến yếu tố kia. Lo âu, trầm cảm, và căng thẳng có thể tác động đến ham muốn và khả năng tham gia vào hoạt động tình dục, trong khi sức khỏe tình dục kém cũng có thể góp phần gây ra các vấn đề về sức khỏe tâm thần. Bài viết này khám phá mối quan hệ giữa sức khỏe tâm thần và sự lành mạnh tình dục, nhấn mạnh tầm quan trọng của một cách tiếp cận toàn diện đối với sức khỏe và hạnh phúc.\n\n" +
+        "Các tình trạng sức khỏe tâm thần như lo âu và trầm cảm có thể dẫn đến giảm ham muốn tình dục, rối loạn chức năng tình dục, và khó khăn trong việc duy trì các mối quan hệ lành mạnh. Ngược lại, các vấn đề về tình dục như đau khi quan hệ tình dục hoặc ham muốn tình dục thấp có thể dẫn đến cảm giác thất vọng, cô lập, hoặc trầm cảm. Do đó, việc giải quyết cả sức khỏe tâm thần và tình dục là rất quan trọng để đạt được sự khỏe mạnh toàn diện.\n\n" +
+        "Tìm kiếm sự giúp đỡ chuyên môn khi cần thiết, thực hành giao tiếp cởi mở trong các mối quan hệ, và áp dụng các thói quen sống lành mạnh như tập thể dục thường xuyên và kỹ thuật quản lý căng thẳng là những bước quan trọng để cải thiện cả sức khỏe tâm thần và sự lành mạnh tình dục. Bằng cách hiểu mối liên hệ này, các cá nhân có thể sống một cuộc sống khỏe mạnh và viên mãn hơn.",
       date: "25/04/2025",
       image: "/blog/08.png",
     },
     {
       id: 9,
-      title: "Sex Education and Its Importance",
-      excerpt: "Why sex education is an essential part of everyone's life.",
+      title: "Giáo Dục Giới Tính Và Tầm Quan Trọng Của Nó",
+      excerpt:
+        "Tại sao giáo dục giới tính là một phần thiết yếu trong cuộc sống của mỗi người.",
       fullText:
-        "Sex education plays a crucial role in helping individuals understand their bodies, relationships, and the rights related to their gender. It provides individuals with knowledge about body changes, sexual health, and how to protect themselves from sexual abuse. This is especially important for teenagers, as they begin to experience physical and emotional changes during adolescence.\n\n" +
-        "One of the main benefits of sex education is its ability to teach about sexual consent, which is essential for building healthy, respectful relationships. It helps individuals understand their rights and responsibilities, thus preventing abuse and fostering mutual respect in relationships. Additionally, it teaches about safe sex practices, including contraception methods and the prevention of sexually transmitted infections (STIs), reducing the risks associated with unprotected sex.\n\n" +
-        "Sex education also empowers individuals to make informed decisions regarding their sexual health, helping them build self-respect and establish personal boundaries. It promotes open communication about relationships, helping to break down stigmas around sexuality and fostering positive attitudes. In a world that is becoming increasingly complex, equipping teenagers with the necessary knowledge enables them to make responsible, thoughtful decisions about their lives.\n\n" +
-        "Ultimately, sex education helps individuals form healthy habits and relationships, promoting physical, mental, and social well-being. It is an essential tool for their development, leading to a healthier and more responsible life.",
+        "Giáo dục giới tính đóng vai trò quan trọng trong việc giúp mọi người hiểu về cơ thể, các mối quan hệ, và những quyền lợi liên quan đến giới tính của họ. Nó cung cấp cho mọi người kiến thức về sự thay đổi của cơ thể, sức khỏe tình dục, và cách bảo vệ bản thân khỏi lạm dụng tình dục. Điều này đặc biệt quan trọng đối với thanh thiếu niên, khi họ bắt đầu trải nghiệm những thay đổi về thể chất và cảm xúc trong giai đoạn dậy thì.\n\n" +
+        "Một trong những lợi ích chính của giáo dục giới tính là khả năng dạy về sự đồng ý trong tình dục, điều này rất cần thiết để xây dựng các mối quan hệ lành mạnh và tôn trọng. Nó giúp mọi người hiểu quyền lợi và trách nhiệm của mình, từ đó ngăn ngừa lạm dụng và thúc đẩy sự tôn trọng lẫn nhau trong các mối quan hệ. Thêm vào đó, nó còn dạy về các biện pháp an toàn trong quan hệ tình dục, bao gồm các phương pháp tránh thai và phòng ngừa các bệnh lây truyền qua đường tình dục (STIs), giảm thiểu các rủi ro liên quan đến quan hệ tình dục không an toàn.\n\n" +
+        "Giáo dục giới tính cũng trao quyền cho mọi người để đưa ra những quyết định đúng đắn về sức khỏe tình dục của mình, giúp họ xây dựng lòng tự trọng và thiết lập ranh giới cá nhân. Nó thúc đẩy việc giao tiếp cởi mở về các mối quan hệ, giúp xóa bỏ các định kiến về tình dục và phát triển những thái độ tích cực. Trong một thế giới ngày càng phức tạp, việc trang bị cho thanh thiếu niên những kiến thức cần thiết sẽ giúp họ có thể đưa ra những quyết định có trách nhiệm và suy nghĩ thấu đáo về cuộc sống của mình.\n\n" +
+        "Cuối cùng, giáo dục giới tính giúp mọi người hình thành những thói quen và mối quan hệ lành mạnh, thúc đẩy sự phát triển về thể chất, tinh thần, và xã hội. Nó là một công cụ thiết yếu cho sự phát triển của họ, dẫn đến một cuộc sống khỏe mạnh và có trách nhiệm hơn.",
       date: "01/07/2025",
       image: "/blog/09.png",
     },
     {
       id: 10,
-      title: "Reproductive Health & Check-ups",
-      excerpt: "Benefits of reproductive health care and check-ups.",
+      title: "Sức Khỏe Sinh Sản & Khám Phá",
+      excerpt:
+        "Lợi ích của việc chăm sóc sức khỏe sinh sản và khám sức khỏe định kỳ.",
       fullText:
-        "Reproductive health care is vital for women at all stages of life. It includes various methods and practices to ensure the health and well-being of women's reproductive systems. From adolescence to menopause, women need to understand their fertility, birth control options, and the importance of regular gynecological exams. As women age, their reproductive health needs change, and staying informed is key to maintaining good health.\n\n" +
-        "During the reproductive years, monitoring menstrual health is crucial. Women should seek professional advice if any irregularities occur. Birth control options such as pills, IUDs, implants, and condoms provide women with the ability to control their reproductive health. Regular check-ups and screenings, including Pap smears and mammograms, are essential for early detection of potential health issues. As women approach menopause, they should understand the changes affecting their bodies and seek advice on managing symptoms and preventing health risks.\n\n" +
-        "By maintaining a healthy lifestyle, such as proper nutrition, regular exercise, and stress management, women can improve their reproductive health and overall well-being. Regular visits to healthcare providers ensure that women have access to necessary resources and support, leading to better health outcomes throughout their lives.",
+        "Chăm sóc sức khỏe sinh sản là rất quan trọng đối với phụ nữ ở mọi lứa tuổi. Nó bao gồm nhiều phương pháp và thực hành khác nhau để đảm bảo sức khỏe và sự phát triển của hệ thống sinh sản nữ. Từ tuổi dậy thì đến thời kỳ mãn kinh, phụ nữ cần hiểu biết về khả năng sinh sản, các biện pháp tránh thai, và tầm quan trọng của việc khám phụ khoa định kỳ. Khi phụ nữ lớn tuổi, nhu cầu về sức khỏe sinh sản của họ cũng thay đổi, và việc cập nhật thông tin về những thay đổi này là chìa khóa để duy trì sức khỏe tốt.\n\n" +
+        "Trong những năm sinh sản, việc theo dõi sức khỏe kinh nguyệt và tìm kiếm sự tư vấn chuyên môn nếu có bất kỳ bất thường nào xảy ra là rất quan trọng. Các biện pháp tránh thai như thuốc tránh thai, vòng tránh thai (IUD), que cấy, và bao cao su, giúp phụ nữ có khả năng kiểm soát sức khỏe sinh sản của mình. Việc khám sức khỏe định kỳ và sàng lọc, bao gồm xét nghiệm Pap và chụp X-quang vú, rất cần thiết để phát hiện sớm các vấn đề sức khỏe tiềm ẩn. Khi phụ nữ tiến gần đến thời kỳ mãn kinh, họ nên nhận thức được những thay đổi ảnh hưởng đến cơ thể và tìm kiếm lời khuyên về cách quản lý các triệu chứng và ngăn ngừa các rủi ro sức khỏe tiềm ẩn.\n\n" +
+        "Bằng cách duy trì một lối sống lành mạnh, như dinh dưỡng hợp lý, tập thể dục thường xuyên, và quản lý căng thẳng, phụ nữ có thể cải thiện sức khỏe sinh sản và tổng thể của mình. Việc thăm khám định kỳ với các nhà cung cấp dịch vụ y tế đảm bảo rằng phụ nữ có quyền truy cập vào các nguồn lực và hỗ trợ cần thiết, dẫn đến kết quả sức khỏe tốt hơn trong suốt cuộc đời.",
       date: "05/07/2025",
       image: "/blog/10.png",
     },
@@ -141,11 +143,34 @@ export default function BlogPages() {
   return (
     <div className="blog-page">
       <div className="blog-header">
-        <h1>Blog Sharing Knowledge</h1>
-        <p>
-          Sharing insights about sex education, reproductive health care, and
-          sexual wellness.
-        </p>
+        <h1
+          style={{
+            fontFamily:
+              "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+            textAlign: "center",
+            lineHeight: 1.2,
+            textTransform: "uppercase",
+          }}
+        >
+          Chia sẻ Kiến Thức Về Chăm Sóc Sức Khỏe & Sinh Sản
+        </h1>
+        <p
+          style={{
+            fontFamily:
+              "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+            fontWeight: 500,
+            fontSize: "1.22rem",
+            color: "#222",
+            textAlign: "center",
+            margin: 0,
+            letterSpacing: "0.04em",
+            lineHeight: 1.7,
+            maxWidth: 700,
+            marginLeft: "auto",
+            marginRight: "auto",
+            paddingTop: 6,
+          }}
+        ></p>
       </div>
 
       <div className="blog-posts">
@@ -162,7 +187,7 @@ export default function BlogPages() {
                 className="view-full"
                 onClick={() => handleOpenModal(post)}
               >
-                Read more
+                Xem chi tiết
               </button>
             </div>
           </div>
@@ -170,21 +195,18 @@ export default function BlogPages() {
       </div>
 
       {/* Modal */}
-      {/* Modal */}
       {isModalOpen && modalPost && (
         <Modal show={isModalOpen} onHide={handleCloseModal} size="lg">
           <Modal.Header closeButton>
-            {" "}
-            {/* Sử dụng closeButton từ React-Bootstrap */}
             <Modal.Title>{modalPost.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h4>Our Commitment</h4>
+            <h4>Cam kết của chúng tôi</h4>
             <p>{modalPost.fullText}</p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseModal}>
-              Close
+              Đóng
             </Button>
           </Modal.Footer>
         </Modal>

@@ -17,26 +17,29 @@ export default function HealthWiseTimeline() {
     <div className="container bg-white p-4" style={{ maxWidth: "960px" }}>
       <div className="mb-5">
         <Title level={4} className="fw-bold mb-3">
-          Trying to conceive?
+          Đang mong có thai?
         </Title>
         <p>
-          Our <Link href="/ovulation">Ovulation Calculator</Link> will tell you
-          your fertile days and the resulting due dates for the next six cycles.
+          <Link href="/ovulation">Công cụ Tính ngày rụng trứng</Link> sẽ giúp
+          bạn biết những ngày dễ thụ thai nhất và ngày dự sinh cho 6 chu kỳ tiếp
+          theo.
         </p>
         <p>
-          Also, find out how long it usually takes to conceive, how to{" "}
-          <Link href="#">get pregnant fast</Link>, and the{" "}
-          <Link href="#">top 10 signs of pregnancy</Link>.
+          Ngoài ra, bạn có thể tìm hiểu mất bao lâu để thụ thai, cách{" "}
+          <Link href="#">có thai nhanh</Link> và{" "}
+          <Link href="#">10 dấu hiệu mang thai phổ biến</Link>.
         </p>
 
         {/* App promo */}
         <div className="row bg-light p-3 rounded-3 mt-4 align-items-center">
           <div className="col-md-6 mb-3 mb-md-0">
-            <p className="fw-semibold mb-2">Track your pregnancy on our free</p>
-            <p className="fw-bold fs-5 mb-3">#1 pregnancy &amp; baby app</p>
+            <p className="fw-semibold mb-2">
+              Theo dõi thai kỳ của bạn miễn phí trên
+            </p>
+            <p className="fw-bold fs-5 mb-3">Ứng dụng thai sản & em bé số 1</p>
             <img
               src="/placeholder.svg"
-              alt="QR Code"
+              alt="Mã QR"
               className="img-fluid"
               style={{ maxWidth: "128px" }}
             />
@@ -44,7 +47,7 @@ export default function HealthWiseTimeline() {
           <div className="col-md-6 text-center">
             <img
               src="/placeholder.svg"
-              alt="App Screenshot"
+              alt="Ảnh ứng dụng"
               className="img-fluid"
               style={{ maxWidth: "200px" }}
             />
@@ -53,23 +56,23 @@ export default function HealthWiseTimeline() {
       </div>
 
       <Title level={2} className="fw-bold mb-4">
-        Pregnancy timeline
+        Dòng thời gian thai kỳ
       </Title>
 
       <div className="mb-5">
         <Title level={4} className="text-success mb-1">
-          First Trimester
+          Tam cá nguyệt đầu tiên
         </Title>
-        <p className="text-muted small mb-4">Mar 13, 2025 to Jun 5, 2025</p>
+        <p className="text-muted small mb-4">13/03/2025 đến 05/06/2025</p>
 
         <div>
           <TimelineItem
             month="Mar"
             day="13"
-            weeks="2 weeks"
+            weeks="2 tuần"
             description={
               <>
-                Your baby is <Link href="#">conceived</Link>
+                Bé của bạn đã được <Link href="#">thụ thai</Link>
               </>
             }
           />
@@ -77,10 +80,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Mar"
             day="27"
-            weeks="4 weeks"
+            weeks="4 tuần"
             description={
               <>
-                You'll have a positive <Link href="#">pregnancy test</Link>
+                Bạn sẽ có <Link href="#">kết quả thử thai dương tính</Link>
               </>
             }
           />
@@ -88,11 +91,11 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Apr"
             day="10"
-            weeks="6 weeks"
+            weeks="6 tuần"
             description={
               <>
-                Cells in your <Link href="#">baby's future heart</Link> are
-                flickering
+                Các tế bào ở <Link href="#">tim tương lai của bé</Link> bắt đầu
+                đập
               </>
             }
           />
@@ -100,10 +103,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Apr"
             day="10"
-            weeks="6-8 weeks"
+            weeks="6-8 tuần"
             description={
               <>
-                You may have your <Link href="#">first prenatal visit</Link>
+                Bạn có thể đi <Link href="#">khám thai lần đầu</Link>
               </>
             }
           />
@@ -111,11 +114,11 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="May"
             day="8"
-            weeks="10 weeks"
+            weeks="10 tuần"
             description={
               <>
-                You'll be offered <Link href="#">NIPT</Link> (Noninvasive
-                prenatal test)
+                Bạn sẽ được đề nghị làm <Link href="#">NIPT</Link> (xét nghiệm
+                tiền sản không xâm lấn)
               </>
             }
           />
@@ -123,11 +126,11 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="May"
             day="8"
-            weeks="10-13 weeks"
+            weeks="10-13 tuần"
             description={
               <>
-                You can choose to have <Link href="#">CVS</Link> (Chorionic
-                villus sampling)
+                Bạn có thể chọn làm <Link href="#">CVS</Link> (sinh thiết gai
+                nhau)
               </>
             }
           />
@@ -135,10 +138,11 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="May"
             day="15"
-            weeks="11-14 weeks"
+            weeks="11-14 tuần"
             description={
               <>
-                You may have an <Link href="#">NT scan</Link> and blood test
+                Bạn có thể làm <Link href="#">siêu âm đo độ mờ da gáy</Link> và
+                xét nghiệm máu
               </>
             }
           />
@@ -146,11 +150,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="May"
             day="22"
-            weeks="12 weeks"
+            weeks="12 tuần"
             description={
               <>
-                You may <Link href="#">hear your baby's heartbeat</Link> with a
-                Doppler
+                Bạn có thể <Link href="#">nghe tim thai</Link> bằng Doppler
               </>
             }
           />
@@ -159,18 +162,18 @@ export default function HealthWiseTimeline() {
 
       <div className="mb-5">
         <Title level={4} className="text-success mb-1">
-          Second Trimester
+          Tam cá nguyệt thứ hai
         </Title>
-        <p className="text-muted small mb-4">Jun 5, 2025 to Sep 11, 2025</p>
+        <p className="text-muted small mb-4">05/06/2025 đến 11/09/2025</p>
 
         <div>
           <TimelineItem
             month="Jun"
             day="12"
-            weeks="15-20 weeks"
+            weeks="15-20 tuần"
             description={
               <>
-                You may have <Link href="#">amniocentesis</Link>
+                Bạn có thể làm <Link href="#">chọc ối</Link>
               </>
             }
           />
@@ -178,10 +181,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Jun"
             day="19"
-            weeks="16-18 weeks"
+            weeks="16-18 tuần"
             description={
               <>
-                You may have a <Link href="#">quad scan</Link> test
+                Bạn có thể làm xét nghiệm <Link href="#">quad scan</Link>
               </>
             }
           />
@@ -189,10 +192,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Jun"
             day="19"
-            weeks="16-22 weeks"
+            weeks="16-22 tuần"
             description={
               <>
-                You can <Link href="#">feel your baby kick</Link>
+                Bạn có thể <Link href="#">cảm nhận bé đạp</Link>
               </>
             }
           />
@@ -200,10 +203,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Jul"
             day="3"
-            weeks="18-22 weeks"
+            weeks="18-22 tuần"
             description={
               <>
-                You'll have a mid-pregnancy <Link href="#">ultrasound</Link>
+                Bạn sẽ được <Link href="#">siêu âm giữa thai kỳ</Link>
               </>
             }
           />
@@ -211,10 +214,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Aug"
             day="7"
-            weeks="23 weeks"
+            weeks="23 tuần"
             description={
               <>
-                Your baby can <Link href="#">hear you talk</Link>
+                Bé có thể <Link href="#">nghe bạn nói chuyện</Link>
               </>
             }
           />
@@ -222,10 +225,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Aug"
             day="14"
-            weeks="24-28 weeks"
+            weeks="24-28 tuần"
             description={
               <>
-                <Link href="#">glucose screening</Link>
+                <Link href="#">Tầm soát tiểu đường thai kỳ</Link>
               </>
             }
           />
@@ -233,10 +236,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Sep"
             day="4"
-            weeks="27 weeks"
+            weeks="27 tuần"
             description={
               <>
-                Your baby will <Link href="#">open their eyes</Link>
+                Bé sẽ <Link href="#">mở mắt</Link>
               </>
             }
           />
@@ -246,19 +249,19 @@ export default function HealthWiseTimeline() {
       {/* Third Trimester */}
       <div className="mb-5">
         <Title level={4} className="text-success mb-1">
-          Third Trimester
+          Tam cá nguyệt thứ ba
         </Title>
-        <p className="text-muted small mb-4">Sep 11, 2025 to Dec 4, 2025</p>
+        <p className="text-muted small mb-4">11/09/2025 đến 04/12/2025</p>
 
         <div>
           <TimelineItem
             month="Sep"
             day="11"
-            weeks="28 weeks"
+            weeks="28 tuần"
             description={
               <>
-                You'll have <Link href="#">prenatal visits</Link> every two
-                weeks until 36 weeks, then weekly
+                Bạn sẽ đi khám thai định kỳ 2 tuần/lần cho đến tuần 36, sau đó
+                mỗi tuần 1 lần
               </>
             }
           />
@@ -266,11 +269,11 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Sep"
             day="11"
-            weeks="28 weeks"
+            weeks="28 tuần"
             description={
               <>
-                If you're <Link href="#">Rh negative</Link>, you'll have a shot
-                of Rh immune globulin (RhoGAM)
+                Nếu bạn <Link href="#">Rh âm</Link>, bạn sẽ được tiêm Rh immune
+                globulin (RhoGAM)
               </>
             }
           />
@@ -278,10 +281,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Oct"
             day="23"
-            weeks="34 weeks"
+            weeks="34 tuần"
             description={
               <>
-                Your baby has <Link href="#">fingernails</Link>
+                Bé đã có <Link href="#">móng tay</Link>
               </>
             }
           />
@@ -289,10 +292,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Nov"
             day="6"
-            weeks="36-37 weeks"
+            weeks="36-37 tuần"
             description={
               <>
-                You'll be screened for <Link href="#">Group B strep</Link>
+                Bạn sẽ được tầm soát <Link href="#">liên cầu khuẩn nhóm B</Link>
               </>
             }
           />
@@ -300,10 +303,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Nov"
             day="13"
-            weeks="37 weeks"
+            weeks="37 tuần"
             description={
               <>
-                Your baby is <Link href="#">early term</Link>
+                Bé của bạn là <Link href="#">giai đoạn đủ sớm</Link>
               </>
             }
           />
@@ -311,10 +314,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Nov"
             day="27"
-            weeks="39 weeks"
+            weeks="39 tuần"
             description={
               <>
-                Your baby is <Link href="#">full term</Link>
+                Bé của bạn là <Link href="#">đủ tháng</Link>
               </>
             }
           />
@@ -322,10 +325,10 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Dec"
             day="4"
-            weeks="40 weeks / Newborn"
+            weeks="40 tuần / Sơ sinh"
             description={
               <>
-                Your baby is <Link href="#">due!</Link>
+                Bé của bạn <Link href="#">đến ngày dự sinh!</Link>
               </>
             }
           />
@@ -333,11 +336,11 @@ export default function HealthWiseTimeline() {
           <TimelineItem
             month="Dec"
             day="11"
-            weeks="41 weeks"
+            weeks="41 tuần"
             description={
               <>
-                If your labor doesn't start, you may be{" "}
-                <Link href="#">induced</Link>
+                Nếu bạn chưa chuyển dạ, có thể sẽ được{" "}
+                <Link href="#">kích sinh</Link>
               </>
             }
           />
@@ -347,7 +350,7 @@ export default function HealthWiseTimeline() {
       {/* Fun facts section */}
       <div>
         <Title level={4} className="fw-bold mb-4">
-          Fun facts about December 4 babies
+          Những điều thú vị về các bé sinh ngày 4/12
         </Title>
 
         <div className="border-top pt-4 pb-4">
@@ -365,11 +368,9 @@ export default function HealthWiseTimeline() {
               </div>
             </div>
             <div className="col">
-              <p className="text-primary fw-medium mb-1">Horoscope</p>
-              <h5 className="fw-bold mb-1">Sagittarius</h5>
-              <p>
-                Your little one will be organized, helpful, and intelligent.
-              </p>
+              <p className="text-primary fw-medium mb-1">Cung hoàng đạo</p>
+              <h5 className="fw-bold mb-1">Nhân Mã</h5>
+              <p>Bé sẽ là người ngăn nắp, biết giúp đỡ và thông minh.</p>
             </div>
           </div>
         </div>
@@ -389,11 +390,11 @@ export default function HealthWiseTimeline() {
               </div>
             </div>
             <div className="col">
-              <p className="text-primary fw-medium mb-1">Birth stone</p>
+              <p className="text-primary fw-medium mb-1">Đá sinh</p>
               <h5 className="fw-bold mb-1">Tanzanite</h5>
               <p>
-                This gemstone features deep blue and purple hues and can only be
-                found in a small region of Tanzania.
+                Loại đá quý này có màu xanh lam và tím đậm, chỉ tìm thấy ở một
+                vùng nhỏ của Tanzania.
               </p>
             </div>
           </div>
@@ -415,13 +416,13 @@ export default function HealthWiseTimeline() {
             </div>
             <div className="col">
               <p className="text-primary fw-medium mb-1">
-                Celebrities Born On December 4
+                Người nổi tiếng sinh ngày 4/12
               </p>
               <h5 className="fw-bold mb-1">Jay-Z</h5>
               <p>
-                He was born on December 4, 1969, in New York City. He's one of
-                the world's best-selling musical artists and regarded as one of
-                the greatest rappers of all time.
+                Anh sinh ngày 4/12/1969 tại New York City. Jay-Z là một trong
+                những nghệ sĩ âm nhạc bán chạy nhất thế giới và được xem là một
+                trong những rapper vĩ đại nhất mọi thời đại.
               </p>
             </div>
           </div>

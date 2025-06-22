@@ -61,7 +61,7 @@ const DrawerMenu = ({
             className="mb-4 p-5 fs-3"
             onCloseDrawer={handleCloseDrawer}
           >
-            My Family Info
+            Thông tin gia đình
           </StyledButton>
         </motion.div>
         <motion.div variants={itemVariants}>
@@ -70,7 +70,7 @@ const DrawerMenu = ({
             className="mb-4 p-5 fs-3"
             onCloseDrawer={handleCloseDrawer}
           >
-            Personal Info
+            Thông tin cá nhân
           </StyledButton>
         </motion.div>
         <motion.div variants={itemVariants}>
@@ -80,7 +80,7 @@ const DrawerMenu = ({
             type="danger"
             onClick={handleLogout}
           >
-            Log out
+            Đăng xuất
           </StyledButton>
         </motion.div>
       </motion.div>

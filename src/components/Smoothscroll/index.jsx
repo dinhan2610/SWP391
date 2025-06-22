@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 
+// Bọc nội dung để tạo hiệu ứng cuộn mượt cho toàn bộ trang
 const SmoothScrollWrapper = ({ children }) => {
   useEffect(() => {
     const handleWheel = (event) => {
       event.preventDefault();
-      const isTrackpad = Math.abs(event.deltaY) < 15; // Giá trị nhỏ hơn -> trackpad
+      const isTrackpad = Math.abs(event.deltaY) < 15; // Nếu là trackpad thì tốc độ cao hơn
       const speedFactor = isTrackpad ? 2000 : 8; // Tăng tốc độ cho trackpad
 
       window.scrollBy({

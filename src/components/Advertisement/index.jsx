@@ -7,7 +7,7 @@ export default function Advertisement() {
         <img
           className="shadow p-3 mb-5 bg-body rounded"
           src={AdvertisementImage}
-          alt="A picture of Advertisement"
+          alt="Hình ảnh quảng cáo"
         />
       </div>
     </div>

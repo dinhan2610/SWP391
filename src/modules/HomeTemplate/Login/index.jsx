@@ -51,7 +51,7 @@ export default function LoginUI({ onSwitchTab }) {
         <div style={{ flex: 1, padding: "20px" }}>
           <div className="row justify-content-md-center">
             <div className="col-md-auto mb-3">
-              <Title>Login</Title>
+              <Title>Đăng nhập</Title>
             </div>
           </div>
 
@@ -62,15 +62,15 @@ export default function LoginUI({ onSwitchTab }) {
               marginLeft: "24px",
             }}
           >
-            Enter your email to log in to your HealthWise account!
+            Nhập email để đăng nhập vào tài khoản HealthWise của bạn!
           </Text>
 
           <Form layout="vertical" onFinish={handleLogin}>
             <Form.Item
               name="email"
               rules={[
-                { type: "email", message: "Email is incorrect!" },
-                { required: true, message: "Please enter your email!" },
+                { type: "email", message: "Email không hợp lệ!" },
+                { required: true, message: "Vui lòng nhập email!" },
               ]}
               style={{ marginBottom: 35 }}
             >
@@ -84,12 +84,12 @@ export default function LoginUI({ onSwitchTab }) {
 
             <Form.Item
               name="password"
-              rules={[{ required: true, message: "Please enter password!" }]}
+              rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
               style={{ marginBottom: 20 }}
             >
               <Input.Password
                 prefix={<LockOutlined style={{ color: "#2563eb" }} />}
-                placeholder="Password"
+                placeholder="Mật khẩu"
                 style={{ height: 50, fontSize: 16 }}
                 autoComplete="current-password"
               />
@@ -115,7 +115,7 @@ export default function LoginUI({ onSwitchTab }) {
                     type="submit"
                     disabled={loading}
                   >
-                    {loading ? "Đang đăng nhập..." : "Log in"}
+                    {loading ? "Đang đăng nhập..." : "Đăng nhập"}
                   </button>
                 </div>
               </div>
@@ -123,7 +123,7 @@ export default function LoginUI({ onSwitchTab }) {
           </Form>
 
           <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <Text>New to HealthWise? </Text>
+            <Text>Bạn mới sử dụng HealthWise? </Text>
             <a
               href="#"
               onClick={onSwitchTab}
@@ -132,7 +132,7 @@ export default function LoginUI({ onSwitchTab }) {
                 fontWeight: 500,
               }}
             >
-              Sign in now!
+              Đăng ký ngay!
             </a>
           </div>
         </div>

@@ -76,7 +76,7 @@ export default function Signin({ setActiveTab, onSwitchTab }) {
         <div style={{ width: "100%", maxWidth: 400, margin: "0 auto" }}>
           <div className="row justify-content-md-center">
             <div className="col-md-auto mb-3">
-              <Title>Sign in</Title>
+              <Title>Đăng ký</Title>
             </div>
           </div>
           <Text
@@ -86,23 +86,23 @@ export default function Signin({ setActiveTab, onSwitchTab }) {
               marginLeft: "24px",
             }}
           >
-            Enter your email to become a new HealthWise member!
+            Nhập email để trở thành thành viên mới của HealthWise!
           </Text>
           <Form layout="vertical" onFinish={handleSubmit}>
             <Form.Item
               name="fullname"
               rules={[
-                { required: true, message: "Please enter full name!" },
+                { required: true, message: "Vui lòng nhập họ tên!" },
                 {
                   pattern: /^[^\d]+$/,
-                  message: "Full name must not contain numbers!",
+                  message: "Họ tên không được chứa số!",
                 },
               ]}
               style={{ marginBottom: 35 }}
             >
               <Input
                 prefix={<UserOutlined style={{ color: "#2563eb" }} />}
-                placeholder="Full name"
+                placeholder="Họ và tên"
                 value={user.fullname}
                 onChange={(e) => setUser({ ...user, fullname: e.target.value })}
                 style={{ height: 50, fontSize: 16 }}
@@ -111,8 +111,8 @@ export default function Signin({ setActiveTab, onSwitchTab }) {
             <Form.Item
               name="email"
               rules={[
-                { type: "email", message: "Email is incorrect!" },
-                { required: true, message: "Please enter email!" },
+                { type: "email", message: "Email không hợp lệ!" },
+                { required: true, message: "Vui lòng nhập email!" },
               ]}
               style={{ marginBottom: 35 }}
             >
@@ -127,20 +127,20 @@ export default function Signin({ setActiveTab, onSwitchTab }) {
             <Form.Item
               name="password"
               rules={[
-                { required: true, message: "Please enter password!" },
-                { min: 8, message: "Password must be at least 8 characters!" },
+                { required: true, message: "Vui lòng nhập mật khẩu!" },
+                { min: 8, message: "Mật khẩu phải có ít nhất 8 ký tự!" },
                 {
                   pattern:
                     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
                   message:
-                    "Password must include uppercase, lowercase, number, and special character!",
+                    "Mật khẩu phải có chữ hoa, chữ thường, số và ký tự đặc biệt!",
                 },
               ]}
               style={{ marginBottom: 50 }}
             >
               <Input.Password
                 prefix={<LockOutlined style={{ color: "#2563eb" }} />}
-                placeholder="Password"
+                placeholder="Mật khẩu"
                 value={user.password}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
                 style={{ height: 50, fontSize: 16 }}
@@ -150,20 +150,20 @@ export default function Signin({ setActiveTab, onSwitchTab }) {
               <div className="row justify-content-md-center">
                 <div className="col-md-auto">
                   <button className="rts-btn btn-primary" type="submit">
-                    Sign in
+                    Đăng ký
                   </button>
                 </div>
               </div>
             </Form.Item>
           </Form>
           <div style={{ textAlign: "center", marginTop: "20px" }}>
-            <Text>Already have an account? </Text>
+            <Text>Bạn đã có tài khoản? </Text>
             <a
               href="#"
               onClick={onSwitchTab}
               style={{ color: "#2563eb", fontWeight: 500 }}
             >
-              Log in now!
+              Đăng nhập ngay!
             </a>
           </div>
         </div>

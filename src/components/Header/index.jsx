@@ -89,48 +89,122 @@ const Headers = () => {
                 >
                   <img src={logo} alt="logo_area" />
                 </motion.a>
-                <div className="nav-area">
-                  <ul>
+                <div className="nav-area" style={{ marginRight: 0 }}>
+                  <ul
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 600,
+                      letterSpacing: 0.1,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 48,
+                      padding: 0,
+                      margin: 0,
+                    }}
+                  >
                     <motion.li
                       className="main-nav"
                       whileHover={{ scale: 1.05 }}
-                      style={{ display: "inline-block", marginRight: 20 }}
+                      style={{ display: "inline-block", padding: 0, margin: 0 }}
                     >
-                      <a onClick={() => navigate("/")}>Home</a>
-                    </motion.li>
-                    <motion.li
-                      className="main-nav"
-                      whileHover={{ scale: 1.05 }}
-                      style={{ display: "inline-block", marginRight: 20 }}
-                    >
-                      <a onClick={() => navigate("/blog")}>Blog</a>
-                    </motion.li>
-                    <motion.li
-                      className="main-nav"
-                      whileHover={{ scale: 1.05 }}
-                      style={{ display: "inline-block", marginRight: 20 }}
-                    >
-                      <a onClick={() => navigate("/stis-testing-services")}>
-                        STIs & Testing Services
+                      <a
+                        onClick={() => navigate("/")}
+                        style={{
+                          color: "#888", // màu xám mặc định
+                          transition: "color 0.18s cubic-bezier(.4,2,.6,1.2)",
+                        }}
+                        onMouseOver={(e) =>
+                          (e.currentTarget.style.color = "#000")
+                        }
+                        onMouseOut={(e) =>
+                          (e.currentTarget.style.color = "#888")
+                        }
+                      >
+                        Trang chủ
                       </a>
                     </motion.li>
                     <motion.li
                       className="main-nav"
                       whileHover={{ scale: 1.05 }}
-                      style={{ display: "inline-block", marginRight: 20 }}
+                      style={{ display: "inline-block", padding: 0, margin: 0 }}
                     >
-                      <a onClick={() => navigate("/booking-consultation")}>
-                        Consultation & Booking
+                      <a
+                        onClick={() => navigate("/blog")}
+                        style={{
+                          color: "#888", // màu xám mặc định
+                          transition: "color 0.18s cubic-bezier(.4,2,.6,1.2)",
+                        }}
+                        onMouseOver={(e) =>
+                          (e.currentTarget.style.color = "#000")
+                        }
+                        onMouseOut={(e) =>
+                          (e.currentTarget.style.color = "#888")
+                        }
+                      >
+                        Bài viết
                       </a>
                     </motion.li>
-
                     <motion.li
                       className="main-nav"
                       whileHover={{ scale: 1.05 }}
-                      style={{ display: "inline-block", marginRight: 20 }}
+                      style={{ display: "inline-block", padding: 0, margin: 0 }}
                     >
-                      <a onClick={() => navigate("/ovulation")}>
-                        Cycle Tracking
+                      <a
+                        onClick={() => navigate("/stis-testing-services")}
+                        style={{
+                          color: "#888", // màu xám mặc định
+                          transition: "color 0.18s cubic-bezier(.4,2,.6,1.2)",
+                        }}
+                        onMouseOver={(e) =>
+                          (e.currentTarget.style.color = "#000")
+                        }
+                        onMouseOut={(e) =>
+                          (e.currentTarget.style.color = "#888")
+                        }
+                      >
+                        Dịch vụ xét nghiệm & STIs
+                      </a>
+                    </motion.li>
+                    <motion.li
+                      className="main-nav"
+                      whileHover={{ scale: 1.05 }}
+                      style={{ display: "inline-block", padding: 0, margin: 0 }}
+                    >
+                      <a
+                        onClick={() => navigate("/booking-consultation")}
+                        style={{
+                          color: "#888", // màu xám mặc định
+                          transition: "color 0.18s cubic-bezier(.4,2,.6,1.2)",
+                        }}
+                        onMouseOver={(e) =>
+                          (e.currentTarget.style.color = "#000")
+                        }
+                        onMouseOut={(e) =>
+                          (e.currentTarget.style.color = "#888")
+                        }
+                      >
+                        Tư vấn & Đặt lịch
+                      </a>
+                    </motion.li>
+                    <motion.li
+                      className="main-nav"
+                      whileHover={{ scale: 1.05 }}
+                      style={{ display: "inline-block", padding: 0, margin: 0 }}
+                    >
+                      <a
+                        onClick={() => navigate("/ovulation")}
+                        style={{
+                          color: "#888", // màu xám mặc định
+                          transition: "color 0.18s cubic-bezier(.4,2,.6,1.2)",
+                        }}
+                        onMouseOver={(e) =>
+                          (e.currentTarget.style.color = "#000")
+                        }
+                        onMouseOut={(e) =>
+                          (e.currentTarget.style.color = "#888")
+                        }
+                      >
+                        Theo dõi chu kỳ
                       </a>
                     </motion.li>
                   </ul>
@@ -138,7 +212,7 @@ const Headers = () => {
               </div>
               <div className="header-right">
                 <div className="input-area">
-                  <input id="myInput" type="text" placeholder="Search..." />
+                  <input id="myInput" type="text" placeholder="Tìm kiếm..." />
                   <FontAwesomeIcon
                     icon={faMagnifyingGlass}
                     className="search-icon"
@@ -160,7 +234,7 @@ const Headers = () => {
                     className="rts-btn btn-primary"
                     whileHover={{ scale: 1.05 }}
                   >
-                    Login/Signin
+                    Đăng nhập/Đăng ký
                   </motion.button>
                 )}
 

@@ -17,20 +17,28 @@ export default function Aboutus() {
               <div className="about-content-wrapper-right">
                 <div className="title-wrapper-left">
                   <a
-                    href="/about" // Đặt URL bạn muốn chuyển tới
-                    className="pre wow fadeInUp"
+                    href="/about"
+                    className="pre wow fadeInUp about-link-border"
                     data-wow-delay=".2s"
                     data-wow-duration=".8s"
                   >
-                    About Us
+                    Giới thiệu
                   </a>
                   <h2
                     className="title wow fadeInUp"
                     data-wow-delay=".4s"
                     data-wow-duration=".8s"
+                    style={{
+                      fontFamily:
+                        "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+                      fontWeight: 800,
+                      letterSpacing: 0.5,
+                      lineHeight: 1.15,
+                      fontSize: "40px",
+                    }}
                   >
-                    Providing top-tier healthcare <br /> with a patient-centered
-                    focus.
+                    Dịch vụ chăm sóc sức khỏe hàng đầu - Lấy bệnh nhân làm trung
+                    tâm
                   </h2>
                 </div>
                 <p
@@ -38,10 +46,10 @@ export default function Aboutus() {
                   data-wow-delay=".6s"
                   data-wow-duration=".8s"
                 >
-                  At HealthWish, we are committed to delivering outstanding
-                  healthcare services, prioritizing the needs of our patients.
-                  Our goal is to enhance the health and quality of life for our
-                  community.
+                  Tại HealthWish, chúng tôi cam kết mang đến dịch vụ chăm sóc
+                  sức khỏe xuất sắc, luôn đặt nhu cầu của bệnh nhân lên hàng
+                  đầu. Mục tiêu của chúng tôi là nâng cao sức khỏe và chất lượng
+                  cuộc sống cho cộng đồng.
                 </p>
               </div>
             </div>
