@@ -17,17 +17,17 @@ export default function Result() {
   return (
     <Box mt={5}>
       <Typography variant="h2" fontWeight="bold" gutterBottom>
-        Your baby's due date is
+        Ngày dự sinh của bé là
       </Typography>
 
       <Box display="flex" alignItems="center" mb={3}>
         <div className="row">
           <div className="col-2">
-            <img className="w-15" src={avatarImage} alt="Written by" />
+            <img className="w-15" src={avatarImage} alt="Tác giả" />
           </div>
           <div className="col">
             <Typography variant="subtile-1">
-              Written by Pregnancy Care Staff | Dec 12, 2024
+              Được biên soạn bởi đội ngũ Pregnancy Care | 12/12/2024
             </Typography>
           </div>
         </div>
@@ -38,7 +38,7 @@ export default function Result() {
           <Box display="flex" justifyContent="center" mb={2}>
             <img
               src={DueDateCalculatorImage}
-              alt="Due Date Calculator"
+              alt="Công cụ tính ngày dự sinh"
               width={80}
             />
           </Box>
@@ -49,7 +49,7 @@ export default function Result() {
             textAlign="center"
             gutterBottom
           >
-            Congrats! Your due date is
+            Chúc mừng! Ngày dự sinh của bạn là
           </Typography>
 
           <Typography
@@ -59,15 +59,15 @@ export default function Result() {
             color="primary"
             gutterBottom
           >
-            November 24, 2025
+            24/11/2025
           </Typography>
 
           <Box display="flex" justifyContent="center" mb={2}>
-            <img src={LightImage} alt="Light" width={30} />
+            <img src={LightImage} alt="Đèn sáng" width={30} />
           </Box>
 
           <Typography variant="h5" textAlign="center">
-            Download our free app to track your pregnancy and baby's growth!
+            Tải ứng dụng miễn phí để theo dõi thai kỳ và sự phát triển của bé!
           </Typography>
         </CardContent>
       </Card>
@@ -79,7 +79,7 @@ export default function Result() {
           color="primary"
           className="fs-5 text-decoration-underline"
         >
-          Recalculate your due date
+          Tính lại ngày dự sinh
         </Button>
       </Box>
 

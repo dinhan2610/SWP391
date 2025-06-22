@@ -42,8 +42,8 @@ h1, h3 {
 }
 
 .blog-header h1 {
-  font-size: 63px;
-  color: #fff; /* Màu chữ sáng hơn để dễ nhìn */
+  font-size: 60px;
+  color: #0cf100; /* Màu chữ sáng hơn để dễ nhìn */
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -52,7 +52,7 @@ h1, h3 {
 
 .blog-header p {
   font-size: 20px;
-  color: #ddd;
+  color: #000000;
   margin-top: -10px;
   line-height: 1.8;
 }
@@ -103,9 +103,20 @@ h1, h3 {
 
 .blog-content h3 {
   font-size: 22px;
-  color: #333;
+  color: #222;
   margin-bottom: 10px;
-  font-weight: bold;
+  font-weight: 700;
+  font-family: 'Montserrat', 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  min-height: 48px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .blog-content p {

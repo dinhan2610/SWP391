@@ -151,7 +151,7 @@ export default function Ovulation() {
 
         cycles.push({
           key: i + 1,
-          cycle: `Cycle ${i + 1}`,
+          cycle: `Chu kỳ ${i + 1}`,
           menstruationDate,
           ovulationDate,
           fertileStart,
@@ -272,7 +272,7 @@ export default function Ovulation() {
 
           <div className="container-fluid p-0">
             <Row className="text-center">
-              {["S", "M", "T", "W", "T", "F", "S"].map((day, i) => (
+              {["C", "H", "T", "B", "N", "S", "C"].map((day, i) => (
                 <Col span={3} key={i} className="py-2">
                   <Text type="secondary" strong>
                     {day}
@@ -294,13 +294,13 @@ export default function Ovulation() {
 
                 if (isMenstruationDay(day)) {
                   icon = <HeartOutlined style={{ color: "#e74c3c" }} />;
-                  title = "Menstruation Day";
+                  title = "Ngày hành kinh";
                 } else if (isDueDate(day)) {
                   icon = <WarningOutlined style={{ color: "#f39c12" }} />;
-                  title = "Expected Due Date";
+                  title = "Ngày dự sinh";
                 } else if (isOvulationDay(day)) {
                   icon = <CalendarOutlined style={{ color: "#17a2b8" }} />;
-                  title = "Ovulation Day";
+                  title = "Ngày rụng trứng";
                 }
 
                 const bgClass = isFertileDay(day)
@@ -334,19 +334,19 @@ export default function Ovulation() {
           </div>
 
           <div className="text-start p-3">
-            <Title level={5}>Legend</Title>
+            <Title level={5}>Chú giải</Title>
             <div className="d-flex flex-wrap gap-3">
               <div className="d-flex align-items-center gap-2">
                 <HeartOutlined style={{ color: "#e74c3c" }} />
-                <Text>Menstruation Day</Text>
+                <Text>Ngày hành kinh</Text>
               </div>
               <div className="d-flex align-items-center gap-2">
                 <WarningOutlined style={{ color: "#f39c12" }} />
-                <Text>Expected Due Date</Text>
+                <Text>Ngày dự sinh</Text>
               </div>
               <div className="d-flex align-items-center gap-2">
                 <CalendarOutlined style={{ color: "#17a2b8" }} />
-                <Text>Ovulation Day</Text>
+                <Text>Ngày rụng trứng</Text>
               </div>
               <div className="d-flex align-items-center gap-2">
                 <div
@@ -357,20 +357,20 @@ export default function Ovulation() {
                     borderRadius: 4,
                   }}
                 ></div>
-                <Text>Fertile Window</Text>
+                <Text>Cửa sổ thụ thai</Text>
               </div>
             </div>
           </div>
 
           <div className="text-center p-3">
             <Popconfirm
-              title="Are you sure you want to reset?"
+              title="Bạn có chắc chắn muốn đặt lại không?"
               onConfirm={resetCalculator}
-              okText="Yes"
-              cancelText="No"
+              okText="Có"
+              cancelText="Không"
             >
               <Button type="default" className="me-2">
-                Start over
+                Bắt đầu lại
               </Button>
             </Popconfirm>
             <Button
@@ -378,20 +378,20 @@ export default function Ovulation() {
               disabled={currentCycleIndex === 0}
               className="me-2"
             >
-              Previous Cycle
+              Chu kỳ trước
             </Button>
             <Button
               type="primary"
               onClick={goToNextCycle}
               disabled={currentCycleIndex + 1 >= multiCycleResults.length}
             >
-              Next Cycle <RightOutlined />
+              Chu kỳ tiếp theo <RightOutlined />
             </Button>
           </div>
         </Card>
 
         <Card className="mt-4">
-          <Title level={4}>Pill Reminder Schedule</Title>
+          <Title level={4}>Lịch nhắc uống thuốc</Title>
           {pillType && pillType !== "none" ? (
             <Table
               bordered
@@ -400,19 +400,19 @@ export default function Ovulation() {
               dataSource={generatePillReminderTable()}
               columns={[
                 {
-                  title: "Day",
+                  title: "Ngày",
                   dataIndex: "day",
                   key: "day",
                   align: "center",
                 },
                 {
-                  title: "Date",
+                  title: "Ngày tháng",
                   dataIndex: "date",
                   key: "date",
                   align: "center",
                 },
                 {
-                  title: "Note",
+                  title: "Ghi chú",
                   dataIndex: "note",
                   key: "note",
                   align: "center",
@@ -421,7 +421,7 @@ export default function Ovulation() {
             />
           ) : (
             <Paragraph type="secondary" className="text-center my-3">
-              No pill schedule to display.
+              Không có lịch nhắc uống thuốc để hiển thị.
             </Paragraph>
           )}
         </Card>
@@ -443,21 +443,21 @@ export default function Ovulation() {
               <Breadcrumb className="mb-3">
                 <Breadcrumb.Item>
                   <a href="#" className="text-success">
-                    Track Your Fertility
+                    Theo dõi khả năng sinh sản
                   </a>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   <a href="#" className="text-success">
-                    Ovulation
+                    Rụng trứng
                   </a>
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <Title level={1}>Cycle & Ovulation Guide</Title>
+              <Title level={1}>Hướng dẫn chu kỳ & rụng trứng</Title>
               <Paragraph className="mb-4">
-                Track your fertility cycle with our tool to determine your
-                ovulation days and maximize your chances of conception. By
-                predicting your most fertile window and ovulation date, this
-                tool supports your journey to starting a family!
+                Theo dõi chu kỳ kinh nguyệt của bạn với công cụ này để xác định
+                ngày rụng trứng và tăng cơ hội thụ thai. Bằng cách dự đoán cửa
+                sổ thụ thai và ngày rụng trứng, công cụ hỗ trợ bạn trên hành
+                trình làm mẹ!
               </Paragraph>
               {!showResults ? (
                 <Card
@@ -466,14 +466,14 @@ export default function Ovulation() {
                 >
                   <Form layout="vertical" onFinish={handleCalculate}>
                     <Form.Item
-                      label="First day of your last period"
+                      label="Ngày đầu tiên của kỳ kinh gần nhất"
                       className="mb-4"
                       name="lastPeriodDate"
                       rules={[
                         {
                           required: true,
                           message:
-                            "Please select the first day of your last period!",
+                            "Vui lòng chọn ngày đầu tiên của kỳ kinh gần nhất!",
                         },
                       ]}
                     >
@@ -481,27 +481,25 @@ export default function Ovulation() {
                         style={{ width: "100%", minHeight: "40px" }}
                         onChange={(date) => setLastPeriodDate(date?.toDate())}
                         format="DD-MM-YYYY"
-                        placeholder="Select a date"
+                        placeholder="Chọn ngày"
                         dropdownAlign={{ offset: [0, 4] }}
                       />
                     </Form.Item>
 
                     <Form.Item
-                      label="How long was your last cycle"
+                      label="Chu kỳ kinh nguyệt của bạn kéo dài bao lâu"
                       className="mb-4"
                       name="cycleLength"
                       rules={[
                         {
                           required: true,
-                          message: "Please select your cycle length!",
+                          message: "Vui lòng chọn độ dài chu kỳ!",
                         },
                         {
                           validator: (_, value) =>
                             value !== "none"
                               ? Promise.resolve()
-                              : Promise.reject(
-                                  "Please select your cycle length!"
-                                ),
+                              : Promise.reject("Vui lòng chọn độ dài chu kỳ!"),
                         },
                       ]}
                     >
@@ -509,15 +507,15 @@ export default function Ovulation() {
                         value={cycleLength}
                         onChange={setCycleLength}
                         style={{ width: "100%", minHeight: "40px" }}
-                        placeholder="Select cycle length"
+                        placeholder="Chọn độ dài chu kỳ"
                       >
                         <Option value="none" disabled>
-                          None
+                          Không chọn
                         </Option>
                         {Array.from({ length: 15 }, (_, i) => i + 21).map(
                           (days) => (
                             <Option key={days} value={days.toString()}>
-                              {days} days
+                              {days} ngày
                             </Option>
                           )
                         )}
@@ -525,28 +523,27 @@ export default function Ovulation() {
                     </Form.Item>
 
                     <Form.Item
-                      label="Type of birth control pill (optional)"
+                      label="Loại thuốc tránh thai (không bắt buộc)"
                       className="mb-4"
                       name="pillType"
                       rules={[
                         {
                           required: true,
-                          message:
-                            "Please select your birth control pill type!",
+                          message: "Vui lòng chọn loại thuốc tránh thai!",
                         },
                       ]}
                     >
                       <Select
                         value={pillType}
                         onChange={(val) => setPillType(val)}
-                        placeholder="Select pill type"
+                        placeholder="Chọn loại thuốc"
                         style={{ width: "100%", minHeight: "40px" }}
                       >
-                        <Option value="none">None</Option>
-                        <Option value="21">21-day pill (7-day break)</Option>
-                        <Option value="28">28-day pill (7 placebo)</Option>
+                        <Option value="none">Không chọn</Option>
+                        <Option value="21">Vỉ 21 viên (nghỉ 7 ngày)</Option>
+                        <Option value="28">Vỉ 28 viên (7 viên giả dược)</Option>
                         <Option value="continuous">
-                          Continuous use (no break)
+                          Dùng liên tục (không nghỉ)
                         </Option>
                       </Select>
                     </Form.Item>
@@ -563,7 +560,7 @@ export default function Ovulation() {
                       size="large"
                       className="focus-button"
                     >
-                      Submit
+                      Xác nhận
                     </Button>
                   </Form>
                 </Card>
@@ -572,14 +569,15 @@ export default function Ovulation() {
                   {renderCalendar()}
                   <div className="mt-4 pt-4 border-top">
                     <Paragraph>
-                      Most couples get pregnant within three months. If you try
-                      for a year without success (or six months if you're 35 or
-                      older), seek help from a{" "}
+                      Hầu hết các cặp đôi sẽ có thai trong vòng ba tháng. Nếu
+                      bạn cố gắng trong một năm mà không thành công (hoặc sáu
+                      tháng nếu bạn trên 35 tuổi), hãy tìm kiếm sự giúp đỡ từ
+                      một{" "}
                       <a
                         href="#"
                         className="fw-medium text-decoration-underline"
                       >
-                        fertility specialist
+                        chuyên gia về sinh sản
                       </a>
                       .
                     </Paragraph>
@@ -592,7 +590,7 @@ export default function Ovulation() {
                   <div className="col-12 my-5">
                     <section>
                       <Title level={2} className="mb-4">
-                        How to Take Birth Control Pills Correctly
+                        Cách uống thuốc tránh thai đúng cách
                       </Title>
                       <ul className="list-unstyled">
                         <li className="d-flex gap-2 mb-3">
@@ -605,12 +603,12 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            <Tooltip title="Take 1 pill daily for 21 days, then stop for 7 days before starting a new pack.">
-                              <strong>21-day pack:</strong>
+                            <Tooltip title="Uống 1 viên mỗi ngày trong 21 ngày, sau đó nghỉ 7 ngày trước khi bắt đầu vỉ mới.">
+                              <strong>Vỉ 21 viên:</strong>
                             </Tooltip>{" "}
-                            Take 1 pill every day at the same time for 21 days.
-                            Then stop for 7 days (no pills), and start a new
-                            pack after the break.
+                            Uống 1 viên mỗi ngày vào cùng một thời điểm trong 21
+                            ngày. Sau đó nghỉ 7 ngày (không uống), rồi bắt đầu
+                            vỉ mới sau khi nghỉ.
                           </Paragraph>
                         </li>
                         <li className="d-flex gap-2 mb-3">
@@ -623,12 +621,12 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            <Tooltip title="Includes 21 hormone pills and 7 reminder pills with no hormones. Keep taking one pill each day.">
-                              <strong>28-day pack:</strong>
+                            <Tooltip title="Bao gồm 21 viên có hormone và 7 viên nhắc nhở không chứa hormone. Tiếp tục uống mỗi ngày.">
+                              <strong>Vỉ 28 viên:</strong>
                             </Tooltip>{" "}
-                            Take 1 pill every day without a break. The first 21
-                            pills contain hormones, the last 7 are inactive
-                            (placebo) to keep your routine.
+                            Uống 1 viên mỗi ngày liên tục, không nghỉ. 21 viên
+                            đầu chứa hormone, 7 viên cuối là giả dược để duy trì
+                            thói quen.
                           </Paragraph>
                         </li>
                         <li className="d-flex gap-2 mb-3">
@@ -641,12 +639,13 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            <Tooltip title="You take active hormone pills every day with no break. This can help avoid monthly periods. Always consult your doctor.">
-                              <strong>Continuous use:</strong>
+                            <Tooltip title="Bạn uống viên hormone mỗi ngày, không nghỉ. Có thể giúp tránh kinh nguyệt hàng tháng. Luôn hỏi ý kiến bác sĩ.">
+                              <strong>Dùng liên tục:</strong>
                             </Tooltip>{" "}
-                            Take 1 hormone pill every day with no breaks or
-                            placebo pills. This can help you skip your period.
-                            Ask your doctor before using this method.
+                            Uống 1 viên hormone mỗi ngày, không nghỉ hoặc không
+                            có viên giả dược. Có thể giúp bạn không có kinh
+                            nguyệt. Hãy hỏi ý kiến bác sĩ trước khi dùng cách
+                            này.
                           </Paragraph>
                         </li>
                       </ul>
@@ -659,7 +658,7 @@ export default function Ovulation() {
                   <div className="col-12 my-5">
                     <section>
                       <Title level={2} className="mb-4">
-                        How to Increase Your Chances of Pregnancy
+                        Cách tăng khả năng thụ thai
                       </Title>
                       <ul className="list-unstyled">
                         <li className="d-flex gap-2 mb-3">
@@ -672,9 +671,8 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            Use an ovulation tracker or test kit, or monitor
-                            your body’s signals to determine your most fertile
-                            days.
+                            Sử dụng que thử rụng trứng, theo dõi dấu hiệu cơ thể
+                            để xác định ngày dễ thụ thai nhất.
                           </Paragraph>
                         </li>
                         <li className="d-flex gap-2 mb-3">
@@ -687,8 +685,8 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            Engage in intercourse every other day during your
-                            fertile window for the best chances of conception.
+                            Quan hệ cách ngày trong cửa sổ thụ thai để tăng cơ
+                            hội thụ thai.
                           </Paragraph>
                         </li>
                         <li className="d-flex gap-2 mb-3">
@@ -701,9 +699,9 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            Begin taking a prenatal vitamin with folic acid at
-                            least a month before trying to conceive (preferably
-                            6 months ahead).
+                            Bắt đầu bổ sung vitamin tổng hợp có axit folic ít
+                            nhất 1 tháng trước khi có ý định mang thai (tốt nhất
+                            là 6 tháng).
                           </Paragraph>
                         </li>
                         <li className="d-flex gap-2 mb-3">
@@ -716,10 +714,9 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            Consult with your healthcare provider to ensure
-                            pre-existing medical conditions are under control.
-                            Regular check-ups and vaccinations can significantly
-                            reduce pregnancy complications.
+                            Tham khảo ý kiến bác sĩ để kiểm soát các bệnh lý
+                            nền. Khám sức khỏe và tiêm phòng đầy đủ giúp giảm
+                            biến chứng thai kỳ.
                           </Paragraph>
                         </li>
                         <li className="d-flex gap-2 mb-3">
@@ -732,10 +729,8 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            Focus on maintaining a healthy lifestyle. Eliminate
-                            harmful habits such as smoking, start a fitness
-                            routine if you don’t already have one, and nourish
-                            your body with a balanced, nutritious diet.
+                            Duy trì lối sống lành mạnh: bỏ thuốc lá, tập thể dục
+                            đều đặn, ăn uống đủ chất.
                           </Paragraph>
                         </li>
                       </ul>
@@ -745,12 +740,12 @@ export default function Ovulation() {
                   <div className="col-12 my-5">
                     <section>
                       <Title level={2} className="mb-4">
-                        How moms calculate ovulation
+                        Cách các mẹ tính ngày rụng trứng
                       </Title>
                       <Paragraph className="mb-3">
-                        In addition to using an ovulation calculator, here are
-                        ways that moms in the BabyCenter Community know they're
-                        ovulating:
+                        Ngoài việc dùng công cụ tính rụng trứng, các mẹ trong
+                        cộng đồng BabyCenter còn nhận biết rụng trứng qua các
+                        dấu hiệu sau:
                       </Paragraph>
                       <div className="d-flex flex-column gap-3">
                         <blockquote
@@ -758,8 +753,8 @@ export default function Ovulation() {
                           style={{ borderLeftWidth: "4px" }}
                         >
                           <p className="fst-italic mb-0">
-                            "I usually get ovulation cramping or pain on my left
-                            side" – mommy1johnson
+                            "Tôi thường bị đau hoặc căng nhẹ ở bên trái khi rụng
+                            trứng" – mommy1johnson
                           </p>
                         </blockquote>
                         <blockquote
@@ -767,10 +762,9 @@ export default function Ovulation() {
                           style={{ borderLeftWidth: "4px" }}
                         >
                           <p className="fst-italic mb-0">
-                            "My ovulation signs are cervical mucus that looks
-                            like egg whites; occasional, very mild, one-sided
-                            ovarian discomfort; a higher sex drive; and
-                            increased appetite." – krt1987
+                            "Dịch nhầy cổ tử cung giống lòng trắng trứng; đôi
+                            khi đau nhẹ một bên buồng trứng; tăng ham muốn; ăn
+                            ngon miệng hơn." – krt1987
                           </p>
                         </blockquote>
                         <blockquote
@@ -778,8 +772,8 @@ export default function Ovulation() {
                           style={{ borderLeftWidth: "4px" }}
                         >
                           <p className="fst-italic mb-0">
-                            "I get bloated and my lower abdomen feels very
-                            sore." – Kmarvin91
+                            "Tôi bị đầy hơi và vùng bụng dưới rất khó chịu." –
+                            Kmarvin91
                           </p>
                         </blockquote>
                         <blockquote
@@ -787,9 +781,9 @@ export default function Ovulation() {
                           style={{ borderLeftWidth: "4px" }}
                         >
                           <p className="fst-italic mb-0">
-                            "My BBT typically rises incrementally over three
-                            days, for a total rise of .8 or .9 over
-                            pre-ovulation temperatures." – Rikkubug
+                            "Nhiệt độ cơ thể tăng dần trong 3 ngày, tổng cộng
+                            tăng khoảng 0.8-0.9 độ so với trước rụng trứng." –
+                            Rikkubug
                           </p>
                         </blockquote>
                         <blockquote
@@ -797,9 +791,8 @@ export default function Ovulation() {
                           style={{ borderLeftWidth: "4px" }}
                         >
                           <p className="fst-italic mb-0">
-                            "I woke up in the middle of the night and had an
-                            increase in body temperature and lower back pain on
-                            the left side." – Newwifelife
+                            "Tôi thức dậy giữa đêm, thấy nhiệt độ cơ thể tăng và
+                            đau lưng dưới bên trái." – Newwifelife
                           </p>
                         </blockquote>
                         <blockquote
@@ -807,9 +800,8 @@ export default function Ovulation() {
                           style={{ borderLeftWidth: "4px" }}
                         >
                           <p className="fst-italic mb-0">
-                            "I have slight bloating, increased appetite, and
-                            light cramps like the ones I get before my period.
-                            Plus, I'm in a great mood!" – NadiaFlower
+                            "Tôi hơi đầy hơi, ăn ngon miệng, đau nhẹ như trước
+                            kỳ kinh và tâm trạng rất tốt!" – NadiaFlower
                           </p>
                         </blockquote>
                       </div>
@@ -819,7 +811,7 @@ export default function Ovulation() {
                   <div className="col-12 my-5">
                     <section>
                       <Title level={2} className="mb-4">
-                        Signs of ovulation
+                        Dấu hiệu rụng trứng
                       </Title>
                       <ul className="list-unstyled">
                         <li className="d-flex gap-2 mb-3">
@@ -832,7 +824,7 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            Rise in basal body temperature
+                            Nhiệt độ cơ thể cơ bản tăng
                           </Paragraph>
                         </li>
                         <li className="d-flex gap-2 mb-3">
@@ -845,8 +837,19 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            Cervical mucus is the texture of egg whites
+                            Dịch nhầy cổ tử cung giống lòng trắng trứng
                           </Paragraph>
+                        </li>
+                        <li className="d-flex gap-2 mb-3">
+                          <div
+                            className="rounded-circle bg-info"
+                            style={{
+                              width: "8px",
+                              height: "8px",
+                              marginTop: "10px",
+                            }}
+                          />
+                          <Paragraph className="m-0">Ngực căng tức</Paragraph>
                         </li>
                         <li className="d-flex gap-2 mb-3">
                           <div
@@ -858,8 +861,19 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            Breast tenderness
+                            Đau nhẹ hoặc lâm râm vùng bụng
                           </Paragraph>
+                        </li>
+                        <li className="d-flex gap-2 mb-3">
+                          <div
+                            className="rounded-circle bg-info"
+                            style={{
+                              width: "8px",
+                              height: "8px",
+                              marginTop: "10px",
+                            }}
+                          />
+                          <Paragraph className="m-0">Ra máu rất nhẹ</Paragraph>
                         </li>
                         <li className="d-flex gap-2 mb-3">
                           <div
@@ -871,8 +885,19 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            Mild cramps or twinges in the abdomen
+                            Khứu giác nhạy hơn
                           </Paragraph>
+                        </li>
+                        <li className="d-flex gap-2 mb-3">
+                          <div
+                            className="rounded-circle bg-info"
+                            style={{
+                              width: "8px",
+                              height: "8px",
+                              marginTop: "10px",
+                            }}
+                          />
+                          <Paragraph className="m-0">Tăng ham muốn</Paragraph>
                         </li>
                         <li className="d-flex gap-2 mb-3">
                           <div
@@ -884,7 +909,7 @@ export default function Ovulation() {
                             }}
                           />
                           <Paragraph className="m-0">
-                            Very mild spotting
+                            Thay đổi khẩu vị hoặc tâm trạng
                           </Paragraph>
                         </li>
                         <li className="d-flex gap-2 mb-3">
@@ -896,46 +921,7 @@ export default function Ovulation() {
                               marginTop: "10px",
                             }}
                           />
-                          <Paragraph className="m-0">
-                            Heightened sense of smell
-                          </Paragraph>
-                        </li>
-                        <li className="d-flex gap-2 mb-3">
-                          <div
-                            className="rounded-circle bg-info"
-                            style={{
-                              width: "8px",
-                              height: "8px",
-                              marginTop: "10px",
-                            }}
-                          />
-                          <Paragraph className="m-0">
-                            Increased sex drive
-                          </Paragraph>
-                        </li>
-                        <li className="d-flex gap-2 mb-3">
-                          <div
-                            className="rounded-circle bg-info"
-                            style={{
-                              width: "8px",
-                              height: "8px",
-                              marginTop: "10px",
-                            }}
-                          />
-                          <Paragraph className="m-0">
-                            Changes in appetite or mood
-                          </Paragraph>
-                        </li>
-                        <li className="d-flex gap-2 mb-3">
-                          <div
-                            className="rounded-circle bg-info"
-                            style={{
-                              width: "8px",
-                              height: "8px",
-                              marginTop: "10px",
-                            }}
-                          />
-                          <Paragraph className="m-0">Bloating</Paragraph>
+                          <Paragraph className="m-0">Đầy hơi</Paragraph>
                         </li>
                       </ul>
                     </section>
@@ -944,7 +930,7 @@ export default function Ovulation() {
                   <div className="col-12 my-5">
                     <section>
                       <Title level={2} className="mb-4">
-                        Frequently asked questions
+                        Câu hỏi thường gặp
                       </Title>
                       <div className="d-flex flex-column gap-3">
                         {/* Using custom buttons instead of Collapse for more control over styling */}
@@ -955,9 +941,7 @@ export default function Ovulation() {
                             className="text-start d-flex justify-content-between align-items-center py-3 px-4"
                             onClick={() => togglePanel("1")}
                           >
-                            <span className="fw-medium">
-                              What is ovulation?
-                            </span>
+                            <span className="fw-medium">Rụng trứng là gì?</span>
                             <RightOutlined
                               className={`transition ${
                                 activeKey.includes("1") ? "rotate-90" : ""
@@ -967,9 +951,9 @@ export default function Ovulation() {
                           {activeKey.includes("1") && (
                             <div className="p-3">
                               <Paragraph>
-                                Ovulation is when one of your ovaries releases
-                                an egg. This egg travels down the fallopian tube
-                                where it may be fertilized by sperm.
+                                Rụng trứng là quá trình buồng trứng phóng thích
+                                một trứng. Trứng này sẽ di chuyển vào ống dẫn
+                                trứng và có thể được thụ tinh bởi tinh trùng.
                               </Paragraph>
                             </div>
                           )}
@@ -983,7 +967,7 @@ export default function Ovulation() {
                             onClick={() => togglePanel("2")}
                           >
                             <span className="fw-medium">
-                              When do you ovulate?
+                              Khi nào rụng trứng?
                             </span>
                             <RightOutlined
                               className={`transition ${
@@ -994,9 +978,9 @@ export default function Ovulation() {
                           {activeKey.includes("2") && (
                             <div className="p-3">
                               <Paragraph>
-                                Most women ovulate about 14 days before their
-                                period starts. In a typical 28-day cycle, this
-                                would be around day 14.
+                                Phụ nữ thường rụng trứng khoảng 14 ngày trước kỳ
+                                kinh tiếp theo. Với chu kỳ 28 ngày, rụng trứng
+                                thường vào ngày thứ 14.
                               </Paragraph>
                             </div>
                           )}
@@ -1010,7 +994,7 @@ export default function Ovulation() {
                             onClick={() => togglePanel("3")}
                           >
                             <span className="fw-medium">
-                              How to know when you're ovulating
+                              Làm sao biết mình đang rụng trứng?
                             </span>
                             <RightOutlined
                               className={`transition ${
@@ -1021,10 +1005,10 @@ export default function Ovulation() {
                           {activeKey.includes("3") && (
                             <div className="p-3">
                               <Paragraph>
-                                You can track your basal body temperature,
-                                observe changes in cervical mucus, use ovulation
-                                predictor kits, or notice physical symptoms like
-                                mild cramping or increased sex drive.
+                                Bạn có thể theo dõi nhiệt độ cơ thể cơ bản, quan
+                                sát dịch nhầy cổ tử cung, dùng que thử rụng
+                                trứng hoặc nhận biết các dấu hiệu như đau nhẹ
+                                bụng, tăng ham muốn.
                               </Paragraph>
                             </div>
                           )}
@@ -1038,7 +1022,7 @@ export default function Ovulation() {
                             onClick={() => togglePanel("4")}
                           >
                             <span className="fw-medium">
-                              What does ovulation feel like?
+                              Cảm giác khi rụng trứng như thế nào?
                             </span>
                             <RightOutlined
                               className={`transition ${
@@ -1049,9 +1033,9 @@ export default function Ovulation() {
                           {activeKey.includes("4") && (
                             <div className="p-3">
                               <Paragraph>
-                                Some women experience mild cramping, bloating,
-                                breast tenderness, or increased sex drive.
-                                Others may not feel anything at all.
+                                Một số phụ nữ cảm thấy đau nhẹ bụng, đầy hơi,
+                                căng ngực hoặc tăng ham muốn. Một số khác không
+                                cảm nhận được gì đặc biệt.
                               </Paragraph>
                             </div>
                           )}
@@ -1065,7 +1049,7 @@ export default function Ovulation() {
                             onClick={() => togglePanel("5")}
                           >
                             <span className="fw-medium">
-                              How long does ovulation last?
+                              Rụng trứng kéo dài bao lâu?
                             </span>
                             <RightOutlined
                               className={`transition ${
@@ -1076,10 +1060,10 @@ export default function Ovulation() {
                           {activeKey.includes("5") && (
                             <div className="p-3">
                               <Paragraph>
-                                The egg is only viable for about 24 hours after
-                                it's released. However, sperm can live in the
-                                female reproductive tract for up to 5 days, so
-                                your fertile window is about 6 days.
+                                Trứng chỉ sống được khoảng 24 giờ sau khi rụng.
+                                Tuy nhiên, tinh trùng có thể sống trong cơ thể
+                                nữ giới tới 5 ngày, nên cửa sổ thụ thai kéo dài
+                                khoảng 6 ngày.
                               </Paragraph>
                             </div>
                           )}

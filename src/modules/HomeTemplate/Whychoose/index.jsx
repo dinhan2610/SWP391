@@ -21,7 +21,7 @@ export default function WhyChoose() {
                           data-wow-delay=".4s"
                           data-wow-duration=".8s"
                         >
-                          Reasons Our Patients Trust Us
+                          Lý do khách hàng tin tưởng chúng tôi
                         </h2>
                       </div>
                       <div className="why-choose-us-main-wrapper">
@@ -35,11 +35,11 @@ export default function WhyChoose() {
                           </div>
                           <div className="info">
                             <h6 className="title">
-                              Care That Puts Patients First
+                              Chăm sóc đặt lợi ích bệnh nhân lên hàng đầu
                             </h6>
                             <p>
-                              Showcase your unwavering focus on prioritizing
-                              patient needs.
+                              Chúng tôi luôn ưu tiên lắng nghe và đáp ứng nhu
+                              cầu của bạn.
                             </p>
                           </div>
                         </div>
@@ -53,11 +53,11 @@ export default function WhyChoose() {
                           </div>
                           <div className="info">
                             <h6 className="title">
-                              Rapid Response for Critical Situations
+                              Phản ứng nhanh trong tình huống khẩn cấp
                             </h6>
                             <p>
-                              Show your commitment to responding swiftly to
-                              urgent medical needs.
+                              Cam kết hỗ trợ kịp thời khi bạn cần chăm sóc y tế
+                              gấp.
                             </p>
                           </div>
                         </div>
@@ -71,11 +71,11 @@ export default function WhyChoose() {
                           </div>
                           <div className="info">
                             <h6 className="title">
-                              Professional Expertise Backed by Years of Practice
+                              Đội ngũ chuyên môn giàu kinh nghiệm
                             </h6>
                             <p>
-                              Underscore your team's qualifications and
-                              experience in providing compassionate care.{" "}
+                              Đội ngũ y bác sĩ tận tâm, nhiều năm kinh nghiệm,
+                              luôn đồng hành cùng bạn.
                             </p>
                           </div>
                         </div>
@@ -88,12 +88,10 @@ export default function WhyChoose() {
                             <img src={choose04} alt="service" />
                           </div>
                           <div className="info">
-                            <h6 className="title">
-                              24/7 Access to Emergency Assistance
-                            </h6>
+                            <h6 className="title">Hỗ trợ khẩn cấp 24/7</h6>
                             <p>
-                              Emphasize your dedication to ensuring that help is
-                              always available in critical situations.
+                              Luôn sẵn sàng hỗ trợ bạn mọi lúc, đặc biệt trong
+                              các tình huống quan trọng.
                             </p>
                           </div>
                         </div>

@@ -7,7 +7,7 @@ import Login from "../Login";
 import Signin from "../Signin";
 
 // Danh sách các tab trong phần Account Settings
-const tabLabels = ["Log in", "Sign in"];
+const tabLabels = ["Đăng nhập", "Đăng ký"];
 
 export default function LoginSignin({ open, onClose }) {
   // Quản lý state cho tab đang được chọn

@@ -1,3 +1,15 @@
+/* Thêm vào đầu file CSS gốc (App.css hoặc index.css) để đồng bộ font chữ toàn trang */
+
+body, html, .container, .row, .col-12, .card, .card-body, .card-title, .card-text, .text-center, .text-muted, .badge, h1, h2, h3, h4, h5, h6, p, span, div, input, textarea, button {
+  font-family: 'Segoe UI', 'Roboto', 'Arial', 'Helvetica Neue', Helvetica, Arial, 'sans-serif' !important;
+  letter-spacing: 0.1px;
+}
+
+/* Nếu muốn font Việt hóa đẹp hơn, có thể dùng font Google như 'Be Vietnam Pro', 'Roboto', ... */
+/* Ví dụ: */
+/* @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap');
+body { font-family: 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif !important; } */
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -39,4 +51,12 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Thêm vào đầu file App.css hoặc index.css để import font Montserrat cho toàn site */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap');
+
+/* Nếu muốn áp dụng cho tất cả tiêu đề h1, h2, h3... */
+h1, h2, h3, .title {
+  font-family: 'Montserrat', 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif !important;
 }

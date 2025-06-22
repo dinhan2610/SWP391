@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Form, Input, Button, Typography, message } from "antd";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { useChangePassword } from "../../../../../apis/CallAPIUser";
+import { changePassword as changePasswordAPI } from "../../../../../apis/CallAPIUser";
 import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
@@ -12,21 +13,21 @@ const ChangePassword = ({ visible, onCancel }) => {
   const navigate = useNavigate();
 
   // Call API
-  const changePassword = async (oldPassword, newPassword) => {
+  const handleChangePassword = async (oldPassword, newPassword) => {
     try {
-      const res = await useChangePassword(oldPassword, newPassword);
+      const res = await changePasswordAPI(oldPassword, newPassword);
 
       if (res.code === 200) {
-        message.success(res.message || "Password changed successfully");
+        message.success(res.message || "Đổi mật khẩu thành công");
         form.resetFields();
         localStorage.removeItem("USER_TOKEN"); // Xóa token để bắt buộc đăng nhập lại
         navigate("/");
         onCancel(); // Đóng modal
       } else {
-        message.error("Failed to change password");
+        message.error("Không thể đổi mật khẩu");
       }
     } catch (error) {
-      message.error(error.message || "Error changing password");
+      message.error(error.message || "Lỗi khi đổi mật khẩu");
     } finally {
       setLoading(false);
     }
@@ -34,11 +35,11 @@ const ChangePassword = ({ visible, onCancel }) => {
 
   const onFinish = (values) => {
     if (values.newPassword !== values.confirmPassword) {
-      message.error("New password and confirm password do not match");
+      message.error("Mật khẩu mới và xác nhận mật khẩu không khớp");
       return;
     }
     setLoading(true);
-    changePassword(values.oldPassword, values.newPassword);
+    handleChangePassword(values.oldPassword, values.newPassword);
   };
 
   // Các variants cho hiệu ứng framer-motion
@@ -57,60 +58,58 @@ const ChangePassword = ({ visible, onCancel }) => {
         exit="exit"
       >
         <div style={{ textAlign: "center", marginBottom: 20 }}>
-          <Title level={4}>Change Your Password</Title>
+          <Title level={4}>Đổi mật khẩu</Title>
           <Text type="secondary">
-            For security, please verify your identity
+            Vì lý do bảo mật, vui lòng xác thực thông tin của bạn
           </Text>
         </div>
         <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
             name="oldPassword"
-            label="Current Password"
+            label="Mật khẩu hiện tại"
             rules={[
               {
                 required: true,
-                message: "Please enter your current password",
+                message: "Vui lòng nhập mật khẩu hiện tại",
               },
             ]}
           >
-            <Input.Password placeholder="Enter current password" />
+            <Input.Password placeholder="Nhập mật khẩu hiện tại" />
           </Form.Item>
           <Form.Item
             name="newPassword"
-            label="New Password"
+            label="Mật khẩu mới"
             rules={[
               {
                 required: true,
-                message: "Please enter your new password",
+                message: "Vui lòng nhập mật khẩu mới",
               },
-              { min: 8, message: "Password must be at least 8 characters" },
+              { min: 8, message: "Mật khẩu phải có ít nhất 8 ký tự" },
             ]}
-            extra="Use 8 or more characters with a mix of letters, numbers & symbols."
+            extra="Sử dụng ít nhất 8 ký tự bao gồm chữ, số và ký tự đặc biệt."
           >
-            <Input.Password placeholder="Enter new password" />
+            <Input.Password placeholder="Nhập mật khẩu mới" />
           </Form.Item>
           <Form.Item
             name="confirmPassword"
-            label="Confirm New Password"
+            label="Xác nhận mật khẩu mới"
             dependencies={["newPassword"]}
             rules={[
               {
                 required: true,
-                message: "Please confirm your new password",
+                message: "Vui lòng xác nhận mật khẩu mới",
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   if (!value || getFieldValue("newPassword") === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(
-                    new Error("The two passwords do not match!")
-                  );
+                  return Promise.reject(new Error("Hai mật khẩu không khớp!"));
                 },
               }),
             ]}
           >
-            <Input.Password placeholder="Confirm new password" />
+            <Input.Password placeholder="Xác nhận mật khẩu mới" />
           </Form.Item>
           <Form.Item>
             <Button
@@ -119,12 +118,12 @@ const ChangePassword = ({ visible, onCancel }) => {
               block
               style={{ backgroundColor: "#615EFC", color: "white" }}
             >
-              Change Password
+              Đổi mật khẩu
             </Button>
           </Form.Item>
           <Form.Item>
             <Button onClick={onCancel} block>
-              Cancel
+              Hủy
             </Button>
           </Form.Item>
         </Form>

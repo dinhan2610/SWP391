@@ -1,0 +1,20 @@
+/* Thêm hiệu ứng focus cho .single-short-service .title */
+.single-short-service:focus .title,
+.single-short-service:active .title,
+.single-short-service:focus-visible .title {
+  color: #615efc !important;
+  transition: color 0.2s;
+  outline: none;
+}
+
+/* Đảm bảo thẻ a có thể focus bằng phím tab */
+.single-short-service {
+  outline: none;
+}
+
+/* Thêm hiệu ứng hover cho .single-short-service để dễ kiểm tra */
+.single-short-service:hover .title {
+  color: #615efc !important;
+  transition: color 0.2s;
+}
+

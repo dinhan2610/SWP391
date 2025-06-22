@@ -94,7 +94,7 @@ export default function AIChatbox() {
               justifyContent: "space-between",
             }}
           >
-            <b>AI Chatbox</b>
+            <b>Trợ lý AI</b>
             <Button
               icon={<CloseOutlined />}
               size="small"
@@ -113,7 +113,7 @@ export default function AIChatbox() {
               <div
                 style={{ color: "#aaa", textAlign: "center", marginTop: 40 }}
               >
-                Hỏi AI bất cứ điều gì về sức khỏe, dịch vụ, v.v.
+                Hãy hỏi AI bất cứ điều gì về sức khỏe, dịch vụ, kiến thức, v.v.
               </div>
             )}
             {messages.map((msg, idx) => (
