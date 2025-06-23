@@ -183,8 +183,8 @@ export default function BookingConsultation() {
                   { required: true, message: "Vui lòng nhập họ tên!" },
                   { min: 2, message: "Họ tên phải có ít nhất 2 ký tự!" },
                   {
-                    pattern: /^[^\d]+$/,
-                    message: "Họ tên không được chứa số!",
+                    pattern: /^[a-zA-ZÀ-ỹà-ỹ\s]+$/,
+                    message: "Họ tên không được chứa số hoặc ký tự đặc biệt!",
                   },
                 ]}
               >

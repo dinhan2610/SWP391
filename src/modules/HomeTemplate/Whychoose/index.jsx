@@ -20,6 +20,18 @@ export default function WhyChoose() {
                           className="title wow fadeInUp"
                           data-wow-delay=".4s"
                           data-wow-duration=".8s"
+                          style={{
+                            fontFamily:
+                              "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+                            fontWeight: 800,
+                            fontSize: "3rem",
+                            letterSpacing: "0.04em",
+                            textAlign: "center",
+                            lineHeight: 1.2,
+                            color: "#222",
+                            margin: "0 0 32px 0",
+                            textTransform: "uppercase",
+                          }}
                         >
                           Lý do khách hàng tin tưởng chúng tôi
                         </h2>
@@ -34,7 +46,21 @@ export default function WhyChoose() {
                             <img src={choose01} alt="service" />
                           </div>
                           <div className="info">
-                            <h6 className="title">
+                            <h6
+                              className="title"
+                              style={{
+                                fontFamily:
+                                  "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+                                fontWeight: 700,
+                                fontSize: "2.6rem",
+                                color: "#2563eb",
+                                letterSpacing: "0.02em",
+                                lineHeight: 1.3,
+                                margin: "0 0 8px 0",
+                                textAlign: "left",
+                                textTransform: "none",
+                              }}
+                            >
                               Chăm sóc đặt lợi ích bệnh nhân lên hàng đầu
                             </h6>
                             <p>
@@ -52,7 +78,21 @@ export default function WhyChoose() {
                             <img src={choose02} alt="service" />
                           </div>
                           <div className="info">
-                            <h6 className="title">
+                            <h6
+                              className="title"
+                              style={{
+                                fontFamily:
+                                  "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+                                fontWeight: 700,
+                                fontSize: "2.6rem",
+                                color: "#2563eb",
+                                letterSpacing: "0.02em",
+                                lineHeight: 1.3,
+                                margin: "0 0 8px 0",
+                                textAlign: "left",
+                                textTransform: "none",
+                              }}
+                            >
                               Phản ứng nhanh trong tình huống khẩn cấp
                             </h6>
                             <p>
@@ -70,7 +110,21 @@ export default function WhyChoose() {
                             <img src={choose03} alt="service" />
                           </div>
                           <div className="info">
-                            <h6 className="title">
+                            <h6
+                              className="title"
+                              style={{
+                                fontFamily:
+                                  "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+                                fontWeight: 700,
+                                fontSize: "2.6rem",
+                                color: "#2563eb",
+                                letterSpacing: "0.02em",
+                                lineHeight: 1.3,
+                                margin: "0 0 8px 0",
+                                textAlign: "left",
+                                textTransform: "none",
+                              }}
+                            >
                               Đội ngũ chuyên môn giàu kinh nghiệm
                             </h6>
                             <p>
@@ -88,7 +142,23 @@ export default function WhyChoose() {
                             <img src={choose04} alt="service" />
                           </div>
                           <div className="info">
-                            <h6 className="title">Hỗ trợ khẩn cấp 24/7</h6>
+                            <h6
+                              className="title"
+                              style={{
+                                fontFamily:
+                                  "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+                                fontWeight: 700,
+                                fontSize: "2.6rem",
+                                color: "#2563eb",
+                                letterSpacing: "0.02em",
+                                lineHeight: 1.3,
+                                margin: "0 0 8px 0",
+                                textAlign: "left",
+                                textTransform: "none",
+                              }}
+                            >
+                              Hỗ trợ khẩn cấp 24/7
+                            </h6>
                             <p>
                               Luôn sẵn sàng hỗ trợ bạn mọi lúc, đặc biệt trong
                               các tình huống quan trọng.

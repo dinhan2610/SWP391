@@ -11,6 +11,7 @@ import ContactPage from "../pages/Contact";
 import TestServiceForm from "../pages/AdminPages/TestService";
 import TestServicesList from "../pages/ServiceList";
 import BookingConsultation from "../pages/BookingConsulation";
+import ChatWithAdvisor from "../pages/ChatWithAdvisor";
 
 const routes = [
   {
@@ -30,6 +31,7 @@ const routes = [
       { path: "/admin/test-services", element: <TestServiceForm /> },
       { path: "/test-services", element: <TestServicesList /> },
       { path: "/booking-consultation", element: <BookingConsultation /> },
+      { path: "/chat", element: <ChatWithAdvisor /> },
     ],
   },
 ];
