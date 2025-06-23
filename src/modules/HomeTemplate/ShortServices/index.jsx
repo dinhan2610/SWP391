@@ -87,7 +87,7 @@ export default function ShortServices() {
             data-wow-duration=".8s"
           >
             <a
-              href="tel:+4733378901"
+              href="/ovulation"
               className="single-short-service"
               style={{
                 display: "flex",
@@ -113,7 +113,7 @@ export default function ShortServices() {
                   letterSpacing: 0.1,
                 }}
               >
-                Theo dõi phát triển thai nhi
+                Theo dõi chu kỳ
               </h5>
             </a>
           </div>
@@ -123,7 +123,7 @@ export default function ShortServices() {
             data-wow-duration=".8s"
           >
             <a
-              href="/contact"
+              href="/chat"
               className="single-short-service"
               style={{
                 display: "flex",

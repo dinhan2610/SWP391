@@ -94,8 +94,8 @@ export default function Signin({ setActiveTab, onSwitchTab }) {
               rules={[
                 { required: true, message: "Vui lòng nhập họ tên!" },
                 {
-                  pattern: /^[^\d]+$/,
-                  message: "Họ tên không được chứa số!",
+                  pattern: /^[a-zA-ZÀ-ỹà-ỹ\s]+$/,
+                  message: "Họ tên không được chứa số hoặc ký tự đặc biệt!",
                 },
               ]}
               style={{ marginBottom: 35 }}
