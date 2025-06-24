@@ -206,15 +206,28 @@ export default function STIsTest() {
     setHistory((prev) => prev.filter((_, i) => i !== idx));
   };
 
+  useEffect(() => {
+    // Giảm tốc độ cuộn riêng cho trang này (chỉ desktop)
+    const handleWheel = (e) => {
+      if (window.innerWidth > 600) {
+        const el = document.scrollingElement || document.documentElement;
+        if (el.scrollHeight > el.clientHeight) {
+          e.preventDefault();
+          const scrollStep = 130;
+          el.scrollBy({
+            top: e.deltaY > 0 ? scrollStep : -scrollStep,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
+      }
+    };
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, []);
+
   return (
-    <div
-      className="container py-5"
-      style={{
-        maxWidth: 1100,
-        // Loại bỏ mọi thuộc tính height/minHeight/overflow không cần thiết ở container ngoài cùng
-        // Đảm bảo không có overflow: hidden hoặc height: 100vh ở đây
-      }}
-    >
+    <div className="container py-5" style={{ maxWidth: 1100 }}>
       <div className="text-center mb-4">
         <div
           style={{
