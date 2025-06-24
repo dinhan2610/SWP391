@@ -9,9 +9,10 @@ import QuizPage from "../modules/HomeTemplate/quiz";
 import AboutHealthWise from "../pages/AboutHealthWise";
 import ContactPage from "../pages/Contact";
 import TestServiceForm from "../pages/AdminPages/TestService";
-import TestServicesList from "../pages/ServiceList";
+import STIsTest from "../pages/STIsTest";
 import BookingConsultation from "../pages/BookingConsulation";
 import ChatWithAdvisor from "../pages/ChatWithAdvisor";
+import PaymentPage from "../pages/PaymentPage";
 
 const routes = [
   {
@@ -29,9 +30,10 @@ const routes = [
       { path: "/quiz", element: <QuizPage /> },
       { path: "/contact", element: <ContactPage /> },
       { path: "/admin/test-services", element: <TestServiceForm /> },
-      { path: "/test-services", element: <TestServicesList /> },
+      { path: "/stis-test", element: <STIsTest /> },
       { path: "/booking-consultation", element: <BookingConsultation /> },
       { path: "/chat", element: <ChatWithAdvisor /> },
+      { path: "/payment", element: <PaymentPage /> },
     ],
   },
 ];

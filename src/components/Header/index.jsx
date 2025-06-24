@@ -150,7 +150,7 @@ const Headers = () => {
                       style={{ display: "inline-block", padding: 0, margin: 0 }}
                     >
                       <a
-                        onClick={() => navigate("/stis-testing-services")}
+                        onClick={() => navigate("/stis-test")}
                         style={{
                           color: "#888", // màu xám mặc định
                           transition: "color 0.18s cubic-bezier(.4,2,.6,1.2)",

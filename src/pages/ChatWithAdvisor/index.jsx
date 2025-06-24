@@ -23,6 +23,11 @@ export default function ChatWithAdvisor() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Scroll về đầu trang khi mount (chuyển route vào chat)
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, []);
+
   const handleSend = () => {
     if (!input.trim()) return;
     const newMsg = {
