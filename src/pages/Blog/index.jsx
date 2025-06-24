@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css"; // Import CSS từ file index.css
 import { Modal, Button } from "react-bootstrap";
 
@@ -139,7 +139,25 @@ export default function BlogPages() {
     setIsModalOpen(false);
     setModalPost(null);
   };
-
+  useEffect(() => {
+    // Giảm tốc độ cuộn riêng cho trang này (chỉ desktop)
+    const handleWheel = (e) => {
+      if (window.innerWidth > 600) {
+        const el = document.scrollingElement || document.documentElement;
+        if (el.scrollHeight > el.clientHeight) {
+          e.preventDefault();
+          const scrollStep = 130;
+          el.scrollBy({
+            top: e.deltaY > 0 ? scrollStep : -scrollStep,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
+      }
+    };
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, []);
   return (
     <div className="blog-page">
       <div className="blog-header">

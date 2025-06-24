@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Typography,
@@ -60,7 +60,25 @@ const PaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("momo");
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-
+  useEffect(() => {
+    // Giảm tốc độ cuộn riêng cho trang này (chỉ desktop)
+    const handleWheel = (e) => {
+      if (window.innerWidth > 600) {
+        const el = document.scrollingElement || document.documentElement;
+        if (el.scrollHeight > el.clientHeight) {
+          e.preventDefault();
+          const scrollStep = 130;
+          el.scrollBy({
+            top: e.deltaY > 0 ? scrollStep : -scrollStep,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
+      }
+    };
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, []);
   // eslint-disable-next-line no-unused-vars
   const onFinish = (_values) => {
     setLoading(true);

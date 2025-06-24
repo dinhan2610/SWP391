@@ -1,11 +1,55 @@
 import React, { useState } from "react";
 import { Card, Typography, Input, Button, message, Row, Col } from "antd";
 import { StarFilled, StarOutlined } from "@ant-design/icons";
-import "./index.css";
 
 const { Title, Paragraph } = Typography;
 
 const customStars = [1, 2, 3, 4, 5];
+
+const styles = {
+  feedbackBg: {
+    minHeight: "100vh",
+    background: "linear-gradient(135deg, #e0e7ff 0%, #fff 100%)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  feedbackCard: {
+    maxWidth: 440,
+    width: "100%",
+    borderRadius: 18,
+    boxShadow: "0 8px 32px #615efc22, 0 1.5px 4px #615efc11",
+    padding: 0,
+  },
+  feedbackStar: {
+    cursor: "pointer",
+    transition: "all 0.2s cubic-bezier(.4,2,.6,1)",
+    outline: "none",
+    boxShadow: "none",
+    border: "none",
+    background: "transparent",
+    padding: 0,
+    position: "relative",
+    zIndex: 1,
+    display: "inline-block",
+    margin: "0 2px",
+  },
+  starBgAnim: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    width: 36,
+    height: 36,
+    borderRadius: "50%",
+    background: "#faad1440",
+    opacity: 0,
+    transition: "opacity 0.2s cubic-bezier(.4,2,.6,1)",
+    zIndex: 0,
+  },
+  feedbackStarSelected: {
+    filter: "drop-shadow(0 2px 8px #faad1440)",
+  },
+};
 
 export default function Feedback() {
   const [rating, setRating] = useState(0);
@@ -24,18 +68,9 @@ export default function Feedback() {
   };
 
   return (
-    <div
-      className="feedback-bg d-flex align-items-center justify-content-center"
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #e0e7ff 0%, #fff 100%)",
-      }}
-    >
-      <Card
-        className="shadow-lg feedback-card"
-        style={{ maxWidth: 440, width: "100%", borderRadius: 18 }}
-      >
-        <div className="text-center mb-4">
+    <div style={styles.feedbackBg}>
+      <Card style={styles.feedbackCard}>
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
           <Title level={2} style={{ marginBottom: 8, color: "#615efc" }}>
             Chúng tôi trân trọng ý kiến của bạn
           </Title>
@@ -44,9 +79,9 @@ export default function Feedback() {
           </Paragraph>
         </div>
         {submitted ? (
-          <div className="text-center">
+          <div style={{ textAlign: "center" }}>
             <StarFilled style={{ fontSize: 48, color: "#faad14" }} />
-            <Title level={4} className="mt-3">
+            <Title level={4} style={{ marginTop: 16 }}>
               Cảm ơn bạn!
             </Title>
             <Paragraph>
@@ -55,7 +90,7 @@ export default function Feedback() {
           </div>
         ) : (
           <>
-            <Row justify="center" className="mb-3">
+            <Row justify="center" style={{ marginBottom: 16 }}>
               {customStars.map((star, idx) => {
                 const isActive = hoveredStar
                   ? star <= hoveredStar
@@ -63,33 +98,27 @@ export default function Feedback() {
                 return (
                   <Col key={idx}>
                     <span
-                      className={`feedback-star${isActive ? " selected" : ""}`}
                       style={{
-                        cursor: "pointer",
-                        transition: "all 0.2s cubic-bezier(.4,2,.6,1)",
-                        outline: "none",
-                        boxShadow: "none",
-                        border: "none",
-                        background: "transparent",
-                        padding: 0,
-                        position: "relative",
-                        zIndex: 1,
+                        ...styles.feedbackStar,
+                        ...(isActive ? styles.feedbackStarSelected : {}),
                       }}
                       onClick={() => setRating(star)}
                       onMouseEnter={() => setHoveredStar(star)}
                       onMouseLeave={() => setHoveredStar(0)}
                       tabIndex={0}
                     >
-                      <span className="star-bg-anim" />
+                      <span
+                        style={{
+                          ...styles.starBgAnim,
+                          opacity: isActive ? 0.18 : 0,
+                        }}
+                      />
                       {isActive ? (
                         <StarFilled
                           style={{
-                            color: isActive ? "#faad14" : "#faad14",
+                            color: "#faad14",
                             fontSize: 36,
                             transition: "all 0.2s cubic-bezier(.4,2,.6,1)",
-                            filter: isActive
-                              ? "drop-shadow(0 2px 8px #faad1440)"
-                              : "none",
                             zIndex: 2,
                             position: "relative",
                           }}
@@ -111,8 +140,9 @@ export default function Feedback() {
               })}
             </Row>
             <div
-              className="text-center mb-2"
               style={{
+                textAlign: "center",
+                marginBottom: 8,
                 fontWeight: 500,
                 color: rating ? "#faad14" : "#888",
               }}

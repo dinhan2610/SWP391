@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { Form, Input, Typography } from "antd";
 import "./index.css";
@@ -8,7 +8,25 @@ export default function AboutHealthWise() {
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
-
+  useEffect(() => {
+    // Giảm tốc độ cuộn riêng cho trang này (chỉ desktop)
+    const handleWheel = (e) => {
+      if (window.innerWidth > 600) {
+        const el = document.scrollingElement || document.documentElement;
+        if (el.scrollHeight > el.clientHeight) {
+          e.preventDefault();
+          const scrollStep = 130;
+          el.scrollBy({
+            top: e.deltaY > 0 ? scrollStep : -scrollStep,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
+      }
+    };
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, []);
   return (
     <div className="about-us-page">
       {/* About Section */}

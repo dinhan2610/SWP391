@@ -17,16 +17,15 @@ export default function ChatWithAdvisor() {
     },
   ]);
   const [input, setInput] = useState("");
+  const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
 
+  // Scroll chỉ trong khung chat khi có tin nhắn mới, đảm bảo luôn sát cuối
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages]);
-
-  // Scroll về đầu trang khi mount (chuyển route vào chat)
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, []);
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -99,10 +98,10 @@ export default function ChatWithAdvisor() {
           </div>
         </div>
         <div
+          ref={chatContainerRef}
           style={{
             background: "#f8fafc",
             borderRadius: 12,
-
             minHeight: 320,
             maxHeight: 400,
             overflowY: "auto",
@@ -175,6 +174,7 @@ export default function ChatWithAdvisor() {
                 "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
             }}
           />
+
           <Button
             type="primary"
             icon={<SendOutlined />}

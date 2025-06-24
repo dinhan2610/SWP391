@@ -9,18 +9,35 @@ export default function LoginUI({ onSwitchTab }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleLogin = (values) => {
+  const handleLogin = async (values) => {
     setLoading(true);
     setError("");
-    // TODO: Thay thế bằng API thật
-    setTimeout(() => {
-      if (values.email === "test@email.com" && values.password === "123456") {
+    try {
+      const res = await fetch(
+        "https://swp391ghsmsbe-production.up.railway.app/api/Authen/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password,
+          }),
+        }
+      );
+      const data = await res.json();
+      if (res.ok && data?.token) {
         Message.success("Đăng nhập thành công!");
+        // Lưu token nếu cần: localStorage.setItem('token', data.token);
+        // Chuyển trang hoặc reload nếu cần
       } else {
-        setError("Email hoặc mật khẩu không đúng!");
+        setError(data?.message || "Email hoặc mật khẩu không đúng!");
       }
-      setLoading(false);
-    }, 1200);
+    } catch {
+      setError("Lỗi kết nối máy chủ!");
+    }
+    setLoading(false);
   };
 
   return (

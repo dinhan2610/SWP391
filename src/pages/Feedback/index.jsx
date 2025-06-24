@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Typography, Rate, Input, Button, message, Row, Col } from "antd";
 import {
   FrownOutlined,
@@ -58,7 +58,25 @@ export default function Feedback() {
     message.success("Cảm ơn bạn đã gửi phản hồi!");
     // TODO: Gửi feedback lên server tại đây
   };
-
+  useEffect(() => {
+    // Giảm tốc độ cuộn riêng cho trang này (chỉ desktop)
+    const handleWheel = (e) => {
+      if (window.innerWidth > 600) {
+        const el = document.scrollingElement || document.documentElement;
+        if (el.scrollHeight > el.clientHeight) {
+          e.preventDefault();
+          const scrollStep = 130;
+          el.scrollBy({
+            top: e.deltaY > 0 ? scrollStep : -scrollStep,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
+      }
+    };
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, []);
   return (
     <div
       className="feedback-bg d-flex align-items-center justify-content-center"

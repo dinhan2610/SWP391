@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+
 import "./index.css";
 
 const quizData = [
@@ -41,17 +42,51 @@ export default function QuizPage() {
   const [answers, setAnswers] = useState([]);
   const [showResult, setShowResult] = useState(false);
 
-  const handleAnswer = (option) => {
-    const updatedAnswers = [...answers, option];
-    setAnswers(updatedAnswers);
+  const [finishActive, setFinishActive] = useState(false);
 
-    if (currentQuestion + 1 < quizData.length) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      setShowResult(true);
-    }
+  // Khi chọn đáp án, chỉ lưu đáp án, không chuyển câu
+  const handleAnswer = (option) => {
+    const updatedAnswers = [...answers];
+    updatedAnswers[currentQuestion] = option;
+    setAnswers(updatedAnswers);
   };
 
+  // Nút Next chuyển câu nếu đã chọn đáp án
+  const handleNext = () => {
+    if (!answers[currentQuestion]) return;
+    setCurrentQuestion((prev) => prev + 1);
+  };
+
+  // Nút Back chuyển câu trước
+  const handleBack = () => {
+    setCurrentQuestion((prev) => prev - 1);
+  };
+
+  // Nút Hoàn thành chỉ cho phép khi đã chọn đáp án cuối
+  const handleFinish = () => {
+    if (!answers[currentQuestion]) return;
+    setShowResult(true);
+  };
+
+  useEffect(() => {
+    // Giảm tốc độ cuộn riêng cho trang này (chỉ desktop)
+    const handleWheel = (e) => {
+      if (window.innerWidth > 600) {
+        const el = document.scrollingElement || document.documentElement;
+        if (el.scrollHeight > el.clientHeight) {
+          e.preventDefault();
+          const scrollStep = 60;
+          el.scrollBy({
+            top: e.deltaY > 0 ? scrollStep : -scrollStep,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
+      }
+    };
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, []);
   const renderResult = () => {
     const risky =
       answers.includes("Có") && !answers.includes("Không có triệu chứng");
@@ -190,6 +225,26 @@ export default function QuizPage() {
                     onBlur={(e) => {
                       e.target.blur();
                     }}
+                    style={{
+                      background:
+                        answers[currentQuestion] === option
+                          ? "#2563eb"
+                          : "#f1f5ff",
+                      color:
+                        answers[currentQuestion] === option
+                          ? "#fff"
+                          : "#2563eb",
+                      border: "none",
+                      borderRadius: 8,
+                      fontWeight: 600,
+                      fontSize: 16,
+                      padding: "10px 24px",
+                      margin: "4px 0",
+                      cursor: "pointer",
+                      boxShadow: "0 2px 8px #2563eb11",
+                      transition: "all 0.18s cubic-bezier(.4,2,.6,1.2)",
+                      outline: "none",
+                    }}
                   >
                     {option}
                   </button>
@@ -219,7 +274,7 @@ export default function QuizPage() {
                       outline: "none",
                       transition: "filter 0.18s cubic-bezier(.4,2,.6,1.2)",
                     }}
-                    onClick={() => setCurrentQuestion(currentQuestion - 1)}
+                    onClick={handleBack}
                     aria-label="Quay lại"
                     onMouseOver={(e) =>
                       (e.currentTarget.firstChild.style.filter =
@@ -260,14 +315,17 @@ export default function QuizPage() {
                       border: "none",
                       boxShadow: "none",
                       padding: 0,
-                      cursor: "pointer",
+                      cursor: answers[currentQuestion]
+                        ? "pointer"
+                        : "not-allowed",
                       display: "flex",
                       alignItems: "center",
                       outline: "none",
                       transition: "filter 0.18s cubic-bezier(.4,2,.6,1.2)",
                     }}
-                    onClick={() => setCurrentQuestion(currentQuestion + 1)}
+                    onClick={handleNext}
                     aria-label="Tiếp theo"
+                    disabled={!answers[currentQuestion]}
                     onMouseOver={(e) =>
                       (e.currentTarget.firstChild.style.filter =
                         "brightness(0)")
@@ -294,9 +352,36 @@ export default function QuizPage() {
                       />
                     </svg>
                   </button>
-                ) : (
-                  <div style={{ width: 36 }} />
-                )}
+                ) : null}
+                {/* Nút Finish chỉ ở câu cuối */}
+                {!showResult && currentQuestion === quizData.length - 1 ? (
+                  <button
+                    style={{
+                      background: "transparent",
+                      color: finishActive ? "#222" : "#888",
+                      border: "none",
+                      borderRadius: 0,
+                      fontWeight: 500,
+                      fontSize: 16,
+                      padding: "8px 18px",
+                      marginLeft: 12,
+                      cursor: answers[currentQuestion]
+                        ? "pointer"
+                        : "not-allowed",
+                      boxShadow: "none",
+                      outline: "none",
+                      transition: "color 0.18s cubic-bezier(.4,2,.6,1.2)",
+                    }}
+                    onClick={handleFinish}
+                    disabled={!answers[currentQuestion]}
+                    onFocus={() => setFinishActive(true)}
+                    onBlur={() => setFinishActive(false)}
+                    onMouseEnter={() => setFinishActive(true)}
+                    onMouseLeave={() => setFinishActive(false)}
+                  >
+                    Hoàn thành
+                  </button>
+                ) : null}
               </div>
             </div>
           )}
