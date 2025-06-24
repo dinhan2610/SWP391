@@ -207,7 +207,14 @@ export default function STIsTest() {
   };
 
   return (
-    <div className="container py-5" style={{ maxWidth: 1100 }}>
+    <div
+      className="container py-5"
+      style={{
+        maxWidth: 1100,
+        // Loại bỏ mọi thuộc tính height/minHeight/overflow không cần thiết ở container ngoài cùng
+        // Đảm bảo không có overflow: hidden hoặc height: 100vh ở đây
+      }}
+    >
       <div className="text-center mb-4">
         <div
           style={{
@@ -220,7 +227,7 @@ export default function STIsTest() {
             textShadow: "0 2px 8px #e0e7ef",
           }}
         >
-          🧬 Đăng ký xét nghiệm STIs tại HealthWise
+          Đăng ký xét nghiệm STIs tại HealthWise
         </div>
         <div
           style={{
@@ -347,7 +354,7 @@ export default function STIsTest() {
           ))}
         </div>
         <div className="text-center text-muted mb-2" style={{ fontSize: 15 }}>
-          📦 Gợi ý các gói xét nghiệm tiết kiệm – chọn nhanh chỉ với 1 click!
+          Gợi ý các gói xét nghiệm tiết kiệm – chọn nhanh chỉ với 1 click!
         </div>
       </div>
       {/* Chọn phương thức lấy mẫu */}
@@ -555,10 +562,7 @@ export default function STIsTest() {
               gap: 8,
             }}
           >
-            <span role="img" aria-label="money">
-              💰
-            </span>{" "}
-            Tổng phí:
+            <span role="img" aria-label="money"></span> Tổng phí:
             <span style={{ fontSize: 22, marginLeft: 4 }}>
               {total.toLocaleString()}đ
             </span>
@@ -591,7 +595,7 @@ export default function STIsTest() {
                 aria-hidden="true"
               ></span>
             ) : (
-              "✅"
+              ""
             )}{" "}
             Đăng ký xét nghiệm
           </button>
@@ -841,8 +845,7 @@ export default function STIsTest() {
             >
               <li>Mọi thông tin cá nhân và kết quả được bảo mật tuyệt đối.</li>
               <li>
-                Kết quả được gửi qua: Email cá nhân (PDF có mã bảo vệ) hoặc in
-                trực tiếp tại cơ sở
+                Kết quả được gửi qua: Email cá nhân hoặc in trực tiếp tại cơ sở
               </li>
               <li>
                 Tư vấn miễn phí 1-1 với chuyên gia y tế sau khi nhận kết quả
@@ -871,7 +874,7 @@ export default function STIsTest() {
           >
             📞 Bạn cần hỗ trợ? Gọi hotline:{" "}
             <span style={{ color: "#16a34a", fontWeight: 800 }}>
-              1800 123 456
+              0123 456 789
             </span>
           </div>
           <div
@@ -883,17 +886,25 @@ export default function STIsTest() {
                 "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
             }}
           >
-            Chat Zalo / Facebook với bác sĩ tư vấn hoặc gửi yêu cầu tại đây:{" "}
+            Chat với bác sĩ tư vấn hoặc gửi yêu cầu tại đây:{" "}
             <a
-              href="#"
-              className="btn btn-outline-primary btn-sm rounded-pill ms-2"
+              href="/booking-consultation"
+              className="btn btn-outline-primary btn-lg rounded-pill ms-2"
               style={{
                 fontWeight: 700,
                 fontFamily:
                   "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+                fontSize: 15,
+                padding: "10px 28px",
+                borderRadius: 32,
+                minHeight: 40,
+                minWidth: 60,
+                letterSpacing: 0.5,
+                boxShadow: "0 2px 8px #615efc22",
+                transition: "all 0.2s",
               }}
             >
-              📩 Đặt lịch & tư vấn
+              📩 Tư vấn & Đặt lịch
             </a>
           </div>
         </div>
