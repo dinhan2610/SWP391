@@ -13,6 +13,9 @@ import STIsTest from "../pages/STIsTest";
 import BookingConsultation from "../pages/BookingConsulation";
 import ChatWithAdvisor from "../pages/ChatWithAdvisor";
 import PaymentPage from "../pages/PaymentPage";
+import STIsDetail from "../pages/STIsDetail/STIsDetail";
+import STIsRegistration from "../pages/STIsRegistration/STIsRegistration";
+import STIsStatus from "../pages/STIsStatus/STIsStatus";
 
 const routes = [
   {
@@ -31,6 +34,9 @@ const routes = [
       { path: "/contact", element: <ContactPage /> },
       { path: "/admin/test-services", element: <TestServiceForm /> },
       { path: "/stis-test", element: <STIsTest /> },
+      { path: "//detail", element: <STIsDetail /> },
+      { path: "/registration", element: <STIsRegistration /> },
+      { path: "/status", element: <STIsStatus /> },
       { path: "/booking-consultation", element: <BookingConsultation /> },
       { path: "/chat", element: <ChatWithAdvisor /> },
       { path: "/payment", element: <PaymentPage /> },

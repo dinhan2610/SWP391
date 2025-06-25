@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -37,48 +38,36 @@ const PaymentPage = () => {
   const navigate = useNavigate();
   // Lấy thông tin đơn hàng từ state nếu có
   const order =
-    location.state && location.state.tests
+    location.state && location.state.order
       ? {
-          name: `Xét nghiệm: ${location.state.tests.join(", ")}`,
-          price: location.state.total,
-          time: location.state.time
-            ? new Date(location.state.time).toLocaleString("vi-VN", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: false,
-              })
-            : "-",
-          desc: `Gồm ${location.state.tests.length} mục xét nghiệm STIs, kết quả bảo mật, tư vấn miễn phí.`,
-          paid: location.state.paid,
-          tests: location.state.tests,
-        }
+        name: `Xét nghiệm: ${location.state.order.disease}`,
+        price: location.state.order.total,
+        time: location.state.order.time,
+        desc: `Xét nghiệm STIs, kết quả bảo mật, tư vấn miễn phí.`,
+        category: location.state.order.category,
+        disease: location.state.order.disease,
+        details: location.state.order.details,
+        paid: location.state.order.paid || false,
+      }
       : DUMMY_ORDER;
   const [paymentMethod, setPaymentMethod] = useState("momo");
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
 
-  // eslint-disable-next-line no-unused-vars
   const onFinish = (_values) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
       message.success("Thanh toán thành công!");
       form.resetFields();
-      // Sau khi thanh toán thành công, chuyển về STIsTest và truyền lại đơn hàng đã thanh toán
-      if (order && order.tests) {
-        navigate("/stis-test", {
-          state: {
-            paidOrder: {
-              ...order,
-              paid: true,
-            },
-          },
-        });
-      }
+      navigate('/status', {
+        state: {
+          category: order.category,
+          disease: order.disease,
+          details: order.details,
+          paid: true,
+        },
+      });
     }, 1200);
   };
 
@@ -127,24 +116,6 @@ const PaymentPage = () => {
         >
           {order.name}
         </div>
-        {order.tests && (
-          <div
-            style={{
-              color: "#444",
-              fontSize: 16,
-              fontWeight: 500,
-              textAlign: "center",
-              marginBottom: 2,
-            }}
-          >
-            {order.tests.map((t, i) => (
-              <span key={t}>
-                {t}
-                {i < order.tests.length - 1 ? ", " : ""}
-              </span>
-            ))}
-          </div>
-        )}
         <div
           style={{
             color: "#444",
@@ -154,7 +125,7 @@ const PaymentPage = () => {
             marginBottom: 2,
           }}
         >
-          {order.desc}
+          {order.category}
         </div>
         <div
           style={{
@@ -166,21 +137,6 @@ const PaymentPage = () => {
         >
           Thời gian đăng ký: <b style={{ color: "#222" }}>{order.time}</b>
         </div>
-        {location.state && location.state.sampleType && (
-          <div
-            style={{
-              color: location.state.sampleType === "home" ? "#eab308" : "#888",
-              fontSize: 15,
-              textAlign: "center",
-              fontWeight: 600,
-              marginBottom: 2,
-            }}
-          >
-            {location.state.sampleType === "home"
-              ? "Phương thức lấy mẫu: Lấy mẫu tại nhà (+50,000đ)"
-              : "Phương thức lấy mẫu: Lấy mẫu tại phòng khám"}
-          </div>
-        )}
         <div
           style={{
             fontWeight: 900,
@@ -436,7 +392,6 @@ const PaymentPage = () => {
                     { required: true, message: "Vui lòng nhập tên chủ thẻ" },
                   ]}
                 >
-                  {" "}
                   <Input
                     placeholder="Nhập tên chủ thẻ"
                     style={{
@@ -444,7 +399,7 @@ const PaymentPage = () => {
                       borderRadius: 8,
                       padding: "8px 12px",
                     }}
-                  />{" "}
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -466,7 +421,6 @@ const PaymentPage = () => {
                     { pattern: /^\d{12,19}$/, message: "Số thẻ không hợp lệ" },
                   ]}
                 >
-                  {" "}
                   <Input
                     placeholder="Nhập số thẻ"
                     maxLength={19}
@@ -475,7 +429,7 @@ const PaymentPage = () => {
                       borderRadius: 8,
                       padding: "8px 12px",
                     }}
-                  />{" "}
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -496,7 +450,6 @@ const PaymentPage = () => {
                     { required: true, message: "Vui lòng chọn ngày hết hạn" },
                   ]}
                 >
-                  {" "}
                   <DatePicker
                     style={{
                       width: "100%",
@@ -507,7 +460,7 @@ const PaymentPage = () => {
                     placeholder="MM/YY"
                     format="MM/YY"
                     picker="month"
-                  />{" "}
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -529,7 +482,6 @@ const PaymentPage = () => {
                     { pattern: /^\d{3,4}$/, message: "CVV không hợp lệ" },
                   ]}
                 >
-                  {" "}
                   <Input
                     placeholder="CVV"
                     maxLength={4}
@@ -538,7 +490,7 @@ const PaymentPage = () => {
                       borderRadius: 8,
                       padding: "8px 12px",
                     }}
-                  />{" "}
+                  />
                 </Form.Item>
               </Col>
             </>

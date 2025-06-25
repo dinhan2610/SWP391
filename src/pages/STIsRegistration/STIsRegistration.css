@@ -1,0 +1,97 @@
+
+.stis-reg-container {
+  padding: 40px 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  font-family: 'Be Vietnam Pro', 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  color: #333;
+}
+
+.stis-reg-card {
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.stis-reg-card .ant-card-body {
+  padding: 0;
+}
+
+.stis-reg-title {
+  text-align: center;
+  color: #ffffff;
+  background: linear-gradient(90deg, #4a90e2, #63b3ed);
+  padding: 20px;
+  margin: 0;
+  font-weight: 600;
+  font-size: 22px;
+  border-radius: 12px 12px 0 0;
+}
+
+.stis-reg-form {
+  padding: 24px;
+}
+
+.stis-reg-form .ant-form-item {
+  margin-bottom: 20px;
+}
+
+.stis-reg-form .ant-input {
+  border-radius: 8px;
+  border-color: #e2e8f0;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  height: 50px; /* Increased height */
+  font-size: 16px; /* Larger font size */
+  padding: 12px 16px; /* Increased padding */
+}
+
+.stis-reg-form .ant-input:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.stis-reg-form .ant-btn-primary {
+  background: #4a90e2;
+  border-color: #4a90e2;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  width: 100%;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.stis-reg-form .ant-btn-primary:hover {
+  background: #357abd;
+  transform: translateY(-2px);
+}
+
+.stis-reg-commitment {
+  margin-top: 20px;
+  padding: 0 24px 24px;
+  text-align: center;
+  color: #4a5568;
+  font-size: 14px;
+  line-height: 1.6;
+  border-top: 1px solid #e2e8f0;
+}
+
+@media (max-width: 768px) {
+  .stis-reg-container {
+    padding: 20px 10px;
+  }
+
+  .stis-reg-card {
+    max-width: 100%;
+  }
+
+  .stis-reg-form {
+    padding: 16px;
+  }
+
+  .stis-reg-commitment {
+    padding: 0 16px 16px;
+  }
+}
