@@ -1,131 +1,148 @@
 import React, { useState } from "react";
-import { Form, Input, Typography, message as Message } from "antd";
-import { MailOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
-import SigninBackground from "../../../assets/Signin.png";
-// import { useRegister } from "../../../apis/CallAPIUser";
+import { Form, Input, Typography, message as Message, Select } from "antd";
+import {
+  MailOutlined,
+  LockOutlined,
+  UserOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
+
 import BackdropLoader from "../../../components/BackdropLoader";
 
 const { Title, Text } = Typography;
+const { Option } = Select;
 
 export default function Signin({ setActiveTab, onSwitchTab }) {
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-    fullname: "",
-  });
 
   // Xử lý đăng ký
-  const handleSubmit = () => {
+  const handleSubmit = async (values) => {
     setLoading(true);
-    // TODO: Thay thế bằng API thật khi có
-    setTimeout(() => {
-      Message.success("Sign in successfully (Mock)");
-      if (setActiveTab) setActiveTab(0);
+    try {
+      const res = await fetch(
+        "https://swp391ghsmsbe-production.up.railway.app/api/Authen/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...values, roleId: 0 }),
+        }
+      );
+      const data = await res.json();
+      if (res.ok) {
+        Message.success("Đăng ký thành công! Vui lòng đăng nhập.");
+        if (setActiveTab) setActiveTab(0);
+      } else {
+        Message.error(data?.message || "Đăng ký thất bại. Vui lòng thử lại!");
+      }
+    } catch {
+      Message.error("Lỗi kết nối máy chủ. Vui lòng thử lại!");
+    } finally {
       setLoading(false);
-    }, 1500);
-
-    // Giả lập success
-    /*
-    useRegister(user.email, user.password, user.fullname)
-      .then((res) => {
-        Message.success("Sign in successfully");
-        setActiveTab(0);
-        setLoading(false);
-      })
-      .catch((error) => {
-        Message.error("Failed sign in: " + error.message);
-        setLoading(false);
-      });
-    */
+    }
   };
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      {/* Ảnh nền bên trái */}
-      <div style={{ flex: 1, overflow: "hidden" }}>
-        <img
-          src={SigninBackground}
-          alt="Signin background"
-          style={{
-            width: "100%",
-            height: 380,
-            objectFit: "contain",
-            display: "block",
-            borderRadius: "12px",
-            minHeight: 320,
-            minWidth: 200,
-            maxHeight: 420,
-            maxWidth: 420,
-            margin: "32px auto 0 auto",
-            background: "#f8fafc",
-          }}
-        />
-      </div>
-      {/* Form bên phải */}
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#f8fafc",
+      }}
+    >
+      <BackdropLoader open={loading} />
       <div
         style={{
-          flex: 1,
-          marginTop: -180,
-          padding: "40px 20px",
+          width: "100%",
+          maxWidth: 600,
+          marginTop: 0,
+          background: "#fff",
+          borderRadius: 16,
+          boxShadow: "0 2px 12px #2563eb11",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
+          padding: "32px 24px 24px 24px",
+          justifyContent: "flex-start",
         }}
       >
-        <BackdropLoader open={loading} />
-        <div style={{ width: "100%", maxWidth: 400, margin: "0 auto" }}>
-          <div className="row justify-content-md-center">
-            <div className="col-md-auto mb-3">
-              <Title>Đăng ký</Title>
-            </div>
+        <div className="row justify-content-md-center">
+          <div className="col-md-auto mb-3">
+            <Title>Đăng ký</Title>
           </div>
-          <Text
-            style={{
-              display: "block",
-              marginBottom: "20px",
-              marginLeft: "24px",
-            }}
-          >
-            Nhập email để trở thành thành viên mới của HealthWise!
-          </Text>
+        </div>
+        <Text
+          style={{
+            display: "block",
+            marginBottom: "20px",
+            marginLeft: 0,
+            textAlign: "center",
+          }}
+        >
+          Nhập thông tin để trở thành thành viên mới của HealthWise!
+        </Text>
+        <div
+          style={{
+            width: "100%",
+            maxHeight: 520,
+            overflowY: "auto",
+            overflowX: "hidden",
+            padding: 0,
+          }}
+        >
           <Form layout="vertical" onFinish={handleSubmit}>
             <Form.Item
-              name="fullname"
+              name="fullName"
+              label={
+                <span>
+                  <span style={{ color: "#e74c3c" }}>*</span> Họ và tên
+                </span>
+              }
               rules={[
                 { required: true, message: "Vui lòng nhập họ tên!" },
+                { min: 2, message: "Họ tên phải có ít nhất 2 ký tự!" },
                 {
                   pattern: /^[a-zA-ZÀ-ỹà-ỹ\s]+$/,
                   message: "Họ tên không được chứa số hoặc ký tự đặc biệt!",
                 },
               ]}
-              style={{ marginBottom: 35 }}
+              style={{ marginBottom: 28 }}
+              required={false}
             >
               <Input
                 prefix={<UserOutlined style={{ color: "#2563eb" }} />}
                 placeholder="Họ và tên"
-                value={user.fullname}
-                onChange={(e) => setUser({ ...user, fullname: e.target.value })}
                 style={{ height: 50, fontSize: 16 }}
               />
             </Form.Item>
             <Form.Item
               name="email"
+              label={
+                <span>
+                  <span style={{ color: "#e74c3c" }}>*</span> Email
+                </span>
+              }
               rules={[
-                { type: "email", message: "Email không hợp lệ!" },
                 { required: true, message: "Vui lòng nhập email!" },
+                { type: "email", message: "Email không hợp lệ!" },
               ]}
-              style={{ marginBottom: 35 }}
+              style={{ marginBottom: 28 }}
+              required={false}
             >
               <Input
                 prefix={<MailOutlined style={{ color: "#2563eb" }} />}
                 placeholder="Email"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
                 style={{ height: 50, fontSize: 16 }}
               />
             </Form.Item>
             <Form.Item
               name="password"
+              label={
+                <span>
+                  <span style={{ color: "#e74c3c" }}>*</span> Mật khẩu
+                </span>
+              }
               rules={[
                 { required: true, message: "Vui lòng nhập mật khẩu!" },
                 { min: 8, message: "Mật khẩu phải có ít nhất 8 ký tự!" },
@@ -136,23 +153,88 @@ export default function Signin({ setActiveTab, onSwitchTab }) {
                     "Mật khẩu phải có chữ hoa, chữ thường, số và ký tự đặc biệt!",
                 },
               ]}
-              style={{ marginBottom: 50 }}
+              style={{ marginBottom: 28 }}
+              required={false}
             >
               <Input.Password
                 prefix={<LockOutlined style={{ color: "#2563eb" }} />}
                 placeholder="Mật khẩu"
-                value={user.password}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
                 style={{ height: 50, fontSize: 16 }}
               />
             </Form.Item>
+            <Form.Item
+              name="phoneNumber"
+              label={
+                <span>
+                  <span style={{ color: "#e74c3c" }}>*</span> Số điện thoại
+                </span>
+              }
+              rules={[
+                { required: true, message: "Vui lòng nhập số điện thoại!" },
+                {
+                  pattern: /^0\d{9}$/,
+                  message: "Số điện thoại phải bắt đầu bằng 0 và đủ 10 số!",
+                },
+              ]}
+              style={{ marginBottom: 28 }}
+              required={false}
+            >
+              <Input
+                prefix={<PhoneOutlined style={{ color: "#2563eb" }} />}
+                placeholder="Số điện thoại"
+                style={{ height: 50, fontSize: 16 }}
+                maxLength={10}
+              />
+            </Form.Item>
+            <Form.Item
+              name="gender"
+              label={
+                <span>
+                  <span style={{ color: "#e74c3c" }}>*</span> Giới tính
+                </span>
+              }
+              rules={[{ required: true, message: "Vui lòng chọn giới tính!" }]}
+              style={{ marginBottom: 36 }}
+              required={false}
+            >
+              <Select
+                placeholder="Giới tính"
+                style={{ height: 50, fontSize: 16 }}
+              >
+                <Option value="Nam">Nam</Option>
+                <Option value="Nữ">Nữ</Option>
+                <Option value="Khác">Khác</Option>
+              </Select>
+            </Form.Item>
+            {/* roleId là ẩn, mặc định 0 */}
+            <Form.Item
+              style={{ display: "none" }}
+              name="roleId"
+              initialValue={0}
+            >
+              <Input type="hidden" value={0} />
+            </Form.Item>
             <Form.Item>
-              <div className="row justify-content-md-center">
-                <div className="col-md-auto">
-                  <button className="rts-btn btn-primary" type="submit">
-                    Đăng ký
-                  </button>
-                </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+              >
+                <button
+                  className="rts-btn btn-primary"
+                  type="submit"
+                  style={{
+                    minWidth: 160,
+                    height: 50,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  Đăng ký
+                </button>
               </div>
             </Form.Item>
           </Form>
@@ -161,7 +243,18 @@ export default function Signin({ setActiveTab, onSwitchTab }) {
             <a
               href="#"
               onClick={onSwitchTab}
-              style={{ color: "#2563eb", fontWeight: 500 }}
+              style={{
+                color: "#2563eb",
+                fontWeight: 500,
+                textDecoration: "none",
+                transition: "text-decoration 0.2s",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.textDecoration = "underline")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.textDecoration = "none")
+              }
             >
               Đăng nhập ngay!
             </a>
