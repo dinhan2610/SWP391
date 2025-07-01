@@ -10,6 +10,7 @@ import {
   Breadcrumb,
   Table,
   Popconfirm,
+  Input,
 } from "antd";
 import {
   format,
@@ -233,34 +234,6 @@ export default function Ovulation() {
     }
   };
 
-  const generatePillReminderTable = () => {
-    if (!pillType || !results) return [];
-
-    const start = results.menstruationDate;
-    let totalDays = pillType === "21" ? 21 : pillType === "28" ? 28 : 30;
-
-    return Array.from({ length: totalDays }, (_, i) => {
-      const date = addDays(start, i);
-      const key = format(date, "yyyy-MM-dd");
-      return {
-        key,
-        day: i + 1,
-        date: format(date, "MMM d, yyyy"),
-        note: (
-          <input
-            type="checkbox"
-            checked={pillTaken[key] || false}
-            onChange={() =>
-              setPillTaken((prev) => ({
-                ...prev,
-                [key]: !prev[key],
-              }))
-            }
-          />
-        ),
-      };
-    });
-  };
   const renderCalendar = () => {
     if (!results || !currentMonth) return null;
 
@@ -409,39 +382,77 @@ export default function Ovulation() {
         </Card>
 
         <Card className="mt-4">
-          <Title level={4}>Lịch nhắc uống thuốc</Title>
-          {pillType && pillType !== "none" ? (
-            <Table
-              bordered
-              size="small"
-              pagination={false}
-              dataSource={generatePillReminderTable()}
-              columns={[
-                {
-                  title: "Ngày",
-                  dataIndex: "day",
-                  key: "day",
-                  align: "center",
-                },
-                {
-                  title: "Ngày tháng",
-                  dataIndex: "date",
-                  key: "date",
-                  align: "center",
-                },
-                {
-                  title: "Ghi chú",
-                  dataIndex: "note",
-                  key: "note",
-                  align: "center",
-                },
+          <Title level={4}>Gửi lịch nhắc về email</Title>
+          <Form
+            layout="vertical"
+            onFinish={async (values) => {
+              if (!multiCycleResults || multiCycleResults.length === 0) return;
+              // Tổng hợp lịch nhắc cho 6 chu kỳ
+              let content = `Lịch nhắc cá nhân hóa từ HealthWise:\n`;
+              multiCycleResults.forEach((cycle, idx) => {
+                content += `\n--- Chu kỳ ${idx + 1} ---\n`;
+                content += `- Ngày hành kinh: ${format(
+                  cycle.menstruationDate,
+                  "dd-MM-yyyy"
+                )}\n`;
+                content += `- Tuần rụng trứng: ${format(
+                  cycle.fertileStart,
+                  "dd-MM-yyyy"
+                )} đến ${format(cycle.fertileEnd, "dd-MM-yyyy")}\n`;
+                content += `- Ngày rụng trứng: ${format(
+                  cycle.ovulationDate,
+                  "dd-MM-yyyy"
+                )}\n`;
+                content += `- Ngày dự sinh (nếu có thai): ${format(
+                  cycle.dueDate,
+                  "dd-MM-yyyy"
+                )}\n`;
+                // Nếu có thuốc tránh thai, liệt kê từng ngày uống thuốc
+                if (pillType && pillType !== "none") {
+                  let totalDays =
+                    pillType === "21" ? 21 : pillType === "28" ? 28 : 30;
+                  let pillDates = Array.from({ length: totalDays }, (_, i) =>
+                    format(addDays(cycle.menstruationDate, i), "dd-MM-yyyy")
+                  );
+                  content += `- Lịch uống thuốc tránh thai: ${pillDates.join(
+                    ", "
+                  )}\n`;
+                }
+              });
+              // Gửi API (giả lập)
+              try {
+                // Thay bằng API thực tế nếu có
+                await fetch("/api/send-reminder", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    email: values.email,
+                    content,
+                  }),
+                });
+                window.alert("Đã gửi lịch nhắc về email thành công!");
+              } catch {
+                window.alert("Gửi email thất bại. Vui lòng thử lại!");
+              }
+            }}
+          >
+            <Form.Item
+              label="Nhập email để nhận lịch nhắc cá nhân hóa"
+              name="email"
+              rules={[
+                { required: true, message: "Vui lòng nhập email!" },
+                { type: "email", message: "Email không hợp lệ!" },
               ]}
-            />
-          ) : (
-            <Paragraph type="secondary" className="text-center my-3">
-              Không có lịch nhắc uống thuốc để hiển thị.
-            </Paragraph>
-          )}
+            >
+              <Input
+                placeholder="Nhập email của bạn"
+                style={{ maxWidth: 320 }}
+              />
+            </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Gửi lịch nhắc
+            </Button>
+          </Form>
         </Card>
       </>
     );

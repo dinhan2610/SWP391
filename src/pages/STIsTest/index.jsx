@@ -102,6 +102,19 @@ export default function STIsTest() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false); // loading khi đăng ký
   const [sampleType, setSampleType] = useState("clinic"); // "clinic" hoặc "home"
+  const [showUserForm, setShowUserForm] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    dob: "",
+    address: "",
+    phone: "",
+  });
+  const [userError, setUserError] = useState({
+    name: "",
+    dob: "",
+    address: "",
+    phone: "",
+  });
   const historyRef = useRef(null); // ref để cuộn tới lịch sử
   const navigate = useNavigate();
   const location = useLocation();
@@ -151,6 +164,35 @@ export default function STIsTest() {
     ) + (sampleType === "home" && selected.length > 0 ? 50000 : 0);
 
   const handleSubmit = () => {
+    setUserError("");
+    setShowUserForm(true);
+  };
+
+  const handleUserFormSubmit = (e) => {
+    e.preventDefault();
+    // Validate đồng bộ với validate trang
+    const name = userInfo.name.trim();
+    const address = userInfo.address.trim();
+    const phone = userInfo.phone.trim();
+    const dob = userInfo.dob;
+    let errors = { name: "", dob: "", address: "", phone: "" };
+    if (!name) errors.name = "Họ tên là bắt buộc!";
+    else if (!/^([\p{L}\s'.-]+)$/u.test(name) || name.length < 2)
+      errors.name = "Họ tên không hợp lệ!";
+    if (!dob) errors.dob = "Ngày sinh là bắt buộc!";
+    else if (!/^\d{4}-\d{2}-\d{2}$/.test(dob) || dob.length < 2)
+      errors.dob = "Ngày sinh không hợp lệ!";
+    else if (new Date(dob) > new Date()) errors.dob = "Ngày sinh không hợp lệ!";
+    if (!address) errors.address = "Địa chỉ là bắt buộc!";
+    else if (!/^([\p{L}\d\s,./-]+)$/u.test(address) || address.length < 5)
+      errors.address = "Địa chỉ không hợp lệ!";
+    if (!phone) errors.phone = "Số điện thoại là bắt buộc!";
+    else if (!/^0[3-9]\d{8}$/.test(phone))
+      errors.phone =
+        "Số điện thoại phải là 10 số, bắt đầu bằng 0, đúng định dạng Việt Nam!";
+    setUserError(errors);
+    if (Object.values(errors).some((v) => v)) return;
+    setShowUserForm(false);
     setLoading(true);
     setTimeout(() => {
       setShowSuccess(true);
@@ -165,11 +207,13 @@ export default function STIsTest() {
             total,
             paid: false,
             sampleType,
+            user: { ...userInfo },
           },
           ...prev,
         ]);
         setSelected([]);
         setSampleType("clinic");
+        setUserInfo({ name: "", dob: "", address: "", phone: "" });
         setTimeout(() => {
           if (historyRef.current) {
             historyRef.current.scrollIntoView({
@@ -614,6 +658,42 @@ export default function STIsTest() {
           </button>
         </div>
         {/* Lịch sử đăng ký */}
+        <div
+          className="mt-4 mb-2 stis-history-link"
+          style={{
+            fontWeight: 800,
+            fontSize: 15,
+            color: "#888",
+            fontFamily:
+              "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+            letterSpacing: 0.5,
+            textAlign: "left",
+            cursor: "pointer",
+            transition: "color 0.2s",
+            userSelect: "none",
+          }}
+          tabIndex={0}
+          role="button"
+          onClick={() =>
+            navigate("/history", {
+              state: { history: history.filter((h) => h.paid) },
+            })
+          }
+          onKeyDown={(e) =>
+            (e.key === "Enter" || e.key === " ") &&
+            navigate("/history", {
+              state: { history: history.filter((h) => h.paid) },
+            })
+          }
+        >
+          Lịch sử đăng ký xét nghiệm
+        </div>
+        <style>{`
+          .stis-history-link:hover, .stis-history-link:focus {
+            color: #111 !important;
+            text-decoration: underline;
+          }
+        `}</style>
         <div className="mt-3" ref={historyRef}>
           <div
             style={{
@@ -631,7 +711,7 @@ export default function STIsTest() {
             <span role="img" aria-label="history">
               📝
             </span>{" "}
-            Lịch sử đăng ký
+            Đợi thanh toán
           </div>
           <div
             style={{
@@ -965,6 +1045,287 @@ export default function STIsTest() {
           .stis-history-item { font-size: 13px !important; padding: 8px 6px !important; }
         }
       `}</style>
+      {/* Form nhập thông tin cá nhân khi đăng ký */}
+      {showUserForm && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.25)",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <form
+            onSubmit={handleUserFormSubmit}
+            style={{
+              background: "#fff",
+              borderRadius: 24,
+              boxShadow: "0 8px 32px #615efc33",
+              padding: 32,
+              minWidth: 320,
+              maxWidth: 420,
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              gap: 20,
+              fontFamily:
+                "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+              position: "relative",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 900,
+                fontSize: 24,
+                color: "#615efc",
+                textAlign: "center",
+                marginBottom: 8,
+                letterSpacing: 0.5,
+              }}
+            >
+              Nhập thông tin cá nhân để đăng ký xét nghiệm
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <label
+                style={{
+                  fontWeight: 700,
+                  fontSize: 15,
+                  marginBottom: 2,
+                  color: "#222",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
+                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span>
+                <span role="img" aria-label="user">
+                  👤
+                </span>{" "}
+                Họ và tên
+              </label>
+              <input
+                type="text"
+                placeholder="Nhập họ và tên đầy đủ"
+                value={userInfo.name}
+                onChange={(e) =>
+                  setUserInfo({ ...userInfo, name: e.target.value })
+                }
+                style={{
+                  padding: "12px 14px",
+                  borderRadius: 12,
+                  border: "1.5px solid #e0e7ef",
+                  fontSize: 16,
+                  outline: "none",
+                  transition: "border 0.2s, box-shadow 0.2s",
+                }}
+                required
+                onFocus={(e) => (e.target.style.border = "2px solid #615efc")}
+                onBlur={(e) => (e.target.style.border = "1.5px solid #e0e7ef")}
+              />
+              {userError.name && (
+                <div
+                  style={{
+                    color: "#e11d48",
+                    fontWeight: 600,
+                    fontSize: 14,
+                    marginTop: 2,
+                  }}
+                >
+                  {userError.name}
+                </div>
+              )}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <label
+                style={{
+                  fontWeight: 700,
+                  fontSize: 15,
+                  marginBottom: 2,
+                  color: "#222",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
+                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span>
+                <span role="img" aria-label="birthday">
+                  🎂
+                </span>{" "}
+                Ngày sinh
+              </label>
+              <input
+                type="date"
+                placeholder="Ngày sinh"
+                value={userInfo.dob}
+                onChange={(e) =>
+                  setUserInfo({ ...userInfo, dob: e.target.value })
+                }
+                style={{
+                  padding: "12px 14px",
+                  borderRadius: 12,
+                  border: "1.5px solid #e0e7ef",
+                  fontSize: 16,
+                  outline: "none",
+                  transition: "border 0.2s, box-shadow 0.2s",
+                }}
+                required
+                max={new Date().toISOString().split("T")[0]}
+                onFocus={(e) => (e.target.style.border = "2px solid #615efc")}
+                onBlur={(e) => (e.target.style.border = "1.5px solid #e0e7ef")}
+              />
+              {userError.dob && (
+                <div
+                  style={{
+                    color: "#e11d48",
+                    fontWeight: 600,
+                    fontSize: 14,
+                    marginTop: 2,
+                  }}
+                >
+                  {userError.dob}
+                </div>
+              )}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <label
+                style={{
+                  fontWeight: 700,
+                  fontSize: 15,
+                  marginBottom: 2,
+                  color: "#222",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
+                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span>
+                <span role="img" aria-label="address">
+                  🏠
+                </span>{" "}
+                Địa chỉ liên hệ
+              </label>
+              <input
+                type="text"
+                placeholder="Nhập địa chỉ liên hệ"
+                value={userInfo.address}
+                onChange={(e) =>
+                  setUserInfo({ ...userInfo, address: e.target.value })
+                }
+                style={{
+                  padding: "12px 14px",
+                  borderRadius: 12,
+                  border: "1.5px solid #e0e7ef",
+                  fontSize: 16,
+                  outline: "none",
+                  transition: "border 0.2s, box-shadow 0.2s",
+                }}
+                required
+                onFocus={(e) => (e.target.style.border = "2px solid #615efc")}
+                onBlur={(e) => (e.target.style.border = "1.5px solid #e0e7ef")}
+              />
+              {userError.address && (
+                <div
+                  style={{
+                    color: "#e11d48",
+                    fontWeight: 600,
+                    fontSize: 14,
+                    marginTop: 2,
+                  }}
+                >
+                  {userError.address}
+                </div>
+              )}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <label
+                style={{
+                  fontWeight: 700,
+                  fontSize: 15,
+                  marginBottom: 2,
+                  color: "#222",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
+                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span>
+                <span role="img" aria-label="phone">
+                  📞
+                </span>{" "}
+                Số điện thoại
+              </label>
+              <input
+                type="tel"
+                placeholder="Nhập số điện thoại (10-11 số)"
+                value={userInfo.phone}
+                onChange={(e) =>
+                  setUserInfo({ ...userInfo, phone: e.target.value })
+                }
+                style={{
+                  padding: "12px 14px",
+                  borderRadius: 12,
+                  border: "1.5px solid #e0e7ef",
+                  fontSize: 16,
+                  outline: "none",
+                  transition: "border 0.2s, box-shadow 0.2s",
+                }}
+                required
+                onFocus={(e) => (e.target.style.border = "2px solid #615efc")}
+                onBlur={(e) => (e.target.style.border = "1.5px solid #e0e7ef")}
+              />
+              {userError.phone && (
+                <div
+                  style={{
+                    color: "#e11d48",
+                    fontWeight: 600,
+                    fontSize: 14,
+                    marginTop: 2,
+                  }}
+                >
+                  {userError.phone}
+                </div>
+              )}
+            </div>
+            <div style={{ display: "flex", gap: 14, marginTop: 10 }}>
+              <button
+                type="button"
+                className="btn btn-outline-secondary rounded-pill px-4"
+                style={{
+                  fontWeight: 700,
+                  fontSize: 16,
+                  flex: 1,
+                  borderWidth: 2,
+                  borderColor: "#e0e7ef",
+                }}
+                onClick={() => setShowUserForm(false)}
+              >
+                Hủy
+              </button>
+              <button
+                type="submit"
+                className="btn btn-primary rounded-pill px-4"
+                style={{
+                  fontWeight: 800,
+                  fontSize: 17,
+                  flex: 1,
+                  background: "#615efc",
+                  border: "none",
+                  boxShadow: "0 2px 8px #615efc33",
+                  letterSpacing: 0.5,
+                }}
+              >
+                Xác nhận
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

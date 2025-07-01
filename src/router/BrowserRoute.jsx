@@ -8,11 +8,14 @@ import BlogPage from "../pages/Blog";
 import QuizPage from "../modules/HomeTemplate/quiz";
 import AboutHealthWise from "../pages/AboutHealthWise";
 import ContactPage from "../pages/Contact";
-import TestServiceForm from "../pages/AdminPages/TestService";
+
 import STIsTest from "../pages/STIsTest";
 import BookingConsultation from "../pages/BookingConsulation";
 import ChatWithAdvisor from "../pages/ChatWithAdvisor";
 import PaymentPage from "../pages/PaymentPage";
+import AdminSTIs from "../pages/AdminPages/STIs";
+import HistorySTIs from "../pages/HistorySTIs";
+import BlogAdmin from "../pages/AdminPages/BlogAdmin";
 
 const routes = [
   {
@@ -29,11 +32,17 @@ const routes = [
       { path: "/about", element: <AboutHealthWise /> },
       { path: "/quiz", element: <QuizPage /> },
       { path: "/contact", element: <ContactPage /> },
-      { path: "/admin/test-services", element: <TestServiceForm /> },
+
       { path: "/stis-test", element: <STIsTest /> },
       { path: "/booking-consultation", element: <BookingConsultation /> },
       { path: "/chat", element: <ChatWithAdvisor /> },
       { path: "/payment", element: <PaymentPage /> },
+      { path: "/admin/stis", element: <AdminSTIs /> },
+      {
+        path: "/history",
+        element: <HistorySTIs />,
+      },
+      { path: "/admin/blog", element: <BlogAdmin /> },
     ],
   },
 ];

@@ -29,8 +29,8 @@ export default function LoginUI({ onSwitchTab }) {
       const data = await res.json();
       if (res.ok && data?.token) {
         Message.success("Đăng nhập thành công!");
-        // Lưu token nếu cần: localStorage.setItem('token', data.token);
-        // Chuyển trang hoặc reload nếu cần
+        localStorage.setItem("token", data.token);
+        // window.location.reload(); // hoặc chuyển trang nếu muốn
       } else {
         setError(data?.message || "Email hoặc mật khẩu không đúng!");
       }
@@ -42,7 +42,7 @@ export default function LoginUI({ onSwitchTab }) {
 
   return (
     <div>
-      <div style={{ display: "flex", height: "100vh" }}>
+      <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
         {/* Image */}
         <div style={{ flex: 1, overflow: "hidden" }}>
           <img
@@ -76,7 +76,8 @@ export default function LoginUI({ onSwitchTab }) {
             style={{
               display: "block",
               marginBottom: "20px",
-              marginLeft: "24px",
+              marginLeft: 0,
+              textAlign: "center",
             }}
           >
             Nhập email để đăng nhập vào tài khoản HealthWise của bạn!
@@ -85,11 +86,17 @@ export default function LoginUI({ onSwitchTab }) {
           <Form layout="vertical" onFinish={handleLogin}>
             <Form.Item
               name="email"
+              label={
+                <span>
+                  <span style={{ color: "#e74c3c" }}>*</span> Email
+                </span>
+              }
               rules={[
                 { type: "email", message: "Email không hợp lệ!" },
                 { required: true, message: "Vui lòng nhập email!" },
               ]}
               style={{ marginBottom: 35 }}
+              required={false}
             >
               <Input
                 prefix={<MailOutlined style={{ color: "#2563eb" }} />}
@@ -101,8 +108,14 @@ export default function LoginUI({ onSwitchTab }) {
 
             <Form.Item
               name="password"
+              label={
+                <span>
+                  <span style={{ color: "#e74c3c" }}>*</span> Mật khẩu
+                </span>
+              }
               rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
               style={{ marginBottom: 20 }}
+              required={false}
             >
               <Input.Password
                 prefix={<LockOutlined style={{ color: "#2563eb" }} />}
@@ -147,7 +160,15 @@ export default function LoginUI({ onSwitchTab }) {
               style={{
                 color: "#2563eb",
                 fontWeight: 500,
+                textDecoration: "none",
+                transition: "text-decoration 0.2s",
               }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.textDecoration = "underline")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.textDecoration = "none")
+              }
             >
               Đăng ký ngay!
             </a>

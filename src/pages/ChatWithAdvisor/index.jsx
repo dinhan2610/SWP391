@@ -20,12 +20,17 @@ export default function ChatWithAdvisor() {
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
 
-  // Scroll chỉ trong khung chat khi có tin nhắn mới, đảm bảo luôn sát cuối
+  // ĐÃ LOẠI BỎ effect scroll xuống cuối khi có tin nhắn mới
+  // useEffect(() => {
+  //   if (messagesEndRef.current) {
+  //     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }, [messages]);
+
+  // Thêm effect để tự động scroll lên đầu trang khi vào trang
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages]);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
 
   const handleSend = () => {
     if (!input.trim()) return;

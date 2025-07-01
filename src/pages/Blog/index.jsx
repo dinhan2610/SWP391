@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./index.css"; // Import CSS từ file index.css
 import { Modal, Button } from "react-bootstrap";
 
-export default function BlogPages() {
-  // eslint-disable-next-line no-unused-vars
-  const [activePost, setActivePost] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalPost, setModalPost] = useState(null);
-
-  const posts = [
+const BLOG_KEY = "blog_admin_posts";
+const getInitialPosts = () => {
+  const local = localStorage.getItem(BLOG_KEY);
+  if (local) return JSON.parse(local);
+  // Dữ liệu mẫu lấy từ BlogPages
+  return [
     {
       id: 1,
       title: "Giáo Dục Giới Tính Cho Thanh Thiếu Niên",
@@ -129,6 +128,24 @@ export default function BlogPages() {
       image: "/blog/10.png",
     },
   ];
+};
+
+export default function BlogPages() {
+  const [posts, setPosts] = useState(getInitialPosts());
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalPost, setModalPost] = useState(null);
+
+  // Luôn đồng bộ dữ liệu khi localStorage thay đổi (khi admin CRUD)
+  useEffect(() => {
+    const syncPosts = () => {
+      const local = localStorage.getItem(BLOG_KEY);
+      if (local) setPosts(JSON.parse(local));
+    };
+    window.addEventListener("storage", syncPosts);
+    // Đảm bảo luôn lấy mới khi vào trang
+    syncPosts();
+    return () => window.removeEventListener("storage", syncPosts);
+  }, []);
 
   const handleOpenModal = (post) => {
     setModalPost(post);

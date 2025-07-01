@@ -165,297 +165,319 @@ export default function BookingConsultation() {
     return () => window.removeEventListener("wheel", handleWheel);
   }, []);
   return (
-    <div className="container py-4" style={{ maxWidth: 900 }}>
-      {/* Show booking form for all users, login not required */}
-      <Tabs defaultActiveKey="1">
-        <Tabs.TabPane tab="Đặt lịch tư vấn" key="1">
-          <Card title="Chọn chuyên gia tư vấn" className="mb-4">
-            <Select
-              value={selectedAdvisorId}
-              onChange={setSelectedAdvisorId}
-              style={{ width: 300, marginBottom: 16 }}
-            >
-              {advisors.map((a) => (
-                <Option key={a.id} value={a.id}>
-                  {a.name} - {a.specialty}
-                </Option>
-              ))}
-            </Select>
-            <div className="d-flex align-items-center gap-4">
-              <Avatar size={80} src={advisor.avatar} icon={<UserOutlined />} />
-              <div>
-                <h4>{advisor.name}</h4>
-                <div>Giới tính: {advisor.gender}</div>
-                <div>Chuyên môn: {advisor.specialty}</div>
-                <div>Bằng cấp: {advisor.degree}</div>
-                <div>Kinh nghiệm: {advisor.experience}</div>
-              </div>
-            </div>
-          </Card>
-          <Card>
-            <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
-              <Form.Item
-                label="Họ và tên"
-                name="name"
-                rules={[
-                  { required: true, message: "Vui lòng nhập họ tên!" },
-                  { min: 2, message: "Họ tên phải có ít nhất 2 ký tự!" },
-                  {
-                    pattern: /^[a-zA-ZÀ-ỹà-ỹ\s]+$/,
-                    message: "Họ tên không được chứa số hoặc ký tự đặc biệt!",
-                  },
-                ]}
+    <div
+      style={{
+        width: "100vw",
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #f8fafc 60%, #e0e7ff 100%)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        padding: "40px 8px 56px 8px",
+        margin: 0,
+        position: "relative",
+        left: "50%",
+        right: "50%",
+        transform: "translate(-50%, 0)",
+      }}
+    >
+      <div style={{ maxWidth: 900, width: "100%", margin: "0 auto" }}>
+        {/* Show booking form for all users, login not required */}
+        <Tabs defaultActiveKey="1">
+          <Tabs.TabPane tab="Đặt lịch tư vấn" key="1">
+            <Card title="Chọn chuyên gia tư vấn" className="mb-4">
+              <Select
+                value={selectedAdvisorId}
+                onChange={setSelectedAdvisorId}
+                style={{ width: 300, marginBottom: 16 }}
               >
-                <Input placeholder="Nhập họ và tên" />
-              </Form.Item>
-              <Form.Item
-                label="Email"
-                name="email"
-                rules={[
-                  { required: true, message: "Vui lòng nhập email!" },
-                  { type: "email", message: "Email không hợp lệ!" },
-                ]}
-              >
-                <Input placeholder="Nhập email" />
-              </Form.Item>
-              <Form.Item
-                label="Số điện thoại"
-                name="phone"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng nhập số điện thoại!",
-                  },
-                  {
-                    pattern: /^0\d{9}$/,
-                    message: "Số điện thoại không hợp lệ!",
-                  },
-                ]}
-              >
-                <Input placeholder="Nhập số điện thoại" />
-              </Form.Item>
-              <Form.Item
-                label="Ngày tư vấn"
-                name="date"
-                rules={[{ required: true, message: "Vui lòng chọn ngày!" }]}
-              >
-                <DatePicker
-                  style={{ width: "100%" }}
-                  onChange={handleDateChange}
-                  disabledDate={(d) =>
-                    !advisor.freeSlots.some(
-                      (f) => f.date === d.format("YYYY-MM-DD")
-                    )
-                  }
+                {advisors.map((a) => (
+                  <Option key={a.id} value={a.id}>
+                    {a.name} - {a.specialty}
+                  </Option>
+                ))}
+              </Select>
+              <div className="d-flex align-items-center gap-4">
+                <Avatar
+                  size={80}
+                  src={advisor.avatar}
+                  icon={<UserOutlined />}
                 />
-              </Form.Item>
-              <Form.Item
-                label="Khung giờ"
-                name="slot"
-                rules={[
-                  { required: true, message: "Vui lòng chọn khung giờ!" },
-                ]}
-              >
-                <Select
-                  placeholder="Chọn khung giờ"
-                  disabled={!availableSlots.length}
-                >
-                  {availableSlots.map((s) => (
-                    <Option key={s} value={s}>
-                      {s}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-              <Form.Item
-                label="Hình thức tư vấn"
-                name="method"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng chọn hình thức tư vấn!",
-                  },
-                ]}
-              >
-                <Select placeholder="Chọn hình thức tư vấn">
-                  {consultMethods.map((m) => (
-                    <Option key={m.value} value={m.value}>
-                      {m.label}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-              <Form.Item
-                label="Nội dung tư vấn"
-                name="content"
-                rules={[
-                  {
-                    required: true,
-                    whitespace: true,
-                    message: "Vui lòng nhập nội dung tư vấn!",
-                  },
-                ]}
-              >
-                <Input.TextArea
-                  rows={3}
-                  placeholder="Nhập nội dung tư vấn..."
-                />
-              </Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="booking-submit-btn"
-              >
-                Đặt lịch ngay
-              </Button>
-            </Form>
-          </Card>
-          <Modal
-            open={confirmModal}
-            onCancel={() => setConfirmModal(false)}
-            onOk={handleConfirm}
-            title="Xác nhận đặt lịch tư vấn"
-            okButtonProps={{ className: "booking-submit-btn" }}
-            cancelButtonProps={{ className: "booking-cancel-btn" }}
-            okText="Xác nhận"
-            cancelText="Hủy"
-          >
-            {bookingInfo && (
-              <div style={{ color: "#000", fontSize: 16, fontWeight: 500 }}>
-                <p>
-                  <b>Họ và tên:</b> {bookingInfo.name}
-                </p>
-                <p>
-                  <b>Email:</b> {bookingInfo.email}
-                </p>
-                <p>
-                  <b>Số điện thoại:</b> {bookingInfo.phone}
-                </p>
-                <p>
-                  <b>Ngày tư vấn:</b> {bookingInfo.date}
-                </p>
-                <p>
-                  <b>Khung giờ:</b> {bookingInfo.slot}
-                </p>
-                <p>
-                  <b>Hình thức:</b>{" "}
-                  {
-                    consultMethods.find((m) => m.value === bookingInfo.method)
-                      ?.label
-                  }
-                </p>
-                <p>
-                  <b>Nội dung tư vấn:</b> {bookingInfo.content}
-                </p>
+                <div>
+                  <h4>{advisor.name}</h4>
+                  <div>Giới tính: {advisor.gender}</div>
+                  <div>Chuyên môn: {advisor.specialty}</div>
+                  <div>Bằng cấp: {advisor.degree}</div>
+                  <div>Kinh nghiệm: {advisor.experience}</div>
+                </div>
               </div>
-            )}
-          </Modal>
-          <Modal
-            open={showLoginModal}
-            onCancel={() => setShowLoginModal(false)}
-            onOk={() => {
-              setIsLoggedIn(true);
-              setShowLoginModal(false);
-            }}
-            title="Vui lòng đăng nhập để đặt lịch tư vấn"
-            okButtonProps={{ className: "booking-submit-btn" }}
-            cancelButtonProps={{ className: "booking-cancel-btn" }}
-            okText="Đăng nhập"
-            cancelText="Hủy"
-          >
-            <p>Bạn cần đăng nhập để tiếp tục đặt lịch tư vấn.</p>
-          </Modal>
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Lịch sử & Quản lý đặt lịch" key="2">
-          <Card title="Lịch sử đặt lịch">
-            <List
-              dataSource={history}
-              renderItem={(item, idx) => (
-                <List.Item
-                  actions={[
-                    <Button
-                      danger
-                      onClick={() => handleCancelBooking(idx)}
-                      key="cancel"
-                      className="booking-cancel-btn"
-                    >
-                      Hủy lịch
-                    </Button>,
+            </Card>
+            <Card>
+              <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
+                <Form.Item
+                  label="Họ và tên"
+                  name="name"
+                  rules={[
+                    { required: true, message: "Vui lòng nhập họ tên!" },
+                    { min: 2, message: "Họ tên phải có ít nhất 2 ký tự!" },
+                    {
+                      pattern: /^[a-zA-ZÀ-ỹà-ỹ\s]+$/,
+                      message: "Họ tên không được chứa số hoặc ký tự đặc biệt!",
+                    },
                   ]}
-                  style={{
-                    background: "#fafbfc",
-                    borderRadius: 8,
-                    marginBottom: 12,
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
                 >
-                  <div
-                    style={{
-                      width: 36,
-                      height: 36,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontWeight: 700,
-                      fontSize: 18,
-                      color: "#fff",
-                      background: "#615efc",
-                      borderRadius: "50%",
-                      marginRight: 20,
-                      flexShrink: 0,
-                    }}
-                  >
-                    {idx + 1}
-                  </div>
-                  <List.Item.Meta
-                    title={
-                      <span
-                        style={{
-                          color: "#222",
-                          fontWeight: 600,
-                          fontSize: 20,
-                        }}
-                      >
-                        {item.date} - {item.slot} (
-                        {
-                          consultMethods.find((m) => m.value === item.method)
-                            ?.label
-                        }
-                        )
-                      </span>
-                    }
-                    description={
-                      <div
-                        style={{
-                          color: "#444",
-                          fontSize: 15,
-                          lineHeight: 1.7,
-                        }}
-                      >
-                        <div>
-                          <b>Họ và tên:</b> {item.name}
-                        </div>
-                        <div>
-                          <b>Email:</b> {item.email}
-                        </div>
-                        <div>
-                          <b>Số điện thoại:</b> {item.phone}
-                        </div>
-                        <div>
-                          <b>Nội dung tư vấn:</b> {item.content}
-                        </div>
-                      </div>
+                  <Input placeholder="Nhập họ và tên" />
+                </Form.Item>
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  rules={[
+                    { required: true, message: "Vui lòng nhập email!" },
+                    { type: "email", message: "Email không hợp lệ!" },
+                  ]}
+                >
+                  <Input placeholder="Nhập email" />
+                </Form.Item>
+                <Form.Item
+                  label="Số điện thoại"
+                  name="phone"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng nhập số điện thoại!",
+                    },
+                    {
+                      pattern: /^0\d{9}$/,
+                      message: "Số điện thoại không hợp lệ!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập số điện thoại" />
+                </Form.Item>
+                <Form.Item
+                  label="Ngày tư vấn"
+                  name="date"
+                  rules={[{ required: true, message: "Vui lòng chọn ngày!" }]}
+                >
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    onChange={handleDateChange}
+                    disabledDate={(d) =>
+                      !advisor.freeSlots.some(
+                        (f) => f.date === d.format("YYYY-MM-DD")
+                      )
                     }
                   />
-                </List.Item>
+                </Form.Item>
+                <Form.Item
+                  label="Khung giờ"
+                  name="slot"
+                  rules={[
+                    { required: true, message: "Vui lòng chọn khung giờ!" },
+                  ]}
+                >
+                  <Select
+                    placeholder="Chọn khung giờ"
+                    disabled={!availableSlots.length}
+                  >
+                    {availableSlots.map((s) => (
+                      <Option key={s} value={s}>
+                        {s}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  label="Hình thức tư vấn"
+                  name="method"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng chọn hình thức tư vấn!",
+                    },
+                  ]}
+                >
+                  <Select placeholder="Chọn hình thức tư vấn">
+                    {consultMethods.map((m) => (
+                      <Option key={m.value} value={m.value}>
+                        {m.label}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  label="Nội dung tư vấn"
+                  name="content"
+                  rules={[
+                    {
+                      required: true,
+                      whitespace: true,
+                      message: "Vui lòng nhập nội dung tư vấn!",
+                    },
+                  ]}
+                >
+                  <Input.TextArea
+                    rows={3}
+                    placeholder="Nhập nội dung tư vấn..."
+                  />
+                </Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="booking-submit-btn"
+                >
+                  Đặt lịch ngay
+                </Button>
+              </Form>
+            </Card>
+            <Modal
+              open={confirmModal}
+              onCancel={() => setConfirmModal(false)}
+              onOk={handleConfirm}
+              title="Xác nhận đặt lịch tư vấn"
+              okButtonProps={{ className: "booking-submit-btn" }}
+              cancelButtonProps={{ className: "booking-cancel-btn" }}
+              okText="Xác nhận"
+              cancelText="Hủy"
+            >
+              {bookingInfo && (
+                <div style={{ color: "#000", fontSize: 16, fontWeight: 500 }}>
+                  <p>
+                    <b>Họ và tên:</b> {bookingInfo.name}
+                  </p>
+                  <p>
+                    <b>Email:</b> {bookingInfo.email}
+                  </p>
+                  <p>
+                    <b>Số điện thoại:</b> {bookingInfo.phone}
+                  </p>
+                  <p>
+                    <b>Ngày tư vấn:</b> {bookingInfo.date}
+                  </p>
+                  <p>
+                    <b>Khung giờ:</b> {bookingInfo.slot}
+                  </p>
+                  <p>
+                    <b>Hình thức:</b>{" "}
+                    {
+                      consultMethods.find((m) => m.value === bookingInfo.method)
+                        ?.label
+                    }
+                  </p>
+                  <p>
+                    <b>Nội dung tư vấn:</b> {bookingInfo.content}
+                  </p>
+                </div>
               )}
-              locale={{ emptyText: "Chưa có lịch sử đặt lịch." }}
-            />
-          </Card>
-        </Tabs.TabPane>
-      </Tabs>
+            </Modal>
+            <Modal
+              open={showLoginModal}
+              onCancel={() => setShowLoginModal(false)}
+              onOk={() => {
+                setIsLoggedIn(true);
+                setShowLoginModal(false);
+              }}
+              title="Vui lòng đăng nhập để đặt lịch tư vấn"
+              okButtonProps={{ className: "booking-submit-btn" }}
+              cancelButtonProps={{ className: "booking-cancel-btn" }}
+              okText="Đăng nhập"
+              cancelText="Hủy"
+            >
+              <p>Bạn cần đăng nhập để tiếp tục đặt lịch tư vấn.</p>
+            </Modal>
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Lịch sử & Quản lý đặt lịch" key="2">
+            <Card title="Lịch sử đặt lịch">
+              <List
+                dataSource={history}
+                renderItem={(item, idx) => (
+                  <List.Item
+                    actions={[
+                      <Button
+                        danger
+                        onClick={() => handleCancelBooking(idx)}
+                        key="cancel"
+                        className="booking-cancel-btn"
+                      >
+                        Hủy lịch
+                      </Button>,
+                    ]}
+                    style={{
+                      background: "#fafbfc",
+                      borderRadius: 8,
+                      marginBottom: 12,
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 36,
+                        height: 36,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontWeight: 700,
+                        fontSize: 18,
+                        color: "#fff",
+                        background: "#615efc",
+                        borderRadius: "50%",
+                        marginRight: 20,
+                        flexShrink: 0,
+                      }}
+                    >
+                      {idx + 1}
+                    </div>
+                    <List.Item.Meta
+                      title={
+                        <span
+                          style={{
+                            color: "#222",
+                            fontWeight: 600,
+                            fontSize: 20,
+                          }}
+                        >
+                          {item.date} - {item.slot} (
+                          {
+                            consultMethods.find((m) => m.value === item.method)
+                              ?.label
+                          }
+                          )
+                        </span>
+                      }
+                      description={
+                        <div
+                          style={{
+                            color: "#444",
+                            fontSize: 15,
+                            lineHeight: 1.7,
+                          }}
+                        >
+                          <div>
+                            <b>Họ và tên:</b> {item.name}
+                          </div>
+                          <div>
+                            <b>Email:</b> {item.email}
+                          </div>
+                          <div>
+                            <b>Số điện thoại:</b> {item.phone}
+                          </div>
+                          <div>
+                            <b>Nội dung tư vấn:</b> {item.content}
+                          </div>
+                        </div>
+                      }
+                    />
+                  </List.Item>
+                )}
+                locale={{ emptyText: "Chưa có lịch sử đặt lịch." }}
+              />
+            </Card>
+          </Tabs.TabPane>
+        </Tabs>
+      </div>
     </div>
   );
 }
