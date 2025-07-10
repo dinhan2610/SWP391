@@ -17,48 +17,7 @@ import "./index.css";
 
 const { Option } = Select;
 
-// Sample advisors list
-const advisors = [
-  {
-    id: 1,
-    name: "Nguyễn Văn A",
-    gender: "Nam",
-    specialty: "Tâm lý học",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-    degree: "Thạc sĩ Tâm lý học, Đại học Quốc gia",
-    experience: "5 năm tư vấn tâm lý cho thanh thiếu niên",
-    freeSlots: [
-      { date: "2025-06-22", slots: ["09:00-10:00", "14:00-15:00"] },
-      { date: "2025-06-23", slots: ["08:00-09:00", "10:00-11:00"] },
-    ],
-  },
-  {
-    id: 2,
-    name: "Trần Thị B",
-    gender: "Nữ",
-    specialty: "Dinh dưỡng",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-    degree: "Bác sĩ Dinh dưỡng, Đại học Y Hà Nội",
-    experience: "7 năm tư vấn dinh dưỡng cho trẻ em",
-    freeSlots: [
-      { date: "2025-06-22", slots: ["10:00-11:00", "15:00-16:00"] },
-      { date: "2025-06-24", slots: ["09:00-10:00", "14:00-15:00"] },
-    ],
-  },
-  {
-    id: 3,
-    name: "Lê Quốc C",
-    gender: "Nam",
-    specialty: "Tư vấn hôn nhân",
-    avatar: "https://randomuser.me/api/portraits/men/65.jpg",
-    degree: "Tiến sĩ Tâm lý học, Đại học Quốc tế",
-    experience: "10 năm tư vấn hôn nhân và gia đình",
-    freeSlots: [
-      { date: "2025-06-23", slots: ["09:00-10:00", "16:00-17:00"] },
-      { date: "2025-06-25", slots: ["08:00-09:00", "10:00-11:00"] },
-    ],
-  },
-];
+// Sử dụng trong function component, không khai báo ngoài component!
 
 const consultMethods = [
   { value: "video", label: "Gọi video" },
@@ -68,6 +27,9 @@ const consultMethods = [
 
 export default function BookingConsultation() {
   const [form] = Form.useForm();
+  const [advisors, setAdvisors] = useState([]);
+  const [advisorsLoading, setAdvisorsLoading] = useState(true);
+  const [advisorsError, setAdvisorsError] = useState(null);
   const [availableSlots, setAvailableSlots] = useState([]);
   const [confirmModal, setConfirmModal] = useState(false);
   const [bookingInfo, setBookingInfo] = useState(null);
@@ -75,17 +37,67 @@ export default function BookingConsultation() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Login status
   const [showLoginModal, setShowLoginModal] = useState(false);
   // State for selected advisor
-  const [selectedAdvisorId, setSelectedAdvisorId] = useState(advisors[0].id);
+  const [selectedAdvisorId, setSelectedAdvisorId] = useState(null);
   const advisor = advisors.find((a) => a.id === selectedAdvisorId);
 
+  // Fetch advisors from API on mount, map dữ liệu về đúng format UI
+  useEffect(() => {
+    setAdvisorsLoading(true);
+    setAdvisorsError(null);
+    fetch("https://ghsm.eposh.io.vn/api/v1/consultants/get-Consultants")
+      .then((res) => res.json())
+      .then((data) => {
+        let arr = [];
+        if (Array.isArray(data)) {
+          arr = data;
+        } else if (Array.isArray(data?.data)) {
+          arr = data.data;
+        }
+        // Map lại dữ liệu để tránh lỗi undefined field
+        const mapped = arr.map((item) => ({
+          id: item.id,
+          name: item.fullName || item.name || "Chuyên gia chưa đặt tên",
+          gender:
+            item.gender === 1
+              ? "Nam"
+              : item.gender === 2
+              ? "Nữ"
+              : item.gender || "Khác",
+          specialty:
+            item.specialty || item.expertise || "Chuyên môn chưa cập nhật",
+          avatar: item.avatarUrl || item.avatar || undefined,
+          degree: item.degree || item.qualification || "",
+          experience:
+            item.experience ||
+            (item.yearsOfExperience
+              ? `${item.yearsOfExperience} năm kinh nghiệm`
+              : ""),
+          freeSlots: Array.isArray(item.freeSlots) ? item.freeSlots : [],
+        }));
+        setAdvisors(mapped);
+        setSelectedAdvisorId(mapped[0]?.id || null);
+      })
+      .catch(() => {
+        setAdvisors([]);
+        setAdvisorsError("Không lấy được danh sách tư vấn viên!");
+        message.error("Không lấy được danh sách tư vấn viên!");
+      })
+      .finally(() => setAdvisorsLoading(false));
+  }, []);
+
   // When advisor changes, reset slot
-  React.useEffect(() => {
+  useEffect(() => {
     setAvailableSlots([]);
     form.setFieldsValue({ slot: undefined, date: undefined });
-  }, [selectedAdvisorId]);
+  }, [selectedAdvisorId, form]);
 
   // When date changes, update slot for selected advisor
   const handleDateChange = (date, dateString) => {
+    if (!advisor || !advisor.freeSlots) {
+      setAvailableSlots([]);
+      form.setFieldsValue({ slot: undefined });
+      return;
+    }
     const found = advisor.freeSlots.find((d) => d.date === dateString);
     setAvailableSlots(found ? found.slots : []);
     form.setFieldsValue({ slot: undefined });
@@ -191,6 +203,15 @@ export default function BookingConsultation() {
                 value={selectedAdvisorId}
                 onChange={setSelectedAdvisorId}
                 style={{ width: 300, marginBottom: 16 }}
+                loading={advisorsLoading}
+                placeholder={
+                  advisorsLoading
+                    ? "Đang tải..."
+                    : advisorsError
+                    ? advisorsError
+                    : "Chọn chuyên gia"
+                }
+                disabled={advisorsLoading || advisors.length === 0}
               >
                 {advisors.map((a) => (
                   <Option key={a.id} value={a.id}>
@@ -198,20 +219,34 @@ export default function BookingConsultation() {
                   </Option>
                 ))}
               </Select>
-              <div className="d-flex align-items-center gap-4">
-                <Avatar
-                  size={80}
-                  src={advisor.avatar}
-                  icon={<UserOutlined />}
-                />
-                <div>
-                  <h4>{advisor.name}</h4>
-                  <div>Giới tính: {advisor.gender}</div>
-                  <div>Chuyên môn: {advisor.specialty}</div>
-                  <div>Bằng cấp: {advisor.degree}</div>
-                  <div>Kinh nghiệm: {advisor.experience}</div>
+              {advisorsLoading ? (
+                <div style={{ color: "#888", margin: "16px 0" }}>
+                  Đang tải thông tin chuyên gia...
                 </div>
-              </div>
+              ) : advisorsError ? (
+                <div style={{ color: "red", margin: "16px 0" }}>
+                  {advisorsError}
+                </div>
+              ) : advisor ? (
+                <div className="d-flex align-items-center gap-4">
+                  <Avatar
+                    size={80}
+                    src={advisor.avatar}
+                    icon={<UserOutlined />}
+                  />
+                  <div>
+                    <h4>{advisor.name}</h4>
+                    <div>Giới tính: {advisor.gender}</div>
+                    <div>Chuyên môn: {advisor.specialty}</div>
+                    <div>Bằng cấp: {advisor.degree}</div>
+                    <div>Kinh nghiệm: {advisor.experience}</div>
+                  </div>
+                </div>
+              ) : (
+                <div style={{ color: "#888", margin: "16px 0" }}>
+                  Không có chuyên gia nào khả dụng.
+                </div>
+              )}
             </Card>
             <Card>
               <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
@@ -263,11 +298,14 @@ export default function BookingConsultation() {
                   <DatePicker
                     style={{ width: "100%" }}
                     onChange={handleDateChange}
-                    disabledDate={(d) =>
-                      !advisor.freeSlots.some(
-                        (f) => f.date === d.format("YYYY-MM-DD")
-                      )
-                    }
+                    disabledDate={(d) => {
+                      if (!advisor || !Array.isArray(advisor.freeSlots))
+                        return true;
+                      // d có thể là null hoặc moment object
+                      const dateStr =
+                        d && d.format ? d.format("YYYY-MM-DD") : "";
+                      return !advisor.freeSlots.some((f) => f.date === dateStr);
+                    }}
                   />
                 </Form.Item>
                 <Form.Item

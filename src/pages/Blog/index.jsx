@@ -233,14 +233,79 @@ export default function BlogPages() {
       {isModalOpen && modalPost && (
         <Modal show={isModalOpen} onHide={handleCloseModal} size="lg">
           <Modal.Header closeButton>
-            <Modal.Title>{modalPost.title}</Modal.Title>
+            <Modal.Title
+              style={{
+                fontFamily:
+                  "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+                fontWeight: 800,
+                fontSize: "2rem",
+                color: "#0d47a1",
+                letterSpacing: 0.5,
+                textTransform: "uppercase",
+                textShadow: "0 2px 8px #e3e7ef",
+                textAlign: "center",
+                width: "100%",
+                display: "block",
+              }}
+            >
+              {modalPost.title}
+            </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <h4>Cam kết của chúng tôi</h4>
-            <p>{modalPost.fullText}</p>
+          <Modal.Body
+            style={{
+              fontFamily:
+                "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+              fontSize: "1.13rem",
+              color: "#222",
+              lineHeight: 1.7,
+              letterSpacing: "0.02em",
+              padding: "18px 8px 8px 8px",
+              textAlign: "center",
+            }}
+          >
+            <h4
+              style={{
+                fontFamily:
+                  "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+                fontWeight: 700,
+                fontSize: "1.25rem",
+                color: "#1976d2",
+                marginBottom: 12,
+                letterSpacing: 0.2,
+                textTransform: "uppercase",
+              }}
+            >
+              Cam kết của chúng tôi
+            </h4>
+            <div
+              style={{
+                whiteSpace: "pre-line",
+                fontFamily:
+                  "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+                fontSize: "1.13rem",
+                color: "#222",
+                lineHeight: 1.7,
+                letterSpacing: "0.02em",
+                textAlign: "center",
+              }}
+            >
+              {modalPost.fullText}
+            </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
+            <Button
+              variant="secondary"
+              onClick={handleCloseModal}
+              style={{
+                fontFamily:
+                  "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+                fontWeight: 700,
+                fontSize: "1.08rem",
+                letterSpacing: 0.2,
+                borderRadius: 8,
+                padding: "8px 24px",
+              }}
+            >
               Đóng
             </Button>
           </Modal.Footer>

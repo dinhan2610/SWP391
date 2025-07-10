@@ -51,7 +51,7 @@ export default function ShortServices() {
             data-wow-duration=".8s"
           >
             <a
-              href="/testing-services"
+              href="/stis-test"
               className="single-short-service"
               style={{
                 display: "flex",

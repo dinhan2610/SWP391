@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Card, Typography, Rate, Input, Button, message, Row, Col } from "antd";
+import {
+  Card,
+  Typography,
+  Rate,
+  Input,
+  Button,
+  message,
+  Row,
+  Col,
+  Spin,
+  List,
+} from "antd";
 import {
   FrownOutlined,
   MehOutlined,
@@ -48,18 +59,32 @@ export default function Feedback() {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [fetching, setFetching] = useState(true);
 
-  const handleSubmit = () => {
-    if (!rating) {
-      message.error("Vui lòng chọn mức độ hài lòng!");
-      return;
-    }
-    setSubmitted(true);
-    message.success("Cảm ơn bạn đã gửi phản hồi!");
-    // TODO: Gửi feedback lên server tại đây
-  };
+  // Lấy feedbacks từ API khi load trang
   useEffect(() => {
-    // Giảm tốc độ cuộn riêng cho trang này (chỉ desktop)
+    setFetching(true);
+    fetch("https://ghsm.eposh.io.vn/api/Feedbacks/get-feedbacks")
+      .then((res) => res.json())
+      .then((data) => {
+        let arr = [];
+        if (Array.isArray(data)) arr = data;
+        else if (Array.isArray(data?.data)) arr = data.data;
+        else arr = [];
+        setFeedbacks(arr);
+        console.log("[Feedback API] feedbacks:", arr);
+      })
+      .catch(() => {
+        setFeedbacks([]);
+        console.log("[Feedback API] fetch error");
+      })
+      .finally(() => setFetching(false));
+  }, []);
+
+  // Giảm tốc độ cuộn riêng cho trang này (chỉ desktop)
+  useEffect(() => {
     const handleWheel = (e) => {
       if (window.innerWidth > 600) {
         const el = document.scrollingElement || document.documentElement;
@@ -77,6 +102,40 @@ export default function Feedback() {
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => window.removeEventListener("wheel", handleWheel);
   }, []);
+
+  const handleSubmit = () => {
+    if (!rating) {
+      message.error("Vui lòng chọn mức độ hài lòng!");
+      return;
+    }
+    setLoading(true);
+    fetch("https://ghsm.eposh.io.vn/api/Feedbacks/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rating, comment }),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setSubmitted(true);
+        message.success("Cảm ơn bạn đã gửi phản hồi!");
+        // Sau khi gửi thành công, reload lại feedbacks
+        setFetching(true);
+        fetch("https://ghsm.eposh.io.vn/api/Feedbacks/get-feedbacks")
+          .then((res) => res.json())
+          .then((data) => {
+            if (Array.isArray(data)) setFeedbacks(data);
+            else if (Array.isArray(data?.data)) setFeedbacks(data.data);
+            else setFeedbacks([]);
+          })
+          .catch(() => setFeedbacks([]))
+          .finally(() => setFetching(false));
+      })
+      .catch(() => {
+        message.error("Gửi phản hồi thất bại. Vui lòng thử lại!");
+      })
+      .finally(() => setLoading(false));
+  };
+
   return (
     <div
       className="feedback-bg d-flex align-items-center justify-content-center"
@@ -87,7 +146,7 @@ export default function Feedback() {
     >
       <Card
         className="shadow-lg feedback-card"
-        style={{ maxWidth: 44, width: "200%", borderRadius: 18 }}
+        style={{ maxWidth: 440, width: "100%", borderRadius: 18 }}
       >
         <div className="text-center mb-4">
           <Title level={2} style={{ marginBottom: 8, color: "#615efc" }}>
@@ -108,7 +167,7 @@ export default function Feedback() {
             </Paragraph>
           </div>
         ) : (
-          <>
+          <div>
             <Row justify="center" className="mb-3">
               {customIcons.map((item, idx) => (
                 <Col key={idx}>
@@ -143,6 +202,7 @@ export default function Feedback() {
               onChange={(e) => setComment(e.target.value)}
               placeholder="Để lại nhận xét (không bắt buộc)"
               style={{ borderRadius: 8, marginBottom: 16 }}
+              disabled={loading}
             />
             <Button
               type="primary"
@@ -154,11 +214,125 @@ export default function Feedback() {
                 fontWeight: 600,
               }}
               onClick={handleSubmit}
+              loading={loading}
+              disabled={loading}
             >
               Gửi phản hồi
             </Button>
-          </>
+          </div>
         )}
+        <div style={{ marginTop: 32 }}>
+          <div>
+            <Title level={4} style={{ color: "#615efc", marginBottom: 12 }}>
+              Phản hồi gần đây
+            </Title>
+            {fetching ? (
+              <div className="text-center" style={{ padding: 24 }}>
+                <Spin /> Đang tải phản hồi...
+              </div>
+            ) : feedbacks.length === 0 ? (
+              <div style={{ color: "#888", textAlign: "center" }}>
+                Chưa có phản hồi nào.
+              </div>
+            ) : (
+              <List
+                dataSource={feedbacks.slice(0, 6)}
+                renderItem={(item) => (
+                  <List.Item style={{ border: "none", padding: "8px 0" }}>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <span style={{ fontSize: 20, marginRight: 8 }}>
+                        {customIcons[(item.rating || 1) - 1]?.icon}
+                      </span>
+                      <span
+                        style={{
+                          fontWeight: 600,
+                          color: customIcons[(item.rating || 1) - 1]?.color,
+                        }}
+                      >
+                        {customIcons[(item.rating || 1) - 1]?.label}
+                      </span>
+                      <span
+                        style={{ marginLeft: 12, color: "#888", fontSize: 13 }}
+                      >
+                        {item.comment || <i>Không có nhận xét</i>}
+                      </span>
+                    </div>
+                  </List.Item>
+                )}
+              />
+            )}
+          </div>
+          <div style={{ marginTop: 40 }}>
+            <Title level={4} style={{ color: "#615efc", marginBottom: 12 }}>
+              Tất cả đánh giá của khách hàng
+            </Title>
+            {fetching ? (
+              <div className="text-center" style={{ padding: 24 }}>
+                <Spin /> Đang tải tất cả đánh giá...
+              </div>
+            ) : feedbacks.length === 0 ? (
+              <div style={{ color: "#888", textAlign: "center" }}>
+                Chưa có đánh giá nào.
+              </div>
+            ) : (
+              <List
+                dataSource={feedbacks}
+                pagination={{ pageSize: 8, showSizeChanger: false }}
+                renderItem={(item, idx) => (
+                  <List.Item
+                    style={{
+                      border: "none",
+                      padding: "12px 0",
+                      background: idx % 2 === 0 ? "#f8fafc" : "#fff",
+                      borderRadius: 10,
+                      marginBottom: 4,
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        width: "100%",
+                      }}
+                    >
+                      <span style={{ fontSize: 22, marginRight: 12 }}>
+                        {customIcons[(item.rating || 1) - 1]?.icon}
+                      </span>
+                      <span
+                        style={{
+                          fontWeight: 600,
+                          color: customIcons[(item.rating || 1) - 1]?.color,
+                          fontSize: 16,
+                          marginRight: 16,
+                        }}
+                      >
+                        {customIcons[(item.rating || 1) - 1]?.label}
+                      </span>
+                      <span
+                        style={{
+                          color: "#444",
+                          fontSize: 15,
+                          marginLeft: 8,
+                          flex: 1,
+                          fontStyle: item.comment ? "normal" : "italic",
+                        }}
+                      >
+                        {item.comment || "Không có nhận xét"}
+                      </span>
+                      <span
+                        style={{ color: "#aaa", fontSize: 13, marginLeft: 16 }}
+                      >
+                        {item.createdAt
+                          ? new Date(item.createdAt).toLocaleString("vi-VN")
+                          : ""}
+                      </span>
+                    </div>
+                  </List.Item>
+                )}
+              />
+            )}
+          </div>
+        </div>
       </Card>
     </div>
   );
