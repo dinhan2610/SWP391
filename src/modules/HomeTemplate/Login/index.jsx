@@ -8,34 +8,47 @@ const { Title, Text } = Typography;
 export default function LoginUI({ onSwitchTab }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const handleLogin = async (values) => {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(
-        "https://swp391ghsmsbe-production.up.railway.app/api/Authen/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: values.email,
-            password: values.password,
-          }),
-        }
-      );
-      const data = await res.json();
+      const res = await fetch("https://ghsm.eposh.io.vn/api/Authen/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
+      });
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        data = {};
+      }
       if (res.ok && data?.token) {
+        setSuccess(true);
         Message.success("Đăng nhập thành công!");
-        localStorage.setItem("token", data.token);
-        // window.location.reload(); // hoặc chuyển trang nếu muốn
+        // Đồng bộ với Header: lưu user vào USER_TOKEN
+        const userData = data.user
+          ? { ...data.user, token: data.token }
+          : { token: data.token };
+        localStorage.setItem("USER_TOKEN", JSON.stringify(userData));
+        setTimeout(() => {
+          setSuccess(false);
+          window.location.reload();
+        }, 800);
       } else {
         setError(data?.message || "Email hoặc mật khẩu không đúng!");
+        Message.error(data?.message || "Email hoặc mật khẩu không đúng!");
       }
     } catch {
       setError("Lỗi kết nối máy chủ!");
+      Message.error("Lỗi kết nối máy chủ!");
     }
     setLoading(false);
   };
@@ -43,6 +56,40 @@ export default function LoginUI({ onSwitchTab }) {
   return (
     <div>
       <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+        {/* Thông báo đăng nhập thành công */}
+        {success && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(0,0,0,0.18)",
+              zIndex: 9999,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: 16,
+                padding: "32px 48px",
+                boxShadow: "0 2px 12px #2563eb22",
+                fontSize: 20,
+                color: "#1976d2",
+                fontWeight: 700,
+                textAlign: "center",
+                fontFamily: "Montserrat, Arial, sans-serif",
+              }}
+            >
+              🎉 Đăng nhập thành công!
+            </div>
+          </div>
+        )}
+
         {/* Image */}
         <div style={{ flex: 1, overflow: "hidden" }}>
           <img
@@ -83,7 +130,7 @@ export default function LoginUI({ onSwitchTab }) {
             Nhập email để đăng nhập vào tài khoản HealthWise của bạn!
           </Text>
 
-          <Form layout="vertical" onFinish={handleLogin}>
+          <Form layout="vertical" onFinish={handleLogin} disabled={loading}>
             <Form.Item
               name="email"
               label={

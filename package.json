@@ -23,6 +23,7 @@
     "axios": "^1.10.0",
     "bootstrap": "^5.3.6",
     "date-fns": "^4.1.0",
+    "firebase": "^11.10.0",
     "framer-motion": "^6.5.1",
     "idx": "^3.0.3",
     "jquery": "^3.7.1",

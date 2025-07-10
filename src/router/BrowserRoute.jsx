@@ -16,6 +16,9 @@ import PaymentPage from "../pages/PaymentPage";
 import AdminSTIs from "../pages/AdminPages/STIs";
 import HistorySTIs from "../pages/HistorySTIs";
 import BlogAdmin from "../pages/AdminPages/BlogAdmin";
+import Profile from "../modules/HomeTemplate/Profile";
+import ManagerConsultant from "../pages/AdminPages/ManagerConsultant";
+import AdminBookingConsultation from "../pages/AdminPages/advise";
 
 const routes = [
   {
@@ -43,6 +46,13 @@ const routes = [
         element: <HistorySTIs />,
       },
       { path: "/admin/blog", element: <BlogAdmin /> },
+
+      { path: "/profile", element: <Profile /> },
+      { path: "/admin/manager-consultant", element: <ManagerConsultant /> },
+      {
+        path: "/admin/booking-consultation",
+        element: <AdminBookingConsultation />,
+      },
     ],
   },
 ];

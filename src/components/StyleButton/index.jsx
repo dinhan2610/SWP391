@@ -59,14 +59,25 @@ const StyledButton = ({
   return (
     <Button
       block
-      style={baseStyle}
+      style={{
+        ...baseStyle,
+        fontWeight: 600,
+        fontFamily: "Montserrat, Arial, sans-serif",
+        transition: "all 0.18s cubic-bezier(.4,0,.2,1)",
+      }}
       className={className}
-      onMouseEnter={(e) =>
-        (e.target.style.backgroundColor = hoverStyle.backgroundColor)
-      }
-      onMouseLeave={(e) =>
-        (e.target.style.backgroundColor = baseStyle.backgroundColor)
-      }
+      onMouseEnter={(e) => {
+        e.target.style.backgroundColor = hoverStyle.backgroundColor;
+        e.target.style.fontWeight = "700";
+        e.target.style.color = type === "danger" ? "#e74c3c" : "#2563eb";
+        e.target.style.boxShadow = "0 2px 12px #2563eb22";
+      }}
+      onMouseLeave={(e) => {
+        e.target.style.backgroundColor = baseStyle.backgroundColor;
+        e.target.style.fontWeight = "600";
+        e.target.style.color = type === "danger" ? "#e74c3c" : "#2563eb";
+        e.target.style.boxShadow = "none";
+      }}
       onClick={handleClick}
     >
       {children}

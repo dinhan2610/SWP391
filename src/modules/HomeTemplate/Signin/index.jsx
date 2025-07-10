@@ -14,23 +14,25 @@ const { Option } = Select;
 
 export default function Signin({ setActiveTab, onSwitchTab }) {
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   // Xử lý đăng ký
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      const res = await fetch(
-        "https://swp391ghsmsbe-production.up.railway.app/api/Authen/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...values, roleId: 0 }),
-        }
-      );
+      const res = await fetch("https://ghsm.eposh.io.vn/api/Authen/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, roleId: 0 }),
+      });
       const data = await res.json();
       if (res.ok) {
+        setSuccess(true);
         Message.success("Đăng ký thành công! Vui lòng đăng nhập.");
-        if (setActiveTab) setActiveTab(0);
+        setTimeout(() => {
+          setSuccess(false);
+          if (setActiveTab) setActiveTab(0);
+        }, 2000);
       } else {
         Message.error(data?.message || "Đăng ký thất bại. Vui lòng thử lại!");
       }
@@ -52,6 +54,40 @@ export default function Signin({ setActiveTab, onSwitchTab }) {
       }}
     >
       <BackdropLoader open={loading} />
+      {success && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.18)",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              background: "#fff",
+              borderRadius: 16,
+              padding: "32px 48px",
+              boxShadow: "0 2px 12px #2563eb22",
+              fontSize: 20,
+              color: "#1976d2",
+              fontWeight: 700,
+              textAlign: "center",
+              fontFamily: "Montserrat, Arial, sans-serif",
+            }}
+          >
+            🎉 Đăng ký thành công!
+            <br />
+            Vui lòng đăng nhập để sử dụng dịch vụ.
+          </div>
+        </div>
+      )}
       <div
         style={{
           width: "100%",

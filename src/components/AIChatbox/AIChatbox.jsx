@@ -33,21 +33,41 @@ export default function AIChatbox() {
     setInput("");
     setLoading(true);
     try {
-      // TODO: Gọi API AI thực tế ở đây
-      // const res = await fetch("/api/ai-chat", { method: "POST", body: JSON.stringify({ question: input }) });
-      // const data = await res.json();
-      // const aiMsg = { role: "ai", content: data.answer };
-      // Demo trả lời mẫu:
-      const aiMsg = {
-        role: "ai",
-        content:
-          "Cảm ơn bạn đã hỏi! Hiện tại đây là demo, hãy tích hợp API AI thực tế.",
-      };
-      setMessages((prev) => {
-        const newMsgs = [...prev, aiMsg];
-        localStorage.setItem("ai_chat_history", JSON.stringify(newMsgs));
-        return newMsgs;
+      // Gọi API chat thực tế
+      const res = await fetch("https://ghsm.eposh.io.vn/api/v1/chat/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: input }),
       });
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        data = {};
+      }
+      if (res.ok && data?.answer) {
+        const aiMsg = { role: "ai", content: data.answer };
+        setMessages((prev) => {
+          const newMsgs = [...prev, aiMsg];
+          localStorage.setItem("ai_chat_history", JSON.stringify(newMsgs));
+          return newMsgs;
+        });
+      } else {
+        setMessages((prev) => {
+          const newMsgs = [
+            ...prev,
+            {
+              role: "ai",
+              content:
+                data?.message || "Xin lỗi, tôi chưa thể trả lời câu hỏi này.",
+            },
+          ];
+          localStorage.setItem("ai_chat_history", JSON.stringify(newMsgs));
+          return newMsgs;
+        });
+      }
     } catch {
       message.error("Có lỗi khi gửi câu hỏi. Vui lòng thử lại!");
     } finally {

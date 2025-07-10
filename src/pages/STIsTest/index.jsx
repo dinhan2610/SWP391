@@ -115,6 +115,56 @@ export default function STIsTest() {
     address: "",
     phone: "",
   });
+
+  // Hàm validate chung cho từng trường
+  const validateField = (field, value) => {
+    switch (field) {
+      case "name": {
+        if (!value) return "Họ tên là bắt buộc!";
+        if (
+          !/^([\p{L}\s'.-]+)$/u.test(value) ||
+          value.length < 2 ||
+          value.length > 50
+        )
+          return "Họ tên không hợp lệ! (Chỉ chữ, tối thiểu 2 ký tự)";
+        return "";
+      }
+      case "dob": {
+        if (!value) return "Ngày sinh là bắt buộc!";
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(value))
+          return "Ngày sinh không hợp lệ!";
+        const dobDate = new Date(value);
+        const now = new Date();
+        if (dobDate > now) return "Ngày sinh không hợp lệ!";
+        const age =
+          now.getFullYear() -
+          dobDate.getFullYear() -
+          (now <
+          new Date(now.getFullYear(), dobDate.getMonth(), dobDate.getDate())
+            ? 1
+            : 0);
+        if (age < 12) return "Bạn phải từ 12 tuổi trở lên!";
+        return "";
+      }
+      case "address": {
+        if (!value) return "Địa chỉ là bắt buộc!";
+        if (
+          !/^([\p{L}\d\s,./-]+)$/u.test(value) ||
+          value.length < 5 ||
+          value.length > 100
+        )
+          return "Địa chỉ không hợp lệ! (Tối thiểu 5)";
+        return "";
+      }
+      case "phone": {
+        if (!value) return "Số điện thoại là bắt buộc!";
+        if (!/^0[3-9]\d{8}$/.test(value)) return "Số điện thoại không hợp lệ!";
+        return "";
+      }
+      default:
+        return "";
+    }
+  };
   const historyRef = useRef(null); // ref để cuộn tới lịch sử
   const navigate = useNavigate();
   const location = useLocation();
@@ -170,26 +220,14 @@ export default function STIsTest() {
 
   const handleUserFormSubmit = (e) => {
     e.preventDefault();
-    // Validate đồng bộ với validate trang
-    const name = userInfo.name.trim();
-    const address = userInfo.address.trim();
-    const phone = userInfo.phone.trim();
-    const dob = userInfo.dob;
-    let errors = { name: "", dob: "", address: "", phone: "" };
-    if (!name) errors.name = "Họ tên là bắt buộc!";
-    else if (!/^([\p{L}\s'.-]+)$/u.test(name) || name.length < 2)
-      errors.name = "Họ tên không hợp lệ!";
-    if (!dob) errors.dob = "Ngày sinh là bắt buộc!";
-    else if (!/^\d{4}-\d{2}-\d{2}$/.test(dob) || dob.length < 2)
-      errors.dob = "Ngày sinh không hợp lệ!";
-    else if (new Date(dob) > new Date()) errors.dob = "Ngày sinh không hợp lệ!";
-    if (!address) errors.address = "Địa chỉ là bắt buộc!";
-    else if (!/^([\p{L}\d\s,./-]+)$/u.test(address) || address.length < 5)
-      errors.address = "Địa chỉ không hợp lệ!";
-    if (!phone) errors.phone = "Số điện thoại là bắt buộc!";
-    else if (!/^0[3-9]\d{8}$/.test(phone))
-      errors.phone =
-        "Số điện thoại phải là 10 số, bắt đầu bằng 0, đúng định dạng Việt Nam!";
+    // Validate tất cả các trường bằng hàm chung
+    const errors = Object.keys(userInfo).reduce((acc, key) => {
+      acc[key] = validateField(
+        key,
+        userInfo[key].trim ? userInfo[key].trim() : userInfo[key]
+      );
+      return acc;
+    }, {});
     setUserError(errors);
     if (Object.values(errors).some((v) => v)) return;
     setShowUserForm(false);
@@ -853,7 +891,7 @@ export default function STIsTest() {
               border: "none",
             }}
           >
-            Đăng ký thành công! Chúng tôi sẽ liên hệ tư vấn sớm nhất.
+            Đăng ký thành công! Vui lòng thanh toán.
           </div>
         )}
       </div>
@@ -1063,11 +1101,11 @@ export default function STIsTest() {
         >
           <form
             onSubmit={handleUserFormSubmit}
+            className="shadow-lg rounded-4 p-4 stis-user-form"
             style={{
               background: "#fff",
               borderRadius: 24,
               boxShadow: "0 8px 32px #615efc33",
-              padding: 32,
               minWidth: 320,
               maxWidth: 420,
               width: "100%",
@@ -1078,6 +1116,8 @@ export default function STIsTest() {
                 "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
               position: "relative",
             }}
+            autoComplete="off"
+            noValidate
           >
             <div
               style={{
@@ -1091,217 +1131,193 @@ export default function STIsTest() {
             >
               Nhập thông tin cá nhân để đăng ký xét nghiệm
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {/* Họ và tên */}
+            <div className="mb-2">
               <label
-                style={{
-                  fontWeight: 700,
-                  fontSize: 15,
-                  marginBottom: 2,
-                  color: "#222",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                }}
+                className="form-label fw-bold"
+                htmlFor="stis-name"
+                style={{ color: "#222" }}
               >
-                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span>
-                <span role="img" aria-label="user">
-                  👤
-                </span>{" "}
-                Họ và tên
+                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span> Họ
+                và tên
               </label>
               <input
+                id="stis-name"
                 type="text"
+                className={`form-control rounded-3 px-3 py-2 ${
+                  userError.name ? "is-invalid" : ""
+                }`}
                 placeholder="Nhập họ và tên đầy đủ"
                 value={userInfo.name}
-                onChange={(e) =>
-                  setUserInfo({ ...userInfo, name: e.target.value })
-                }
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setUserInfo({ ...userInfo, name: val });
+                  setUserError((prev) => ({
+                    ...prev,
+                    name: validateField("name", val),
+                  }));
+                }}
+                autoComplete="off"
                 style={{
-                  padding: "12px 14px",
-                  borderRadius: 12,
-                  border: "1.5px solid #e0e7ef",
                   fontSize: 16,
-                  outline: "none",
-                  transition: "border 0.2s, box-shadow 0.2s",
+                  fontWeight: 600,
+                  borderColor: userError.name ? "#e11d48" : "#e0e7ef",
                 }}
                 required
-                onFocus={(e) => (e.target.style.border = "2px solid #615efc")}
-                onBlur={(e) => (e.target.style.border = "1.5px solid #e0e7ef")}
+                maxLength={50}
               />
               {userError.name && (
                 <div
-                  style={{
-                    color: "#e11d48",
-                    fontWeight: 600,
-                    fontSize: 14,
-                    marginTop: 2,
-                  }}
+                  className="invalid-feedback d-block"
+                  style={{ fontWeight: 600 }}
                 >
                   {userError.name}
                 </div>
               )}
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {/* Ngày sinh */}
+            <div className="mb-2">
               <label
-                style={{
-                  fontWeight: 700,
-                  fontSize: 15,
-                  marginBottom: 2,
-                  color: "#222",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                }}
+                className="form-label fw-bold"
+                htmlFor="stis-dob"
+                style={{ color: "#222" }}
               >
-                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span>
-                <span role="img" aria-label="birthday">
-                  🎂
-                </span>{" "}
+                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span>{" "}
                 Ngày sinh
               </label>
               <input
+                id="stis-dob"
                 type="date"
+                className={`form-control rounded-3 px-3 py-2 ${
+                  userError.dob ? "is-invalid" : ""
+                }`}
                 placeholder="Ngày sinh"
                 value={userInfo.dob}
-                onChange={(e) =>
-                  setUserInfo({ ...userInfo, dob: e.target.value })
-                }
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setUserInfo({ ...userInfo, dob: val });
+                  setUserError((prev) => ({
+                    ...prev,
+                    dob: validateField("dob", val),
+                  }));
+                }}
                 style={{
-                  padding: "12px 14px",
-                  borderRadius: 12,
-                  border: "1.5px solid #e0e7ef",
                   fontSize: 16,
-                  outline: "none",
-                  transition: "border 0.2s, box-shadow 0.2s",
+                  fontWeight: 600,
+                  borderColor: userError.dob ? "#e11d48" : "#e0e7ef",
                 }}
                 required
                 max={new Date().toISOString().split("T")[0]}
-                onFocus={(e) => (e.target.style.border = "2px solid #615efc")}
-                onBlur={(e) => (e.target.style.border = "1.5px solid #e0e7ef")}
               />
               {userError.dob && (
                 <div
-                  style={{
-                    color: "#e11d48",
-                    fontWeight: 600,
-                    fontSize: 14,
-                    marginTop: 2,
-                  }}
+                  className="invalid-feedback d-block"
+                  style={{ fontWeight: 600 }}
                 >
                   {userError.dob}
                 </div>
               )}
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {/* Địa chỉ liên hệ */}
+            <div className="mb-2">
               <label
-                style={{
-                  fontWeight: 700,
-                  fontSize: 15,
-                  marginBottom: 2,
-                  color: "#222",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                }}
+                className="form-label fw-bold"
+                htmlFor="stis-address"
+                style={{ color: "#222" }}
               >
-                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span>
-                <span role="img" aria-label="address">
-                  🏠
-                </span>{" "}
-                Địa chỉ liên hệ
+                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span> Địa
+                chỉ liên hệ
               </label>
               <input
+                id="stis-address"
                 type="text"
+                className={`form-control rounded-3 px-3 py-2 ${
+                  userError.address ? "is-invalid" : ""
+                }`}
                 placeholder="Nhập địa chỉ liên hệ"
                 value={userInfo.address}
-                onChange={(e) =>
-                  setUserInfo({ ...userInfo, address: e.target.value })
-                }
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setUserInfo({ ...userInfo, address: val });
+                  setUserError((prev) => ({
+                    ...prev,
+                    address: validateField("address", val),
+                  }));
+                }}
+                autoComplete="off"
                 style={{
-                  padding: "12px 14px",
-                  borderRadius: 12,
-                  border: "1.5px solid #e0e7ef",
                   fontSize: 16,
-                  outline: "none",
-                  transition: "border 0.2s, box-shadow 0.2s",
+                  fontWeight: 600,
+                  borderColor: userError.address ? "#e11d48" : "#e0e7ef",
                 }}
                 required
-                onFocus={(e) => (e.target.style.border = "2px solid #615efc")}
-                onBlur={(e) => (e.target.style.border = "1.5px solid #e0e7ef")}
+                maxLength={100}
               />
               {userError.address && (
                 <div
-                  style={{
-                    color: "#e11d48",
-                    fontWeight: 600,
-                    fontSize: 14,
-                    marginTop: 2,
-                  }}
+                  className="invalid-feedback d-block"
+                  style={{ fontWeight: 600 }}
                 >
                   {userError.address}
                 </div>
               )}
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {/* Số điện thoại */}
+            <div className="mb-2">
               <label
-                style={{
-                  fontWeight: 700,
-                  fontSize: 15,
-                  marginBottom: 2,
-                  color: "#222",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                }}
+                className="form-label fw-bold"
+                htmlFor="stis-phone"
+                style={{ color: "#222" }}
               >
-                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span>
-                <span role="img" aria-label="phone">
-                  📞
-                </span>{" "}
-                Số điện thoại
+                <span style={{ color: "#e11d48", fontWeight: 900 }}>*</span> Số
+                điện thoại
               </label>
               <input
+                id="stis-phone"
                 type="tel"
-                placeholder="Nhập số điện thoại (10-11 số)"
+                className={`form-control rounded-3 px-3 py-2 ${
+                  userError.phone ? "is-invalid" : ""
+                }`}
+                placeholder="Nhập số điện thoại liên hệ"
                 value={userInfo.phone}
-                onChange={(e) =>
-                  setUserInfo({ ...userInfo, phone: e.target.value })
-                }
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setUserInfo({ ...userInfo, phone: val });
+                  setUserError((prev) => ({
+                    ...prev,
+                    phone: validateField("phone", val),
+                  }));
+                }}
+                autoComplete="off"
                 style={{
-                  padding: "12px 14px",
-                  borderRadius: 12,
-                  border: "1.5px solid #e0e7ef",
                   fontSize: 16,
-                  outline: "none",
-                  transition: "border 0.2s, box-shadow 0.2s",
+                  fontWeight: 600,
+                  borderColor: userError.phone ? "#e11d48" : "#e0e7ef",
                 }}
                 required
-                onFocus={(e) => (e.target.style.border = "2px solid #615efc")}
-                onBlur={(e) => (e.target.style.border = "1.5px solid #e0e7ef")}
+                maxLength={10}
               />
               {userError.phone && (
                 <div
-                  style={{
-                    color: "#e11d48",
-                    fontWeight: 600,
-                    fontSize: 14,
-                    marginTop: 2,
-                  }}
+                  className="invalid-feedback d-block"
+                  style={{ fontWeight: 600 }}
                 >
                   {userError.phone}
                 </div>
               )}
             </div>
-            <div style={{ display: "flex", gap: 14, marginTop: 10 }}>
+            <div className="d-flex gap-3 mt-3">
               <button
                 type="button"
-                className="btn btn-outline-secondary rounded-pill px-4"
+                className="btn stis-cancel-btn rounded-pill px-4 flex-fill"
                 style={{
                   fontWeight: 700,
                   fontSize: 16,
-                  flex: 1,
                   borderWidth: 2,
-                  borderColor: "#e0e7ef",
+                  borderColor: "#e11d48",
+                  color: "#e11d48",
+                  background: "#fff",
+                  transition: "all 0.2s",
                 }}
                 onClick={() => setShowUserForm(false)}
               >
@@ -1309,20 +1325,50 @@ export default function STIsTest() {
               </button>
               <button
                 type="submit"
-                className="btn btn-primary rounded-pill px-4"
+                className="btn stis-confirm-btn rounded-pill px-4 flex-fill"
                 style={{
                   fontWeight: 800,
                   fontSize: 17,
-                  flex: 1,
                   background: "#615efc",
                   border: "none",
                   boxShadow: "0 2px 8px #615efc33",
                   letterSpacing: 0.5,
+                  color: "#fff",
+                  transition: "all 0.2s",
                 }}
               >
                 Xác nhận
               </button>
             </div>
+            <style>{`
+              .stis-user-form input:focus {
+                border-color: #615efc !important;
+                box-shadow: 0 0 0 2px #615efc33 !important;
+              }
+              .stis-user-form input.is-invalid {
+                border-color: #e11d48 !important;
+                background: #fef2f2 !important;
+              }
+              .stis-user-form .invalid-feedback {
+                color: #e11d48 !important;
+              }
+              .stis-cancel-btn {
+                border-color: #e11d48 !important;
+                color: #e11d48 !important;
+                background: #fff !important;
+              }
+              .stis-cancel-btn:hover, .stis-cancel-btn:focus {
+                background: #e11d48 !important;
+                color: #fff !important;
+                border-color: #e11d48 !important;
+                box-shadow: 0 2px 8px #e11d4833 !important;
+              }
+              .stis-confirm-btn:hover, .stis-confirm-btn:focus {
+                background: #111 !important;
+                color: #fff !important;
+                box-shadow: 0 2px 8px #1113 !important;
+              }
+            `}</style>
           </form>
         </div>
       )}

@@ -75,7 +75,7 @@ export default function QuizPage() {
         const el = document.scrollingElement || document.documentElement;
         if (el.scrollHeight > el.clientHeight) {
           e.preventDefault();
-          const scrollStep = 60;
+          const scrollStep = 30;
           el.scrollBy({
             top: e.deltaY > 0 ? scrollStep : -scrollStep,
             left: 0,
