@@ -117,16 +117,45 @@ export default function BookingConsultation() {
     setConfirmModal(true);
   };
 
-  // Submit booking (replace with API)
-  const handleConfirm = () => {
-    setHistory((prev) => [bookingInfo, ...prev]);
-    setConfirmModal(false);
-    message.success(
-      "Đặt lịch thành công! Thông tin xác nhận sẽ được gửi qua email."
-    );
-    form.resetFields();
-    setAvailableSlots([]);
-    // TODO: Call booking API, send email, send notification...
+  // Submit booking (call API)
+  const handleConfirm = async () => {
+    if (!bookingInfo) return;
+    try {
+      const res = await fetch(
+        "https://ghsm.eposh.io.vn/api/v1/booking/consulation-booking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: bookingInfo.name,
+            email: bookingInfo.email,
+            phone: bookingInfo.phone,
+            date: bookingInfo.date,
+            slot: bookingInfo.slot,
+            method: bookingInfo.method,
+            content: bookingInfo.content,
+            consultantId: selectedAdvisorId,
+          }),
+        }
+      );
+      const data = await res.json();
+      if (res.ok && (data.success || data.status === 200)) {
+        message.success(
+          "Đặt lịch thành công! Thông tin xác nhận sẽ được gửi qua email."
+        );
+        setConfirmModal(false);
+        form.resetFields();
+        setAvailableSlots([]);
+        // Sau khi đặt lịch thành công, load lại lịch sử
+        fetchHistory();
+      } else {
+        message.error(data.message || "Đặt lịch thất bại!");
+      }
+    } catch {
+      message.error("Đặt lịch thất bại!");
+    }
   };
 
   // Cancel booking (ready for API integration)
@@ -140,7 +169,6 @@ export default function BookingConsultation() {
       cancelButtonProps: { className: "booking-submit-btn" },
       onOk: async () => {
         // TODO: Call cancel booking API here, pass id or needed info
-        // Example:
         // await api.cancelBooking(history[idx].id);
         // After API success, update UI:
         setHistory((prev) => prev.filter((_, i) => i !== idx));
@@ -148,6 +176,28 @@ export default function BookingConsultation() {
       },
     });
   };
+
+  // Fetch booking history from API
+  const fetchHistory = async () => {
+    try {
+      // Có thể cần truyền token hoặc userId nếu API yêu cầu
+      const res = await fetch(
+        "https://ghsm.eposh.io.vn/api/v1/booking/get-consulation-booking"
+      );
+      const data = await res.json();
+      let arr = [];
+      if (Array.isArray(data)) arr = data;
+      else if (Array.isArray(data?.data)) arr = data.data;
+      setHistory(arr);
+    } catch {
+      setHistory([]);
+    }
+  };
+
+  // Load history on mount
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
   // Custom submit handler to check login before submit
   const handleFormSubmit = (values) => {
