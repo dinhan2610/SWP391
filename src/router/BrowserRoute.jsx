@@ -1,4 +1,25 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+// Simple role check (replace with real auth logic as needed)
+function getUserRole() {
+  const user = localStorage.getItem("USER_TOKEN");
+  if (!user) return null;
+  try {
+    const parsed = JSON.parse(user);
+    return parsed.role || null;
+  } catch {
+    return null;
+  }
+}
+
+// Route guard for admin
+function RequireAdmin({ children }) {
+  return getUserRole() === "admin" ? children : <Navigate to="/" replace />;
+}
+
+// Route guard for user (login required)
+function RequireUser({ children }) {
+  return getUserRole() ? children : <Navigate to="/" replace />;
+}
 import HomePages from "../pages/HomePages";
 import HomeTemplate from "../modules/HomeTemplate";
 import Ovulation from "../pages/Ovulation";
@@ -40,18 +61,55 @@ const routes = [
       { path: "/booking-consultation", element: <BookingConsultation /> },
       { path: "/chat", element: <ChatWithAdvisor /> },
       { path: "/payment", element: <PaymentPage /> },
-      { path: "/admin/stis", element: <AdminSTIs /> },
+      { path: "/admin/blog", element: <BlogAdmin /> },
+      {
+        path: "/admin/stis",
+        element: (
+          <RequireAdmin>
+            <AdminSTIs />
+          </RequireAdmin>
+        ),
+      },
       {
         path: "/history",
-        element: <HistorySTIs />,
+        element: (
+          <RequireUser>
+            <HistorySTIs />
+          </RequireUser>
+        ),
       },
-      { path: "/admin/blog", element: <BlogAdmin /> },
+      // {
+      //   path: "/admin/blog",
+      //   element: (
+      //     <RequireAdmin>
+      //       <BlogAdmin />
+      //     </RequireAdmin>
+      //   ),
+      // },
 
-      { path: "/profile", element: <Profile /> },
-      { path: "/admin/manager-consultant", element: <ManagerConsultant /> },
+      {
+        path: "/profile",
+        element: (
+          <RequireUser>
+            <Profile />
+          </RequireUser>
+        ),
+      },
+      {
+        path: "/admin/manager-consultant",
+        element: (
+          <RequireAdmin>
+            <ManagerConsultant />
+          </RequireAdmin>
+        ),
+      },
       {
         path: "/admin/booking-consultation",
-        element: <AdminBookingConsultation />,
+        element: (
+          <RequireAdmin>
+            <AdminBookingConsultation />
+          </RequireAdmin>
+        ),
       },
     ],
   },

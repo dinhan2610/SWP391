@@ -1,28 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-// Lưu trữ blog vào localStorage để CRUD không mất khi reload
-const BLOG_KEY = "blog_admin_posts";
-
-const getInitialPosts = () => {
-  const local = localStorage.getItem(BLOG_KEY);
-  if (local) return JSON.parse(local);
-  // Dữ liệu mẫu lấy từ BlogPages
-  return [
-    {
-      id: 1,
-      title: "Giáo Dục Giới Tính Cho Thanh Thiếu Niên",
-      excerpt:
-        "Giáo dục giới tính giúp thanh thiếu niên hiểu biết về cơ thể và sức khỏe của mình.",
-      fullText: "Giáo dục giới tính đóng vai trò quan trọng...",
-      date: "12/06/2025",
-      image: "/blog/01.png",
-    },
-    // ... Thêm các bài viết mẫu khác nếu muốn ...
-  ];
-};
-
 export default function BlogAdmin() {
-  const [posts, setPosts] = useState(getInitialPosts());
+  const [posts, setPosts] = useState([]);
   const [editing, setEditing] = useState(null); // null hoặc post đang sửa
   const [form, setForm] = useState({
     title: "",
@@ -34,21 +13,56 @@ export default function BlogAdmin() {
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState("");
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
+
+  // API endpoints
+  const API_BASE = "https://ghsm.eposh.io.vn";
+
+  // Fetch all blogs
+  const fetchPosts = async () => {
+    setLoading(true);
+    setApiError("");
+    try {
+      const res = await fetch(`${API_BASE}/get-blogs`);
+      if (!res.ok) throw new Error("Không thể tải danh sách bài viết");
+      const data = await res.json();
+      setPosts(Array.isArray(data) ? data : data.blogs || []);
+    } catch (err) {
+      setApiError(err.message || "Lỗi không xác định");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    localStorage.setItem(BLOG_KEY, JSON.stringify(posts));
-  }, [posts]);
+    fetchPosts();
+    // eslint-disable-next-line
+  }, []);
 
   const handleEdit = (post) => {
     setEditing(post);
     setForm(post);
     setShowModal(true);
   };
-  const handleDelete = (id) => {
-    if (window.confirm("Bạn có chắc muốn xóa bài viết này?")) {
-      setPosts((prev) => prev.filter((p) => p.id !== id));
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Bạn có chắc muốn xóa bài viết này?")) return;
+    setLoading(true);
+    setApiError("");
+    try {
+      const res = await fetch(`${API_BASE}/delete-blog/${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Xóa bài viết thất bại");
+      await fetchPosts();
+    } catch (err) {
+      setApiError(err.message || "Lỗi không xác định");
+    } finally {
+      setLoading(false);
     }
   };
+
   const handleAdd = () => {
     setEditing(null);
     // Tự động lấy ngày hiện tại theo định dạng dd/mm/yyyy
@@ -60,6 +74,7 @@ export default function BlogAdmin() {
     setForm({ title: "", excerpt: "", fullText: "", date: today, image: "" });
     setShowModal(true);
   };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -73,24 +88,12 @@ export default function BlogAdmin() {
 
   // Validate từng trường
   const validate = (field, value) => {
-    switch (field) {
-      case "title":
-        if (!value.trim()) return "Tiêu đề không được để trống.";
-        return "";
-      case "excerpt":
-        if (!value.trim()) return "Tóm tắt không được để trống.";
-        return "";
-      case "fullText":
-        if (!value.trim()) return "Nội dung không được để trống.";
-        return "";
-      // case "date":
-      //   if (!value.trim()) return "Ngày đăng không được để trống.";
-      //   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(value.trim()))
-      //     return "Ngày đăng phải đúng định dạng dd/mm/yyyy.";
-      //   return "";
-      default:
-        return "";
+    // Validate 3 trường chính đều trả về cùng 1 thông báo nếu rỗng
+    if (["title", "excerpt", "fullText"].includes(field)) {
+      if (!value.trim()) return "Không được để trống nội dung!";
+      return "";
     }
+    return "";
   };
 
   // Validate toàn bộ form
@@ -110,30 +113,72 @@ export default function BlogAdmin() {
   const handleChange = (field) => (e) => {
     const value = e.target.value;
     setForm((f) => ({ ...f, [field]: value }));
+    // Nếu đã có lỗi trước đó, validate lại khi nhập
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: validate(field, value) }));
+    }
+  };
+
+  // Xử lý khi rời khỏi input để validate ngay
+  const handleBlur = (field) => (e) => {
+    const value = e.target.value;
     setErrors((prev) => ({ ...prev, [field]: validate(field, value) }));
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    if (!validateAll()) return;
-    // Nếu có file ảnh mới, đã set form.image là base64 ở handleImageChange
-    if (editing) {
-      setPosts((prev) =>
-        prev.map((p) => (p.id === editing.id ? { ...form, id: editing.id } : p))
+    const valid = validateAll();
+    if (!valid) {
+      // Focus vào input đầu tiên bị lỗi
+      const firstError = ["title", "excerpt", "fullText"].find(
+        (f) => errors[f] || !form[f].trim()
       );
-    } else {
-      setPosts((prev) => [...prev, { ...form, id: Date.now() }]);
+      if (firstError) {
+        const el = document.getElementById(`blog-${firstError}`);
+        if (el) el.focus();
+      }
+      return;
     }
-    setShowModal(false);
-    setErrors({});
+    setLoading(true);
+    setApiError("");
+    let success = false;
+    try {
+      if (editing) {
+        // PATCH/PUT update
+        const res = await fetch(`${API_BASE}/edit-blog/${editing.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+        if (!res.ok) throw new Error("Cập nhật bài viết thất bại");
+      } else {
+        // POST create
+        const res = await fetch(`${API_BASE}/create-blog`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+        if (!res.ok) throw new Error("Thêm bài viết thất bại");
+      }
+      success = true;
+      setErrors({});
+    } catch (err) {
+      setApiError(err.message || "Lỗi không xác định");
+    } finally {
+      setLoading(false);
+      if (success) {
+        setShowModal(false);
+        await fetchPosts();
+      }
+    }
   };
 
   // Tìm kiếm bài viết
   const filteredPosts = posts.filter(
     (p) =>
-      p.title.toLowerCase().includes(search.toLowerCase()) ||
-      p.excerpt.toLowerCase().includes(search.toLowerCase()) ||
-      p.date.includes(search)
+      (p.title || "").toLowerCase().includes(search.toLowerCase()) ||
+      (p.excerpt || "").toLowerCase().includes(search.toLowerCase()) ||
+      (p.date || "").includes(search)
   );
 
   return (
@@ -141,8 +186,9 @@ export default function BlogAdmin() {
       style={{
         maxWidth: 1000,
         margin: "40px auto",
-        fontFamily: "Montserrat, Arial, sans-serif",
+        fontFamily: "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
         padding: 16,
+        color: "#222",
       }}
     >
       <h1
@@ -152,9 +198,10 @@ export default function BlogAdmin() {
           fontSize: "2.8rem",
           marginBottom: 38,
           letterSpacing: 1.5,
-          color: "#0d47a1",
+          color: "#1976d2",
           textShadow: "0 2px 12px #e3e7ef",
           textTransform: "uppercase",
+          fontFamily: "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
         }}
       >
         Quản trị Blog
@@ -182,6 +229,9 @@ export default function BlogAdmin() {
             outline: "none",
             boxShadow: "0 1px 4px #e3e7ef",
             transition: "border 0.2s",
+            fontFamily:
+              "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+            color: "#222",
           }}
         />
         <button
@@ -189,7 +239,7 @@ export default function BlogAdmin() {
           style={{
             padding: "12px 36px",
             borderRadius: 10,
-            background: "linear-gradient(90deg,#1976d2,#42a5f5)",
+            background: "#615efc",
             color: "#fff",
             fontWeight: 800,
             border: "none",
@@ -198,20 +248,52 @@ export default function BlogAdmin() {
             boxShadow: "0 2px 12px #b3c6e7",
             letterSpacing: 0.8,
             textTransform: "uppercase",
-            transition: "background 0.2s,transform 0.1s",
+            transition: "background 0.2s,transform 0.1s,scale 0.1s",
+            fontFamily:
+              "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
           }}
-          onMouseOver={(e) =>
-            (e.currentTarget.style.background =
-              "linear-gradient(90deg,#0d47a1,#64b5f6)")
-          }
-          onMouseOut={(e) =>
-            (e.currentTarget.style.background =
-              "linear-gradient(90deg,#1976d2,#42a5f5)")
-          }
+          onMouseOver={(e) => {
+            e.currentTarget.style.background = "#000";
+            e.currentTarget.style.transform = "scale(1.07)";
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.background = "#615efc";
+            e.currentTarget.style.transform = "scale(1)";
+          }}
         >
           + Thêm bài viết
         </button>
       </div>
+      {apiError && (
+        <div
+          style={{
+            color: "#d32f2f",
+            fontWeight: 700,
+            marginBottom: 12,
+            textAlign: "center",
+            fontFamily:
+              "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+            fontSize: "1.08rem",
+          }}
+        >
+          {apiError}
+        </div>
+      )}
+      {loading && (
+        <div
+          style={{
+            color: "#1976d2",
+            fontWeight: 700,
+            marginBottom: 12,
+            textAlign: "center",
+            fontFamily:
+              "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+            fontSize: "1.08rem",
+          }}
+        >
+          Đang tải dữ liệu...
+        </div>
+      )}
       <div
         style={{
           overflowX: "auto",
@@ -228,16 +310,24 @@ export default function BlogAdmin() {
           }}
         >
           <thead>
-            <tr style={{ background: "#f5f7ff" }}>
+            <tr
+              style={{
+                background: "#f5f7ff",
+                fontFamily:
+                  "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
+              }}
+            >
               <th
                 style={{
                   padding: 14,
                   fontWeight: 900,
                   fontSize: "1.18rem",
-                  color: "#0d47a1",
+                  color: "#615efc",
                   letterSpacing: 0.5,
                   textTransform: "uppercase",
-                  borderBottom: "2.5px solid #1976d2",
+                  borderBottom: "2.5px solid #615efc",
+                  fontFamily:
+                    "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
                 }}
               >
                 Tiêu đề
@@ -247,10 +337,12 @@ export default function BlogAdmin() {
                   padding: 14,
                   fontWeight: 900,
                   fontSize: "1.18rem",
-                  color: "#0d47a1",
+                  color: "#615efc",
                   letterSpacing: 0.5,
                   textTransform: "uppercase",
-                  borderBottom: "2.5px solid #1976d2",
+                  borderBottom: "2.5px solid #615efc",
+                  fontFamily:
+                    "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
                 }}
               >
                 Tóm tắt
@@ -258,12 +350,13 @@ export default function BlogAdmin() {
               <th
                 style={{
                   padding: 14,
-                  fontWeight: 900,
-                  fontSize: "1.18rem",
-                  color: "#0d47a1",
-                  letterSpacing: 0.5,
-                  textTransform: "uppercase",
-                  borderBottom: "2.5px solid #1976d2",
+                  fontWeight: 700,
+                  color: "#615efc",
+                  maxWidth: 220,
+                  wordBreak: "break-word",
+                  fontFamily:
+                    "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+                  borderBottom: "2.5px solid #615efc",
                 }}
               >
                 Ngày
@@ -273,10 +366,10 @@ export default function BlogAdmin() {
                   padding: 14,
                   fontWeight: 900,
                   fontSize: "1.18rem",
-                  color: "#0d47a1",
+                  color: "#615efc",
                   letterSpacing: 0.5,
                   textTransform: "uppercase",
-                  borderBottom: "2.5px solid #1976d2",
+                  borderBottom: "2.5px solid #615efc",
                 }}
               >
                 Ảnh
@@ -286,10 +379,10 @@ export default function BlogAdmin() {
                   padding: 14,
                   fontWeight: 900,
                   fontSize: "1.18rem",
-                  color: "#0d47a1",
+                  color: "#615efc",
                   letterSpacing: 0.5,
                   textTransform: "uppercase",
-                  borderBottom: "2.5px solid #1976d2",
+                  borderBottom: "2.5px solid #615efc",
                 }}
               >
                 Thao tác
@@ -324,7 +417,7 @@ export default function BlogAdmin() {
                   style={{
                     padding: 14,
                     fontWeight: 700,
-                    color: "#1a237e",
+                    color: "#615efc",
                     maxWidth: 220,
                     wordBreak: "break-word",
                   }}
@@ -334,14 +427,24 @@ export default function BlogAdmin() {
                 <td
                   style={{
                     padding: 14,
-                    color: "#333",
+                    color: "#615efc",
                     maxWidth: 260,
                     wordBreak: "break-word",
+                    fontFamily:
+                      "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
                   }}
                 >
                   {post.excerpt}
                 </td>
-                <td style={{ padding: 14, color: "#607d8b", fontWeight: 600 }}>
+                <td
+                  style={{
+                    padding: 14,
+                    color: "#607d8b",
+                    fontWeight: 600,
+                    fontFamily:
+                      "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+                  }}
+                >
                   {post.date}
                 </td>
                 <td style={{ padding: 14 }}>
@@ -365,19 +468,23 @@ export default function BlogAdmin() {
                       padding: "6px 16px",
                       borderRadius: 6,
                       border: "none",
-                      background: "#e3f2fd",
-                      color: "#1565c0",
+                      background: "#615efc",
+                      color: "#fff",
                       fontWeight: 700,
                       cursor: "pointer",
                       fontSize: "1rem",
-                      transition: "background 0.2s,transform 0.1s",
+                      transition: "background 0.2s,transform 0.1s,scale 0.1s",
+                      fontFamily:
+                        "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
                     }}
-                    onMouseOver={(e) =>
-                      (e.currentTarget.style.background = "#bbdefb")
-                    }
-                    onMouseOut={(e) =>
-                      (e.currentTarget.style.background = "#e3f2fd")
-                    }
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.background = "#000";
+                      e.currentTarget.style.transform = "scale(1.07)";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.background = "#615efc";
+                      e.currentTarget.style.transform = "scale(1)";
+                    }}
                   >
                     Sửa
                   </button>
@@ -387,19 +494,23 @@ export default function BlogAdmin() {
                       padding: "6px 16px",
                       borderRadius: 6,
                       border: "none",
-                      background: "#ffebee",
-                      color: "#d32f2f",
+                      background: "#ff4d4f",
+                      color: "#fff",
                       fontWeight: 700,
                       cursor: "pointer",
                       fontSize: "1rem",
-                      transition: "background 0.2s,transform 0.1s",
+                      transition: "background 0.2s,transform 0.1s,scale 0.1s",
+                      fontFamily:
+                        "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
                     }}
-                    onMouseOver={(e) =>
-                      (e.currentTarget.style.background = "#ffcdd2")
-                    }
-                    onMouseOut={(e) =>
-                      (e.currentTarget.style.background = "#ffebee")
-                    }
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.background = "#d32f2f";
+                      e.currentTarget.style.transform = "scale(1.07)";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.background = "#ff4d4f";
+                      e.currentTarget.style.transform = "scale(1)";
+                    }}
                   >
                     Xóa
                   </button>
@@ -454,16 +565,26 @@ export default function BlogAdmin() {
                 {editing ? "Chỉnh sửa bài viết" : "Thêm bài viết"}
               </span>
             </div>
-            <form onSubmit={handleSave} autoComplete="off">
+            <form
+              onSubmit={handleSave}
+              autoComplete="off"
+              style={{
+                fontFamily:
+                  "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+                color: "#222",
+              }}
+            >
               <label
                 htmlFor="blog-title"
                 style={{
                   fontWeight: 700,
                   marginBottom: 4,
                   display: "block",
-                  color: "#0d47a1",
+                  color: "#1976d2",
                   fontSize: "1.08rem",
                   letterSpacing: 0.2,
+                  fontFamily:
+                    "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
                 }}
               >
                 Tiêu đề bài viết <span style={{ color: "#d32f2f" }}>*</span>
@@ -472,6 +593,7 @@ export default function BlogAdmin() {
                 id="blog-title"
                 value={form.title}
                 onChange={handleChange("title")}
+                onBlur={handleBlur("title")}
                 placeholder="Nhập tiêu đề bài viết"
                 style={{
                   marginBottom: 4,
@@ -482,8 +604,11 @@ export default function BlogAdmin() {
                   fontSize: "1.08rem",
                   fontWeight: 600,
                   outline: "none",
+                  fontFamily:
+                    "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+                  color: "#222",
                 }}
-                required
+                // required removed to disable browser default validation
                 autoFocus
               />
               {errors.title && (
@@ -503,9 +628,11 @@ export default function BlogAdmin() {
                   fontWeight: 700,
                   marginBottom: 4,
                   display: "block",
-                  color: "#0d47a1",
+                  color: "#1976d2",
                   fontSize: "1.08rem",
                   letterSpacing: 0.2,
+                  fontFamily:
+                    "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
                 }}
               >
                 Tóm tắt ngắn <span style={{ color: "#d32f2f" }}>*</span>
@@ -514,6 +641,7 @@ export default function BlogAdmin() {
                 id="blog-excerpt"
                 value={form.excerpt}
                 onChange={handleChange("excerpt")}
+                onBlur={handleBlur("excerpt")}
                 placeholder="Nhập tóm tắt nội dung bài viết"
                 style={{
                   marginBottom: 4,
@@ -523,8 +651,11 @@ export default function BlogAdmin() {
                   width: "100%",
                   fontSize: "1.08rem",
                   outline: "none",
+                  fontFamily:
+                    "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+                  color: "#222",
                 }}
-                required
+                // required removed to disable browser default validation
               />
               {errors.excerpt && (
                 <div
@@ -543,9 +674,11 @@ export default function BlogAdmin() {
                   fontWeight: 700,
                   marginBottom: 4,
                   display: "block",
-                  color: "#0d47a1",
+                  color: "#1976d2",
                   fontSize: "1.08rem",
                   letterSpacing: 0.2,
+                  fontFamily:
+                    "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
                 }}
               >
                 Nội dung chi tiết <span style={{ color: "#d32f2f" }}>*</span>
@@ -554,6 +687,7 @@ export default function BlogAdmin() {
                 id="blog-fullText"
                 value={form.fullText}
                 onChange={handleChange("fullText")}
+                onBlur={handleBlur("fullText")}
                 placeholder="Nhập nội dung chi tiết bài viết"
                 style={{
                   marginBottom: 4,
@@ -564,8 +698,11 @@ export default function BlogAdmin() {
                   minHeight: 120,
                   fontSize: "1.08rem",
                   outline: "none",
+                  fontFamily:
+                    "Be Vietnam Pro, Montserrat, Segoe UI, Arial, sans-serif",
+                  color: "#222",
                 }}
-                required
+                // required removed to disable browser default validation
               />
               {errors.fullText && (
                 <div
@@ -578,17 +715,18 @@ export default function BlogAdmin() {
                   {errors.fullText}
                 </div>
               )}
-              {/* XÓA label và input ngày đăng, chỉ hiển thị ngày đăng tự động */}
               <div
                 style={{
                   margin: "12px 0 8px 0",
                   color: "#1976d2",
                   fontWeight: 700,
                   fontSize: "1.08rem",
+                  fontFamily:
+                    "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
                 }}
               >
                 Ngày đăng:{" "}
-                <span style={{ color: "#333", fontWeight: 600 }}>
+                <span style={{ color: "#222", fontWeight: 600 }}>
                   {form.date}
                 </span>
               </div>
@@ -598,9 +736,11 @@ export default function BlogAdmin() {
                   fontWeight: 700,
                   marginBottom: 4,
                   display: "block",
-                  color: "#0d47a1",
+                  color: "#1976d2",
                   fontSize: "1.08rem",
                   letterSpacing: 0.2,
+                  fontFamily:
+                    "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
                 }}
               >
                 Ảnh đại diện
@@ -612,19 +752,6 @@ export default function BlogAdmin() {
                 onChange={handleImageChange}
                 style={{ marginBottom: 10 }}
               />
-              {form.image && (
-                <div style={{ marginBottom: 16 }}>
-                  <img
-                    src={form.image}
-                    alt="preview"
-                    style={{
-                      maxWidth: 120,
-                      borderRadius: 8,
-                      boxShadow: "0 1px 4px #b3c6e7",
-                    }}
-                  />
-                </div>
-              )}
               <div
                 style={{
                   display: "flex",
@@ -639,20 +766,24 @@ export default function BlogAdmin() {
                   style={{
                     padding: "10px 22px",
                     borderRadius: 8,
-                    background: "#eee",
-                    color: "#333",
+                    background: "#ff4d4f",
+                    color: "#fff",
                     fontWeight: 700,
                     border: "none",
                     cursor: "pointer",
                     fontSize: "1.08rem",
-                    transition: "background 0.2s,transform 0.1s",
+                    transition: "background 0.2s,transform 0.1s,scale 0.1s",
+                    fontFamily:
+                      "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
                   }}
-                  onMouseOver={(e) =>
-                    (e.currentTarget.style.background = "#e3e7ef")
-                  }
-                  onMouseOut={(e) =>
-                    (e.currentTarget.style.background = "#eee")
-                  }
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.background = "#d32f2f";
+                    e.currentTarget.style.transform = "scale(1.07)";
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.background = "#ff4d4f";
+                    e.currentTarget.style.transform = "scale(1)";
+                  }}
                 >
                   Hủy
                 </button>
@@ -661,7 +792,7 @@ export default function BlogAdmin() {
                   style={{
                     padding: "10px 22px",
                     borderRadius: 8,
-                    background: "linear-gradient(90deg,#1565c0,#42a5f5)",
+                    background: "#615efc",
                     color: "#fff",
                     fontWeight: 700,
                     border: "none",
@@ -669,16 +800,18 @@ export default function BlogAdmin() {
                     fontSize: "1.08rem",
                     boxShadow: "0 2px 8px #b3c6e7",
                     letterSpacing: 0.5,
-                    transition: "background 0.2s,transform 0.1s",
+                    transition: "background 0.2s,transform 0.1s,scale 0.1s",
+                    fontFamily:
+                      "Montserrat, Be Vietnam Pro, Segoe UI, Arial, sans-serif",
                   }}
-                  onMouseOver={(e) =>
-                    (e.currentTarget.style.background =
-                      "linear-gradient(90deg,#1976d2,#64b5f6)")
-                  }
-                  onMouseOut={(e) =>
-                    (e.currentTarget.style.background =
-                      "linear-gradient(90deg,#1565c0,#42a5f5)")
-                  }
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.background = "#000";
+                    e.currentTarget.style.transform = "scale(1.07)";
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.background = "#615efc";
+                    e.currentTarget.style.transform = "scale(1)";
+                  }}
                 >
                   Lưu
                 </button>

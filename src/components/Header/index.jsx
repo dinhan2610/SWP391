@@ -9,6 +9,7 @@ import avatar from "../../assets/PregnantAvatar.jpg";
 import { useNavigate } from "react-router-dom";
 // import { useGetImageUrl } from "../../apis/CallAPIFirebase";
 import DrawerMenu from "../DrawerMenu";
+import NotificationBell from "../Notification";
 import { motion } from "framer-motion";
 
 const headerVariants = {
@@ -25,15 +26,36 @@ const Headers = () => {
   const [open, setOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [url, setUrl] = useState(null);
+  const [url, setUrl] = useState("");
+  // Notification state and logic for NotificationBell
+  const [notiOpen, setNotiOpen] = useState(false);
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      title: "Lịch tư vấn sắp diễn ra",
+      content: "Bạn có lịch tư vấn với chuyên gia lúc 14:00 hôm nay.",
+      read: false,
+      time: "5 phút trước",
+    },
+    {
+      id: 2,
+      title: "Đặt lịch thành công",
+      content: "Bạn đã đặt lịch tư vấn thành công.",
+      read: true,
+      time: "1 ngày trước",
+    },
+  ]);
+  const handleReadAllNoti = () => {
+    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+  };
   const navigate = useNavigate();
 
   // Get image
   const handleGetImage = async () => {
     try {
       // const result = await useGetImageUrl("pregnancyCareImages/users", 1);
-      setUrl("https://via.placeholder.com/150");
       // setUrl(result);
+      setUrl(""); // Nếu không có ảnh thì url là rỗng, sẽ dùng avatar mặc định
     } catch (error) {
       console.error(error);
     }
@@ -219,15 +241,31 @@ const Headers = () => {
                   />
                 </div>
 
+                {/* Notification Bell Component */}
+                <NotificationBell
+                  notiOpen={notiOpen}
+                  setNotiOpen={setNotiOpen}
+                  notifications={notifications}
+                  setNotifications={setNotifications}
+                  handleReadAllNoti={handleReadAllNoti}
+                />
+
                 {user ? (
-                  <motion.div whileHover={{ scale: 1.1 }}>
-                    <Avatar
-                      src={url || avatar}
-                      size={40}
-                      style={{ cursor: "pointer" }}
-                      onClick={handleOpenDrawer}
-                    />
-                  </motion.div>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <motion.div whileHover={{ scale: 1.1 }}>
+                      <Avatar
+                        src={url && url !== "" ? url : avatar}
+                        size={40}
+                        style={{
+                          cursor: "pointer",
+                          border: "2px solid #615efc",
+                          background: url && url !== "" ? "#fff" : undefined,
+                        }}
+                        onClick={handleOpenDrawer}
+                        alt="avatar"
+                      />
+                    </motion.div>
+                  </div>
                 ) : (
                   <motion.button
                     onClick={handleOpen}
